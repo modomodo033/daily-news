@@ -12,234 +12,299 @@
         * { margin: 0; padding: 0; box-sizing: border-box; }
 
         :root {
-            --yellow: #FFD93D;
-            --yellow-light: #FFF5C2;
-            --yellow-soft: #FFFBEA;
-            --blue: #4A90D9;
-            --blue-deep: #2E6CB5;
-            --blue-light: #E8F2FF;
-            --blue-soft: #D0E4FF;
+            --pink: #FF6B9D;
+            --pink-light: #FFB8D0;
+            --pink-soft: #FFF0F5;
+            --purple: #A855F7;
+            --purple-light: #DDD6FE;
+            --blue: #60A5FA;
+            --blue-deep: #3B82F6;
+            --blue-light: #DBEAFE;
+            --yellow: #FBBF24;
+            --yellow-light: #FEF3C7;
+            --mint: #34D399;
+            --mint-light: #D1FAE5;
+            --text: #1E1B4B;
+            --text-soft: #6B7280;
             --white: #FFFFFF;
-            --text: #1A2B4C;
-            --text-soft: #5A6F8A;
-            --shadow-yellow: rgba(255, 217, 61, 0.3);
-            --shadow-blue: rgba(74, 144, 217, 0.2);
         }
 
         body {
             font-family: 'ZCOOL KuaiLe', 'PingFang SC', 'Microsoft YaHei', sans-serif;
-            background: url('https://images.unsplash.com/photo-1506744038136-46273834b4fb?w=1920&q=80') center/cover no-repeat fixed;
+            background: linear-gradient(135deg, #FFF0F5 0%, #F3E8FF 25%, #DBEAFE 50%, #FEF3C7 75%, #D1FAE5 100%);
+            background-size: 400% 400%;
+            animation: gradient-shift 12s ease-in-out infinite;
             height: 100vh; height: 100dvh;
             display: flex; justify-content: center; align-items: center;
             padding: 4px; position: relative; overflow: hidden;
         }
-        body::before {
-            content: ''; position: fixed; top: 0; left: 0; right: 0; bottom: 0;
-            background: rgba(255,255,255,0.15); backdrop-filter: blur(2px);
-            z-index: 0; pointer-events: none;
-        }
-        .bg-paws {
-            position: fixed; top: 0; left: 0; right: 0; bottom: 0;
-            pointer-events: none; z-index: 0; opacity: 0.05;
-            background-image:
-                url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100'%3E%3Ctext x='10' y='70' font-size='35' fill='%234A90D9'%3E🐾%3C/text%3E%3C/svg%3E"),
-                url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100'%3E%3Ctext x='50' y='40' font-size='20' fill='%23FFD93D'%3E⭐%3C/text%3E%3C/svg%3E");
-            background-size: 100px 100px, 100px 100px;
-            background-position: 0 0, 50px 50px;
+
+        @keyframes gradient-shift {
+            0%{background-position:0% 50%} 25%{background-position:100% 0%}
+            50%{background-position:100% 100%} 75%{background-position:0% 100%}
+            100%{background-position:0% 50%}
         }
 
-        /* ===== 主卡片 -- 填满整屏 ===== */
+        /* ===== 漂浮粒子 ===== */
+        .particles {
+            position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+            pointer-events: none; z-index: 0;
+        }
+        .particle {
+            position: absolute; font-size: 24px; opacity: 0;
+            animation: float-up linear infinite;
+        }
+        @keyframes float-up {
+            0%{transform:translateY(110vh) scale(0) rotate(0deg); opacity:0}
+            10%{opacity:0.8}
+            90%{opacity:0.6}
+            100%{transform:translateY(-10vh) scale(1.2) rotate(360deg); opacity:0}
+        }
+
+        /* ===== 主卡片 ===== */
         .player-card {
-            background: rgba(255,255,255,0.92);
-            backdrop-filter: blur(24px);
-            border-radius: 24px;
-            box-shadow: 0 8px 40px var(--shadow-blue), 0 4px 16px rgba(0,0,0,0.05);
-            padding: 10px 14px 8px;
+            background: rgba(255,255,255,0.75);
+            backdrop-filter: blur(28px);
+            border-radius: 28px;
+            padding: 12px 16px 8px;
             width: 100%; max-width: 430px;
             height: calc(100vh - 8px); height: calc(100dvh - 8px);
             text-align: center; position: relative; z-index: 1;
-            border: 2px solid rgba(74,144,217,0.08);
             display: flex; flex-direction: column;
+            border: 3px solid transparent;
+            background-clip: padding-box;
+            box-shadow: 0 0 30px rgba(168,85,247,0.2), 0 0 60px rgba(96,165,250,0.15), 0 8px 40px rgba(0,0,0,0.05);
+        }
+        .player-card::before {
+            content: ''; position: absolute; inset: -3px; border-radius: 30px;
+            padding: 3px; background: linear-gradient(135deg, #FF6B9D, #A855F7, #60A5FA, #FBBF24, #34D399);
+            background-size: 300% 300%; animation: border-glow 4s ease-in-out infinite;
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor; mask-composite: exclude;
+            pointer-events: none; z-index: -1;
+        }
+        @keyframes border-glow {
+            0%{background-position:0% 50%} 50%{background-position:100% 50%} 100%{background-position:0% 50%}
         }
 
         /* ===== 日期导航 ===== */
         .date-nav {
             display: flex; align-items: center; justify-content: center;
-            gap: 8px; margin-bottom: 8px; flex-shrink: 0;
+            gap: 8px; margin-bottom: 6px; flex-shrink: 0;
         }
         .date-nav-btn {
-            width: 32px; height: 32px; border-radius: 50%; border: none;
-            background: var(--blue-light); color: var(--blue-deep);
-            font-size: 14px; cursor: pointer; display: flex; align-items: center; justify-content: center;
-            transition: all 0.2s; flex-shrink: 0;
+            width: 34px; height: 34px; border-radius: 50%; border: none;
+            background: linear-gradient(135deg, var(--pink-light), var(--purple-light));
+            color: var(--purple); font-size: 14px; cursor: pointer;
+            display: flex; align-items: center; justify-content: center;
+            transition: all 0.3s; flex-shrink: 0; font-weight: 700;
+            box-shadow: 0 2px 8px rgba(168,85,247,0.2);
         }
-        .date-nav-btn:hover { background: var(--blue); color: white; }
+        .date-nav-btn:hover { transform: scale(1.1); box-shadow: 0 4px 16px rgba(168,85,247,0.3); }
         .date-nav-btn:active { transform: scale(0.9); }
         .date-nav-btn:disabled { opacity: 0.3; cursor: default; pointer-events: none; }
 
         .date-select {
-            padding: 6px 14px; border-radius: 18px;
-            border: 2px solid rgba(74,144,217,0.2);
-            background: linear-gradient(135deg, var(--blue-light), var(--white));
-            font-size: 14px; font-weight: 700; color: var(--blue-deep);
+            padding: 7px 14px; border-radius: 20px;
+            border: 2px solid rgba(168,85,247,0.25);
+            background: linear-gradient(135deg, rgba(255,255,255,0.9), rgba(221,214,254,0.5));
+            font-size: 14px; font-weight: 700; color: var(--text);
             font-family: inherit; cursor: pointer; outline: none;
             -webkit-appearance: none; appearance: none;
-            text-align: center; max-width: 170px;
+            text-align: center; max-width: 180px;
         }
         .date-select option { text-align: center; }
 
         /* ===== 模块标签 ===== */
         .module-tabs {
-            display: flex; gap: 8px; justify-content: center;
-            margin-bottom: 10px; flex-shrink: 0;
+            display: flex; gap: 10px; justify-content: center;
+            margin-bottom: 8px; flex-shrink: 0;
         }
         .module-tab {
-            padding: 8px 22px; border-radius: 20px;
+            padding: 8px 20px; border-radius: 22px;
             font-size: 15px; font-weight: 700; cursor: pointer;
-            border: 2px solid transparent;
-            transition: all 0.25s; font-family: inherit;
-            background: rgba(74,144,217,0.06); color: var(--text-soft);
+            border: 2.5px solid rgba(168,85,247,0.2);
+            transition: all 0.3s cubic-bezier(0.4,0,0.2,1);
+            font-family: inherit;
+            background: rgba(255,255,255,0.7); color: var(--text-soft);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
         }
-        .module-tab:hover { background: rgba(74,144,217,0.12); }
+        .module-tab:hover { transform: translateY(-2px); box-shadow: 0 4px 16px rgba(168,85,247,0.15); }
         .module-tab.active {
-            background: linear-gradient(135deg, var(--blue), var(--blue-deep));
+            background: linear-gradient(135deg, #FF6B9D, #A855F7);
             color: white; border-color: transparent;
-            box-shadow: 0 4px 16px var(--shadow-blue);
+            box-shadow: 0 4px 20px rgba(168,85,247,0.4), 0 0 30px rgba(255,107,157,0.3);
+            animation: tab-pulse 2s ease-in-out infinite;
+        }
+        @keyframes tab-pulse {
+            0%,100%{box-shadow: 0 4px 20px rgba(168,85,247,0.4), 0 0 30px rgba(255,107,157,0.3)}
+            50%{box-shadow: 0 4px 30px rgba(168,85,247,0.6), 0 0 50px rgba(255,107,157,0.5)}
         }
 
-        /* ===== 宠物头像 + 标题 ===== */
+        /* ===== 头部 ===== */
         .header-row {
             display: flex; align-items: center; justify-content: center;
-            gap: 12px; margin-bottom: 6px; flex-shrink: 0;
+            gap: 12px; margin-bottom: 4px; flex-shrink: 0;
         }
         .pet-hero {
-            width: 52px; height: 52px; flex-shrink: 0;
+            width: 56px; height: 56px; flex-shrink: 0; position: relative;
         }
         .pet-hero img {
-            width: 52px; height: 52px; border-radius: 50%;
-            object-fit: cover; border: 3px solid #FFF;
-            box-shadow: 0 3px 12px var(--shadow-blue);
-            cursor: pointer;
+            width: 56px; height: 56px; border-radius: 50%;
+            object-fit: cover; cursor: pointer;
+            box-shadow: 0 0 20px rgba(255,107,157,0.4), 0 0 40px rgba(168,85,247,0.2);
+            border: 3px solid #FFF;
+            transition: transform 0.3s;
+        }
+        .pet-hero img:hover { transform: scale(1.1) rotate(5deg); }
+        .pet-hero::after {
+            content: '💫'; position: absolute; top: -8px; right: -8px;
+            font-size: 16px; animation: sparkle 1.5s ease-in-out infinite;
+        }
+        @keyframes sparkle {
+            0%,100%{opacity:1; transform:scale(1)} 50%{opacity:0.3; transform:scale(0.5)}
         }
         .title {
             font-size: 20px; font-weight: 700; color: var(--text);
             letter-spacing: 1px;
+            background: linear-gradient(135deg, #FF6B9D, #A855F7, #60A5FA);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
 
-        /* ===== 加载指示 ===== */
+        /* ===== 内联加载 ===== */
         .inline-loader {
             display: none; align-items: center; justify-content: center; gap: 6px;
-            padding: 6px; font-size: 13px; color: var(--text-soft);
-            animation: pulse-text 1.5s ease-in-out infinite;
-            flex-shrink: 0;
+            padding: 4px; font-size: 13px; color: var(--text-soft);
+            animation: pulse-text 1.5s ease-in-out infinite; flex-shrink: 0;
         }
         .inline-loader.show { display: flex; }
-        @keyframes pulse-text { 0%,100%{opacity:1} 50%{opacity:0.5} }
+        @keyframes pulse-text { 0%,100%{opacity:1} 50%{opacity:0.4} }
 
-        /* ===== 字幕 -- flex:1 占满剩余空间 ===== */
+        /* ===== 字幕 ===== */
         .subtitle-box {
             width: 100%; flex: 1 1 0; min-height: 0;
             overflow-y: auto; overflow-x: hidden;
-            border-radius: 16px;
-            background: linear-gradient(180deg, rgba(74,144,217,0.06) 0%, rgba(255,217,61,0.08) 100%);
-            border: 2px solid rgba(74,144,217,0.12);
-            margin: 6px 0 6px; padding: 6px 0; position: relative;
+            border-radius: 18px;
+            background: linear-gradient(180deg, rgba(255,107,157,0.04) 0%, rgba(168,85,247,0.05) 50%, rgba(96,165,250,0.04) 100%);
+            border: 2px solid rgba(168,85,247,0.1);
+            margin: 6px 0; padding: 8px 0; position: relative;
         }
-        .subtitle-box::-webkit-scrollbar { width: 5px; }
+        .subtitle-box::-webkit-scrollbar { width: 6px; }
         .subtitle-box::-webkit-scrollbar-track { background: transparent; border-radius: 10px; }
-        .subtitle-box::-webkit-scrollbar-thumb { background: rgba(74,144,217,0.25); border-radius: 10px; }
+        .subtitle-box::-webkit-scrollbar-thumb { background: linear-gradient(180deg, var(--pink-light), var(--purple-light)); border-radius: 10px; }
         .subtitle-inner { display: flex; flex-direction: column; padding-right: 2px; min-height: 100%; }
 
         .sub-line {
-            min-height: 36px; display: flex; align-items: center; justify-content: center;
-            padding: 5px 18px; font-size: 15px; font-weight: 500;
-            color: #7A8FA5; line-height: 1.6; text-align: center;
-            transition: all 0.35s ease; opacity: 0.45; transform: scale(0.92);
+            min-height: 38px; display: flex; align-items: center; justify-content: center;
+            padding: 6px 20px; font-size: 15px; font-weight: 500;
+            color: #9CA3AF; line-height: 1.6; text-align: center;
+            transition: all 0.35s ease;
             white-space: normal; word-break: break-all;
             cursor: pointer; user-select: none;
             font-family: 'PingFang SC', 'Microsoft YaHei', sans-serif;
+            border-radius: 12px; margin: 1px 8px;
         }
-        .sub-line:hover { opacity: 0.7; background: rgba(74,144,217,0.06); border-radius: 10px; }
         .sub-line.active {
-            color: var(--text); font-weight: 700; font-size: 18px;
-            opacity: 1; transform: scale(1);
+            color: #FF6B9D; font-weight: 800; font-size: 17px;
+            background: linear-gradient(135deg, rgba(255,107,157,0.08), rgba(168,85,247,0.06));
+            text-shadow: 0 0 20px rgba(255,107,157,0.2);
+            box-shadow: 0 0 20px rgba(255,107,157,0.1);
         }
-        .sub-line.active::before { content: '🐾 '; font-size: 13px; }
-        .sub-line.prev { opacity: 0.55; transform: scale(0.95); }
-        .sub-line.future { opacity: 0.3; }
+        .sub-line.active::before { content: '🐾 '; font-size: 14px; }
+        .sub-line.prev { opacity: 0.5; color: #A78BFA; }
+        .sub-line.future { opacity: 0.25; }
         .sub-section-tag {
-            min-height: 24px; display: flex; align-items: center; justify-content: center;
-            padding: 4px 16px; font-size: 13px; font-weight: 700;
-            color: var(--blue-deep); letter-spacing: 2px;
-            transition: all 0.35s ease; opacity: 0; transform: translateY(-4px);
+            min-height: 26px; display: flex; align-items: center; justify-content: center;
+            padding: 6px 16px; margin: 4px 8px;
+            font-size: 13px; font-weight: 700;
+            background: linear-gradient(135deg, rgba(168,85,247,0.08), rgba(255,107,157,0.06));
+            color: var(--purple); letter-spacing: 2px;
+            border-radius: 14px;
+            transition: all 0.35s ease; opacity: 0; transform: translateY(-6px);
         }
         .sub-section-tag.visible { opacity: 1; transform: translateY(0); }
 
         .no-content {
             display: flex; flex-direction: column; align-items: center; justify-content: center;
-            height: 100%; min-height: 60px; color: var(--text-soft); font-size: 15px; gap: 6px;
+            height: 100%; min-height: 60px; color: var(--text-soft); font-size: 15px; gap: 8px;
         }
 
-        /* ===== 进度条 + 控制 ===== */
+        /* ===== 进度条 ===== */
         .progress-bar {
-            width: 100%; height: 8px; background: #EDF2FA;
+            width: 100%; height: 10px; background: rgba(168,85,247,0.1);
             border-radius: 10px; cursor: pointer; position: relative; overflow: visible;
             touch-action: none; flex-shrink: 0;
         }
         .progress-bar::before { content: ''; position: absolute; inset: -12px 0; }
         .progress-fill {
-            height: 100%; background: linear-gradient(90deg, var(--yellow), #FFC107, var(--blue));
-            border-radius: 10px; width: 0%; transition: width 0.15s linear; position: relative;
+            height: 100%;
+            background: linear-gradient(90deg, #FF6B9D, #A855F7, #60A5FA, #FBBF24);
+            background-size: 200% 100%;
+            animation: progress-shine 2s linear infinite;
+            border-radius: 10px; width: 0%; transition: width 0.1s linear; position: relative;
+        }
+        @keyframes progress-shine {
+            0%{background-position:200% 0} 100%{background-position:0% 0}
         }
         .progress-fill::after {
-            content: ''; position: absolute; right: -7px; top: -4px;
-            width: 16px; height: 16px; background: #FFF;
-            border: 3px solid var(--blue); border-radius: 50%;
-            box-shadow: 0 2px 8px rgba(74,144,217,0.3);
+            content: ''; position: absolute; right: -8px; top: -4px;
+            width: 18px; height: 18px; background: #FFF;
+            border: 3px solid var(--purple); border-radius: 50%;
+            box-shadow: 0 0 16px rgba(168,85,247,0.5), 0 2px 8px rgba(0,0,0,0.1);
         }
 
         .time-info {
             display: flex; justify-content: space-between;
-            font-size: 12px; color: #8EA0B5; margin: 3px 0 1px;
+            font-size: 12px; color: var(--text-soft); margin: 4px 0 1px;
             font-variant-numeric: tabular-nums; flex-shrink: 0;
         }
 
         .controls {
             display: flex; align-items: center; justify-content: center;
-            gap: 16px; margin: 4px 0; flex-shrink: 0;
+            gap: 18px; margin: 3px 0; flex-shrink: 0;
         }
         .btn {
-            width: 44px; height: 44px; border-radius: 50%; border: none;
+            width: 46px; height: 46px; border-radius: 50%; border: none;
             cursor: pointer; display: flex; align-items: center; justify-content: center;
-            font-size: 18px; transition: all 0.25s; outline: none;
+            font-size: 18px; transition: all 0.25s cubic-bezier(0.4,0,0.2,1); outline: none;
         }
         .btn-play {
-            width: 60px; height: 60px;
-            background: linear-gradient(135deg, var(--blue), var(--blue-deep));
-            color: white; font-size: 24px;
-            box-shadow: 0 6px 24px rgba(74,144,217,0.45);
+            width: 64px; height: 64px;
+            background: linear-gradient(135deg, #FF6B9D, #A855F7);
+            color: white; font-size: 26px;
+            box-shadow: 0 0 24px rgba(255,107,157,0.5), 0 0 48px rgba(168,85,247,0.3);
+            animation: play-glow 2s ease-in-out infinite;
         }
-        .btn-play:disabled { background: #C0CCDA; box-shadow: none; cursor: not-allowed; opacity: 0.6; }
-        .btn-play:hover:not(:disabled) { transform: scale(1.06); }
-        .btn-play:active:not(:disabled) { transform: scale(0.94); }
+        @keyframes play-glow {
+            0%,100%{box-shadow: 0 0 24px rgba(255,107,157,0.5), 0 0 48px rgba(168,85,247,0.3)}
+            50%{box-shadow: 0 0 36px rgba(255,107,157,0.75), 0 0 64px rgba(168,85,247,0.5)}
+        }
+        .btn-play:disabled { background: #D1D5DB; box-shadow: none; cursor: not-allowed; opacity: 0.5; animation: none; }
+        .btn-play:hover:not(:disabled) { transform: scale(1.08); }
+        .btn-play:active:not(:disabled) { transform: scale(0.92); }
         .btn-sm {
-            background: var(--white); color: var(--blue);
-            border: 2px solid var(--blue-soft); font-size: 18px;
+            background: rgba(255,255,255,0.8); color: var(--purple);
+            border: 2.5px solid var(--purple-light); font-size: 16px;
+            box-shadow: 0 2px 8px rgba(168,85,247,0.15);
         }
-        .btn-sm:hover { background: var(--blue); color: white; border-color: transparent; }
+        .btn-sm:hover { background: var(--purple); color: white; border-color: transparent; }
+        .btn-sm:active { transform: scale(0.9); }
         .speed-btn {
-            background: linear-gradient(135deg, var(--blue-light), var(--blue-soft));
-            color: var(--blue-deep); border: none;
-            border-radius: 14px; padding: 5px 16px;
+            background: linear-gradient(135deg, rgba(168,85,247,0.1), rgba(255,107,157,0.1));
+            color: var(--purple); border: 2px solid rgba(168,85,247,0.25);
+            border-radius: 16px; padding: 5px 18px;
             font-size: 13px; font-weight: 700; cursor: pointer;
-            box-shadow: 0 2px 8px var(--shadow-blue);
-            font-family: inherit;
+            font-family: inherit; transition: all 0.2s;
         }
+        .speed-btn:hover { background: rgba(168,85,247,0.2); }
 
         .current-section {
             font-size: 13px; font-weight: 700;
-            color: var(--blue-deep); padding: 2px 0; min-height: 20px;
-            flex-shrink: 0;
+            background: linear-gradient(135deg, #FF6B9D, #A855F7);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            background-clip: text;
+            padding: 2px 0; min-height: 20px; flex-shrink: 0;
         }
 
         /* ===== 分类标签 ===== */
@@ -248,90 +313,178 @@
             gap: 5px; padding: 2px 0; flex-shrink: 0;
         }
         .tag {
-            display: flex; align-items: center; justify-content: center; gap: 3px;
-            padding: 5px 12px; border-radius: 14px;
+            display: flex; align-items: center; justify-content: center; gap: 4px;
+            padding: 6px 14px; border-radius: 16px;
             font-size: 12px; font-weight: 700; cursor: pointer;
-            border: 1.5px solid rgba(74,144,217,0.2);
-            background: linear-gradient(135deg, rgba(74,144,217,0.04), rgba(255,217,61,0.06));
-            color: var(--text-soft);
-            transition: all 0.2s; font-family: inherit; white-space: nowrap;
+            border: 2px solid rgba(168,85,247,0.15);
+            background: rgba(255,255,255,0.8); color: var(--text-soft);
+            transition: all 0.2s cubic-bezier(0.4,0,0.2,1);
+            font-family: inherit; white-space: nowrap;
+            box-shadow: 0 1px 4px rgba(0,0,0,0.04);
         }
-        .tag:hover { background: rgba(74,144,217,0.12); border-color: var(--blue); color: var(--blue-deep); }
+        .tag:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(168,85,247,0.2); border-color: var(--purple); }
         .tag:active { transform: scale(0.93); }
         .tag.active-tag {
-            background: linear-gradient(135deg, var(--blue), var(--blue-deep));
+            background: linear-gradient(135deg, #FF6B9D, #A855F7);
             color: white; border-color: transparent;
-            box-shadow: 0 3px 12px var(--shadow-blue);
+            box-shadow: 0 0 16px rgba(255,107,157,0.4), 0 0 30px rgba(168,85,247,0.2);
+            animation: tag-glow 1.5s ease-in-out infinite;
+        }
+        @keyframes tag-glow {
+            0%,100%{box-shadow: 0 0 16px rgba(255,107,157,0.4)}
+            50%{box-shadow: 0 0 24px rgba(255,107,157,0.7), 0 0 40px rgba(168,85,247,0.4)}
         }
         .tag-emoji { font-size: 14px; }
         .tag-text { font-size: 12px; }
 
         .footer {
-            font-size: 10px; color: #A0B5CC;
+            font-size: 10px; color: #C4B5FD;
             display: flex; align-items: center; justify-content: center; gap: 4px;
             flex-shrink: 0; margin-top: 2px;
         }
 
-        .playing .pet-hero img { animation: gentle-bounce 2s ease-in-out infinite; }
+        /* ===== 播放动画 ===== */
+        .playing .pet-hero img { animation: gentle-bounce 1.5s ease-in-out infinite; }
         @keyframes gentle-bounce {
-            0%,100%{transform:translateY(0) scale(1)} 50%{transform:translateY(-4px) scale(1.03)}
+            0%,100%{transform:translateY(0) scale(1)} 30%{transform:translateY(-6px) scale(1.05)}
+            60%{transform:translateY(0) scale(0.98)}
         }
+
+        /* ===== 飞吻结束动画 ===== */
+        .kiss-overlay {
+            position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+            z-index: 200; display: flex; flex-direction: column;
+            align-items: center; justify-content: center;
+            background: rgba(30,27,75,0.7); backdrop-filter: blur(8px);
+            opacity: 0; visibility: hidden; pointer-events: none;
+            transition: opacity 0.6s ease, visibility 0.6s ease;
+        }
+        .kiss-overlay.show { opacity: 1; visibility: visible; }
+        .kiss-container {
+            position: relative; display: flex; flex-direction: column;
+            align-items: center; gap: 16px;
+        }
+        .kiss-pet {
+            width: 140px; height: 140px; border-radius: 50%;
+            object-fit: cover; border: 5px solid #FFF;
+            box-shadow: 0 0 40px rgba(255,107,157,0.6), 0 0 80px rgba(168,85,247,0.4);
+            animation: kiss-bounce 0.8s ease-in-out infinite, kiss-glow 1.5s ease-in-out infinite;
+        }
+        @keyframes kiss-bounce {
+            0%,100%{transform:translateY(0) scale(1)} 50%{transform:translateY(-20px) scale(1.05)}
+        }
+        @keyframes kiss-glow {
+            0%,100%{box-shadow: 0 0 40px rgba(255,107,157,0.6), 0 0 80px rgba(168,85,247,0.4)}
+            50%{box-shadow: 0 0 60px rgba(255,107,157,0.9), 0 0 100px rgba(168,85,247,0.6)}
+        }
+        .kiss-emoji {
+            font-size: 64px; animation: kiss-fly 0.6s ease-out infinite;
+        }
+        @keyframes kiss-fly {
+            0%{transform:translateY(0) scale(0); opacity:1}
+            60%{transform:translateY(-60px) scale(1.5); opacity:0.8}
+            100%{transform:translateY(-100px) scale(2); opacity:0}
+        }
+        .kiss-text {
+            font-family: 'ZCOOL KuaiLe', sans-serif;
+            font-size: 32px; font-weight: 700; color: #FFF;
+            text-shadow: 0 0 30px rgba(255,107,157,0.8), 0 0 60px rgba(168,85,247,0.6);
+            animation: kiss-text 1s ease-in-out infinite;
+        }
+        @keyframes kiss-text {
+            0%,100%{transform:scale(1); opacity:1} 50%{transform:scale(1.08); opacity:0.85}
+        }
+        .kiss-hearts {
+            position: absolute; top: 0; left: 50%; transform: translateX(-50%);
+            pointer-events: none;
+        }
+        .kiss-heart {
+            position: absolute; font-size: 24px;
+            animation: heart-float 1.5s ease-out infinite;
+        }
+        @keyframes heart-float {
+            0%{transform:translate(0,0) scale(0) rotate(0deg); opacity:1}
+            100%{transform:translate(var(--dx),-120px) scale(1.5) rotate(var(--dr)); opacity:0}
+        }
+        .kiss-dismiss {
+            margin-top: 24px; padding: 10px 30px;
+            border-radius: 24px; border: none;
+            background: linear-gradient(135deg, #FF6B9D, #A855F7);
+            color: white; font-size: 16px; font-weight: 700;
+            cursor: pointer; font-family: inherit;
+            box-shadow: 0 4px 20px rgba(168,85,247,0.4);
+            transition: all 0.3s;
+        }
+        .kiss-dismiss:hover { transform: scale(1.05); box-shadow: 0 6px 30px rgba(168,85,247,0.6); }
 
         /* ===== 加载覆盖层 ===== */
         .loading-overlay {
             position: fixed; top: 0; left: 0; right: 0; bottom: 0;
-            background: rgba(255,251,230,0.95); backdrop-filter: blur(8px);
+            background: linear-gradient(135deg, rgba(255,240,245,0.97), rgba(243,232,255,0.97));
+            backdrop-filter: blur(8px);
             display: flex; flex-direction: column;
             align-items: center; justify-content: center;
             z-index: 100; transition: opacity 0.5s ease, visibility 0.5s ease;
         }
         .loading-overlay.hidden { opacity: 0; visibility: hidden; pointer-events: none; }
         .loading-paw {
-            width: 50px; height: 50px;
-            display: flex; align-items: center; justify-content: center;
-            animation: paw-spin 1.5s ease-in-out infinite;
+            width: 60px; height: 60px; display: flex; align-items: center; justify-content: center;
+            font-size: 48px; animation: paw-spin 1.2s ease-in-out infinite;
         }
         @keyframes paw-spin {
-            0%{transform:rotate(0) scale(1)} 25%{transform:rotate(15deg) scale(1.15)}
-            50%{transform:rotate(0) scale(1)} 75%{transform:rotate(-15deg) scale(1.15)}
+            0%{transform:rotate(0) scale(1)} 25%{transform:rotate(20deg) scale(1.2)}
+            50%{transform:rotate(0) scale(1)} 75%{transform:rotate(-20deg) scale(1.2)}
             100%{transform:rotate(0) scale(1)}
         }
         .loading-status {
-            margin-top: 12px; font-size: 16px; font-weight: 700;
+            margin-top: 16px; font-size: 18px; font-weight: 700;
             color: var(--text); text-align: center;
             font-family: 'ZCOOL KuaiLe', 'PingFang SC', 'Microsoft YaHei', sans-serif;
         }
         .loading-progress-bar {
-            width: 200px; height: 8px; background: #E8E0C8;
-            border-radius: 10px; margin-top: 12px; overflow: hidden;
+            width: 220px; height: 10px; background: rgba(168,85,247,0.15);
+            border-radius: 10px; margin-top: 16px; overflow: hidden;
         }
         .loading-progress-fill {
             height: 100%; width: 0%;
-            background: linear-gradient(90deg, var(--yellow), var(--blue));
-            border-radius: 10px; transition: width 0.3s ease;
+            background: linear-gradient(90deg, #FF6B9D, #A855F7, #60A5FA);
+            border-radius: 10px; transition: width 0.4s ease;
         }
 
         @media (max-width: 400px) {
-            .player-card { padding: 8px 10px 6px; border-radius: 18px; }
-            .pet-hero, .pet-hero img { width: 42px; height: 42px; }
+            .player-card { padding: 8px 10px 6px; border-radius: 22px; }
+            .player-card::before { border-radius: 24px; }
+            .pet-hero, .pet-hero img { width: 46px; height: 46px; }
             .title { font-size: 17px; }
             .sub-line { font-size: 14px; min-height: 32px; padding: 4px 12px; }
-            .sub-line.active { font-size: 16px; }
-            .btn { width: 38px; height: 38px; font-size: 16px; }
-            .btn-play { width: 52px; height: 52px; font-size: 22px; }
+            .sub-line.active { font-size: 15px; }
+            .btn { width: 40px; height: 40px; font-size: 16px; }
+            .btn-play { width: 54px; height: 54px; font-size: 22px; }
             .controls { gap: 12px; }
-            .date-select { font-size: 13px; padding: 5px 10px; max-width: 150px; }
-            .module-tab { padding: 7px 18px; font-size: 14px; }
+            .module-tab { padding: 7px 16px; font-size: 13px; }
             .tag { padding: 4px 10px; border-radius: 12px; }
-            .tag-emoji { font-size: 13px; }
-            .tag-text { font-size: 11px; }
+            .kiss-pet { width: 110px; height: 110px; }
+            .kiss-text { font-size: 26px; }
         }
     </style>
 </head>
 <body>
-    <div class="bg-paws"></div>
 
-    <!-- ===== 初始加载 ===== -->
+    <!-- 漂浮粒子 -->
+    <div class="particles" id="particles"></div>
+
+    <!-- 飞吻结束动画 -->
+    <div class="kiss-overlay" id="kissOverlay">
+        <div class="kiss-container">
+            <div class="kiss-hearts" id="kissHearts"></div>
+            <img class="kiss-pet" src="baobaolei.jpg" alt="宝宝雷">
+            <div class="kiss-emoji">😘</div>
+            <div class="kiss-text">爸爸妈妈播报完毕<br>爱你们哦～</div>
+            <button class="kiss-dismiss" id="kissDismiss">🐾 再看一次</button>
+        </div>
+    </div>
+
+    <!-- 加载 -->
     <div class="loading-overlay" id="loadingOverlay">
         <div class="loading-paw">🐾</div>
         <div class="loading-status" id="loadingStatus">宝宝雷正在准备...</div>
@@ -341,20 +494,17 @@
     </div>
 
     <div class="player-card" id="playerCard">
-        <!-- 日期导航 -->
         <div class="date-nav">
             <button class="date-nav-btn" id="btnDatePrev" title="前一天">◀</button>
             <select class="date-select" id="dateSelect"></select>
             <button class="date-nav-btn" id="btnDateNext" title="后一天">▶</button>
         </div>
 
-        <!-- 模块标签 -->
         <div class="module-tabs" id="moduleTabs">
             <button class="module-tab active" data-module="news">📰 每日新闻</button>
             <button class="module-tab" data-module="ai">🤖 AI要闻</button>
         </div>
 
-        <!-- 头部：头像 + 标题 -->
         <div class="header-row">
             <div class="pet-hero">
                 <img src="baobaolei.jpg" alt="宝宝雷" id="petImage">
@@ -362,17 +512,14 @@
             <h1 class="title" id="mainTitle">宝宝雷の新闻电台</h1>
         </div>
 
-        <!-- 内联加载 -->
         <div class="inline-loader" id="inlineLoader">🐾 正在加载...</div>
 
-        <!-- 字幕 -->
         <div class="subtitle-box" id="subtitleBox">
             <div class="subtitle-inner" id="subtitleInner">
-                <div class="no-content">点击上方标签选择播报类型</div>
+                <div class="no-content">点击上方标签选择播报类型 🎀</div>
             </div>
         </div>
 
-        <!-- 进度条 -->
         <div class="progress-bar" id="progressBar">
             <div class="progress-fill" id="progressFill"></div>
         </div>
@@ -382,10 +529,8 @@
         </div>
         <div class="current-section" id="currentSection">🎧 准备收听...</div>
 
-        <!-- 分类标签 -->
         <div class="tags-area" id="tagsArea"></div>
 
-        <!-- 控制 -->
         <div class="controls">
             <button class="btn btn-sm" id="btnRewind">⏪</button>
             <button class="btn btn-play" id="btnPlay" disabled>▶️</button>
@@ -394,18 +539,34 @@
         <div><button class="speed-btn" id="btnSpeed">1.0x</button></div>
 
         <div class="footer">
-            <span>Made with ❤️ by WorkBuddy · 每日更新</span>
+            <span>Made with 💖 by WorkBuddy · 每日更新</span>
         </div>
     </div>
 
     <audio id="audio" preload="auto"></audio>
 
     <script>
+    // ===== 漂浮粒子 =====
+    (function initParticles() {
+        const container = document.getElementById('particles');
+        const emojis = ['⭐','🌟','💫','🐾','💖','🌸','✨','🎀','💝','🍬','🦴','🎵','💕','🌙','🫧'];
+        for (let i = 0; i < 25; i++) {
+            const p = document.createElement('span');
+            p.className = 'particle';
+            p.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+            p.style.left = Math.random() * 100 + '%';
+            p.style.fontSize = (16 + Math.random() * 24) + 'px';
+            p.style.animationDuration = (8 + Math.random() * 16) + 's';
+            p.style.animationDelay = Math.random() * 12 + 's';
+            container.appendChild(p);
+        }
+    })();
+
     // ===== 全局状态 =====
     let archiveData = null;
     let currentDate = '';
     let currentModule = 'news';
-    let currentData = null;       // { subtitles, sections, duration }
+    let currentData = null;
     let currentAudioSrc = '';
     let audioReady = false;
     let activeIdx = -1;
@@ -436,6 +597,50 @@
     const loadingOverlay = document.getElementById('loadingOverlay');
     const loadingStatus = document.getElementById('loadingStatus');
     const loadingProgressFill = document.getElementById('loadingProgressFill');
+    const tagsArea = document.getElementById('tagsArea');
+    const kissOverlay = document.getElementById('kissOverlay');
+    const kissDismiss = document.getElementById('kissDismiss');
+
+    // ===== 飞吻动画 =====
+    function showKiss() {
+        // 生成飘浮爱心
+        const heartsContainer = document.getElementById('kissHearts');
+        heartsContainer.innerHTML = '';
+        for (let i = 0; i < 12; i++) {
+            const h = document.createElement('span');
+            h.className = 'kiss-heart';
+            h.textContent = ['❤️','💕','💗','💖','💝','😘'][Math.floor(Math.random()*6)];
+            h.style.left = ((Math.random() - 0.5) * 120) + 'px';
+            h.style.top = '20px';
+            h.style.setProperty('--dx', ((Math.random()-0.5)*160)+'px');
+            h.style.setProperty('--dr', ((Math.random()-0.5)*60)+'deg');
+            h.style.animationDelay = (i * 0.15) + 's';
+            h.style.animationDuration = (1.2 + Math.random() * 1) + 's';
+            heartsContainer.appendChild(h);
+        }
+        kissOverlay.classList.add('show');
+    }
+
+    kissOverlay.addEventListener('click', (e) => {
+        if (e.target === kissOverlay) hideKiss();
+    });
+
+    kissDismiss.addEventListener('click', (e) => {
+        e.stopPropagation();
+        hideKiss();
+        // 重播
+        audio.currentTime = 0;
+        if (!isPlaying) {
+            audio.play().catch(()=>{});
+            btnPlay.textContent = '⏸️';
+            playerCard.classList.add('playing');
+            isPlaying = true;
+        }
+    });
+
+    function hideKiss() {
+        kissOverlay.classList.remove('show');
+    }
 
     // ===== 工具函数 =====
     function formatTime(s) {
@@ -461,7 +666,7 @@
         durationEl.textContent = formatTime(audio.duration || currentData?.duration || 0);
         btnPlay.disabled = false;
         btnPlay.textContent = '▶️';
-        currentSectionEl.textContent = '✅ 准备就绪，点击播放';
+        currentSectionEl.textContent = '✅ 准备就绪，点击播放吧～';
         inlineLoader.classList.remove('show');
     });
 
@@ -485,10 +690,12 @@
         btnPlay.textContent = '▶️';
         playerCard.classList.remove('playing');
         isPlaying = false;
-        currentSectionEl.textContent = '✅ 播报完毕，宝宝雷下班啦~';
+        currentSectionEl.textContent = '✅ 播报完毕，爱你们哦～';
         if (currentData?.subtitles) {
             updateSubtitles(currentData.duration + 10);
         }
+        // 🎉 弹出飞吻动画
+        showKiss();
     });
 
     audio.addEventListener('waiting', () => { currentSectionEl.textContent = '⏳ 缓冲中...'; });
@@ -512,6 +719,7 @@
         durationEl.textContent = '00:00';
         currentSectionEl.textContent = '🎧 加载中...';
         activeIdx = -1;
+        hideKiss();
 
         const day = archiveData.days[date];
         if (!day || !day.modules[module]) {
@@ -534,27 +742,23 @@
             return;
         }
 
-        // 设置音频源
         audio.src = mod.audio + '?t=' + Date.now();
         audio.load();
 
-        // 更新标题
         const dateCn = day.date_cn + ' · ' + day.weekday_cn;
         mainTitle.textContent = '宝宝雷の' + mod.title;
 
-        // 渲染字幕 + 标签
         renderSubtitles();
         renderTags();
         inlineLoader.classList.remove('show');
 
-        // 等 canplay 或超时
         setTimeout(() => {
             if (!canplayFired && audio.duration && isFinite(audio.duration)) {
                 canplayFired = true; audioReady = true;
                 durationEl.textContent = formatTime(audio.duration);
                 btnPlay.disabled = false;
                 btnPlay.textContent = '▶️';
-                currentSectionEl.textContent = '✅ 准备就绪，点击播放';
+                currentSectionEl.textContent = '✅ 准备就绪，点击播放吧～';
                 inlineLoader.classList.remove('show');
             }
         }, 3000);
@@ -567,7 +771,7 @@
             return;
         }
         const names = {
-            finance:'财经', politics:'国际政治', ai:'AI', livelihood:'国内民生',
+            finance:'财经', politics:'国际政治', livelihood:'国内民生',
             tech:'硬科技产业', energy:'能源与大宗商品', military:'军事与地缘安全',
             health:'健康与公共卫生', disaster:'突发灾害与公共安全',
             models:'大模型军备竞赛', waic:'WAIC倒计时', video:'AI视频赛道',
@@ -643,7 +847,7 @@
     function updateSectionDisplay(time) {
         if (!currentData || !currentData.sections) return;
         const key = getCurrentSection(time);
-        if (!key) { currentSectionEl.textContent = '🎧 今日播报'; return; }
+        if (!key) { currentSectionEl.textContent = '🎀 今日播报'; return; }
         const sec = currentData.sections[key];
         currentSectionEl.textContent = (sec.emoji||'') + ' ' + sec.name;
     }
@@ -658,7 +862,6 @@
             return `<option value="${d}">${day.date_cn} ${icons}</option>`;
         }).join('');
 
-        // 默认选今天或最新
         const today = '2026-07-07';
         if (archiveData.days[today]) currentDate = today;
         else currentDate = days[days.length - 1] || today;
@@ -680,10 +883,8 @@
         dateSelect.value = date;
         updateDateNavButtons();
 
-        // 检查当前模块是否在该日期可用
         const day = archiveData.days[date];
         if (day && !day.modules[currentModule]) {
-            // 自动切换到可用的模块
             currentModule = Object.keys(day.modules)[0] || 'news';
             document.querySelectorAll('.module-tab').forEach(t => {
                 t.classList.toggle('active', t.dataset.module === currentModule);
@@ -719,8 +920,6 @@
     });
 
     // ===== 分类标签 =====
-    const tagsArea = document.getElementById('tagsArea');
-
     function renderTags() {
         if (!currentData || !currentData.sections) {
             tagsArea.innerHTML = '';
@@ -732,9 +931,7 @@
                 <span class="tag-text">${sec.name}</span>
             </button>`
         ).join('');
-        
-        // 高亮当前播放板块
-        updateTagHighlight(currentAudioSrc ? (audio.currentTime || 0) : 0);
+        updateTagHighlight(audio.currentTime || 0);
     }
 
     function updateTagHighlight(time) {
@@ -750,13 +947,11 @@
         const key = tag.dataset.sec;
         const sec = currentData.sections[key];
         if (!sec) return;
-        // seek to section start
         audio.currentTime = sec.start;
         activeIdx = -1;
         updateSubtitles(sec.start);
         updateSectionDisplay(sec.start);
         updateTagHighlight(sec.start);
-        // auto play
         if (!isPlaying) {
             audio.play().catch(()=>{});
             btnPlay.textContent = '⏸️';
@@ -813,7 +1008,7 @@
         progressFill.style.width = (pct*100)+'%';
         currentTimeEl.textContent = formatTime(t);
         activeIdx = -1;
-        if (audio.duration) { updateSubtitles(t); updateSectionDisplay(t); }
+        if (audio.duration) { updateSubtitles(t); updateSectionDisplay(t); updateTagHighlight(t); }
     }
     progressBar.addEventListener('pointerdown', e => {
         e.preventDefault(); isDragging = true;
@@ -845,29 +1040,25 @@
         if (t === undefined) return;
         if (!audio.duration && currentData.duration) audio.duration = currentData.duration;
         audio.currentTime = t; activeIdx = -1;
-        updateSectionDisplay(t); updateSubtitles(t);
+        updateSectionDisplay(t); updateSubtitles(t); updateTagHighlight(t);
         if (!isPlaying) {
             audio.play().catch(()=>{});
             btnPlay.textContent = '⏸️'; playerCard.classList.add('playing');
             isPlaying = true;
         }
-        line.style.transform = 'scale(0.95)';
-        setTimeout(() => { line.style.transform = ''; }, 150);
     });
 
     // ===== 初始化 =====
     (async function init() {
-        // 模拟加载动画
-        const steps = [
-            { ms:0, pct:0 }, { ms:200, pct:15 }, { ms:500, pct:35 },
-            { ms:800, pct:60 }, { ms:1200, pct:80 }, { ms:1500, pct:95 },
-        ];
+        const steps = [0, 15, 35, 60, 80, 95];
         const start = Date.now();
         const timer = setInterval(() => {
             const elapsed = Date.now() - start;
-            let s = steps[0];
-            for (const st of steps) { if (elapsed >= st.ms) s = st; }
-            loadingProgressFill.style.width = s.pct + '%';
+            let pct = steps[0];
+            for (let i = 0; i < steps.length; i++) {
+                if (elapsed >= i * 300) pct = steps[i];
+            }
+            loadingProgressFill.style.width = pct + '%';
             if (elapsed >= 1800) clearInterval(timer);
         }, 100);
 
@@ -880,7 +1071,6 @@
 
         buildDateNav();
 
-        // 确定默认模块
         const day = archiveData.days[currentDate];
         if (day && !day.modules[currentModule]) {
             currentModule = Object.keys(day.modules)[0] || 'news';
