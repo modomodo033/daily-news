@@ -190,38 +190,57 @@
         /* ===== 字幕区域 ===== */
         .subtitle-box {
             width: 100%;
-            height: 96px;
-            overflow: hidden;
+            height: 260px;
+            overflow-y: auto;
+            overflow-x: hidden;
             border-radius: 16px;
             background: linear-gradient(180deg, rgba(74,144,217,0.06) 0%, rgba(255,217,61,0.08) 100%);
             border: 1.5px solid rgba(74,144,217,0.12);
             margin: 8px 0 10px;
-            padding: 4px 0;
+            padding: 6px 0;
             position: relative;
+            scroll-behavior: auto;
         }
 
+        /* 自定义滚动条 */
+        .subtitle-box::-webkit-scrollbar {
+            width: 5px;
+        }
+        .subtitle-box::-webkit-scrollbar-track {
+            background: transparent;
+            border-radius: 10px;
+        }
+        .subtitle-box::-webkit-scrollbar-thumb {
+            background: rgba(74,144,217,0.25);
+            border-radius: 10px;
+        }
+        .subtitle-box::-webkit-scrollbar-thumb:hover {
+            background: rgba(74,144,217,0.45);
+        }
+
+        /* 滚动条出现时右侧留一点 padding */
         .subtitle-inner {
             display: flex;
             flex-direction: column;
-            transition: transform 0.35s cubic-bezier(0.4,0,0.2,1);
-            will-change: transform;
+            padding-right: 2px;
         }
 
         .sub-line {
-            min-height: 32px;
+            min-height: 34px;
             display: flex;
             align-items: center;
             justify-content: center;
-            padding: 4px 16px;
-            font-size: 15px;
+            padding: 5px 20px;
+            font-size: 14px;
             font-weight: 500;
             color: #7A8FA5;
-            line-height: 1.5;
+            line-height: 1.6;
             text-align: center;
             transition: all 0.35s ease;
             opacity: 0.45;
             transform: scale(0.92);
-            white-space: nowrap;
+            white-space: normal;
+            word-break: break-all;
         }
 
         .sub-line.active {
@@ -468,9 +487,9 @@
             .pet-hero { width: 100px; height: 100px; }
             .pet-hero img { width: 100px; height: 100px; }
             .title { font-size: 19px; }
-            .subtitle-box { height: 84px; }
-            .sub-line { font-size: 14px; }
-            .sub-line.active { font-size: 15px; }
+            .subtitle-box { height: 200px; }
+            .sub-line { font-size: 13px; }
+            .sub-line.active { font-size: 14px; }
             .tags-grid { gap: 5px; }
             .tag { padding: 7px 3px; border-radius: 12px; }
             .loading-progress-bar { width: 160px; }
@@ -820,6 +839,10 @@
         quickIntro();
 
         // ===== 字幕切换 =====
+        let userScrolling = false;
+        let userScrollTimer = null;
+        let programmaticScroll = false;
+
         function renderSubtitles() {
             subtitleInner.innerHTML = SUBTITLES.map((s, i) => {
                 if (s.section) {
@@ -833,6 +856,34 @@
                 return `<div class="sub-line" data-idx="${i}">${s.text}</div>`;
             }).join('');
             activeIdx = -1;
+        }
+
+        // 检测用户手动滚动：暂停自动滚动 3 秒
+        subtitleBox.addEventListener('scroll', () => {
+            if (programmaticScroll) return;  // 程序触发的滚动不算
+            userScrolling = true;
+            if (userScrollTimer) clearTimeout(userScrollTimer);
+            userScrollTimer = setTimeout(() => {
+                userScrolling = false;
+            }, 3000);
+        }, { passive: true });
+
+        function autoScrollToLine(activeEl) {
+            if (!activeEl) return;
+            const boxH = subtitleBox.clientHeight;
+            const elTop = activeEl.offsetTop;
+            const elH = activeEl.offsetHeight;
+            const targetScroll = elTop - boxH / 2 + elH / 2;
+            // 如果目标行已经在可视区内（±30px 容差），不做大幅滚动
+            const currentScroll = subtitleBox.scrollTop;
+            const visibleTop = currentScroll;
+            const visibleBottom = currentScroll + boxH;
+            const elCenter = elTop + elH / 2;
+            if (elCenter > visibleTop + 40 && elCenter < visibleBottom - 40) return;
+
+            programmaticScroll = true;
+            subtitleBox.scrollTo({ top: Math.max(0, targetScroll), behavior: 'smooth' });
+            setTimeout(() => { programmaticScroll = false; }, 400);
         }
 
         function updateSubtitles(time) {
@@ -866,15 +917,9 @@
                 }
             });
 
-            if (target >= 0) {
+            if (target >= 0 && !userScrolling) {
                 const activeEl = subtitleInner.querySelector(`[data-idx="${target}"]`);
-                if (activeEl) {
-                    const boxH = subtitleBox.clientHeight;
-                    const elTop = activeEl.offsetTop;
-                    const elH = activeEl.offsetHeight;
-                    const scrollTo = Math.max(0, elTop - boxH / 2 + elH / 2);
-                    subtitleInner.style.transform = `translateY(-${scrollTo}px)`;
-                }
+                autoScrollToLine(activeEl);
             }
         }
 
