@@ -483,7 +483,7 @@
             <div class="loading-progress-fill" id="loadingProgressFill"></div>
         </div>
         <div class="loading-progress-text" id="loadingProgressText">0%</div>
-        <button class="loading-retry" id="btnRetry" onclick="retryLoad()">🔄 重新加载</button>
+        <button class="loading-retry" id="btnRetry" onclick="location.reload()">🔄 刷新页面</button>
     </div>
 
     <div class="player-card" id="playerCard">
@@ -737,113 +737,61 @@
             });
         }
 
-        // ========== 加载状态（双保险：模拟动画 + 原生事件） ==========
-        let loadDone = false, loaderInterval = null;
-        let canUseNative = false;
+        // ===== 简洁可靠的加载流程 =====
+        // 移动端浏览器忽略 preload="auto"，音频只在点击播放时才真正下载。
+        // 所以不用等 canplay，快速动画 → 亮播放按钮 → 点击即播。
 
-        function setLoadUI(text, pct) {
-            loadingStatus.textContent = text;
-            loadingProgressFill.style.width = pct + '%';
-            loadingProgressText.textContent = Math.round(pct) + '%';
-        }
+        let loadDone = false;
 
-        function finishLoading() {
-            if (loadDone) return;
-            loadDone = true;
-            clearInterval(loaderInterval);
-            setLoadUI('加载完成，准备收听！', 100);
-            loadingPaw.classList.add('done');
-            setTimeout(() => {
-                loadingOverlay.classList.add('hidden');
-                btnPlay.disabled = false;
-                btnPlay.textContent = '▶️';
-                audioLoadStatus.textContent = '✅ 准备就绪，点击播放即可收听';
-                audioLoadStatus.className = 'audio-load-status ready';
-                audioLoadStatus.style.display = 'flex';
-                setTimeout(() => { audioLoadStatus.style.display = 'none'; }, 3000);
-            }, 500);
-        }
-
-        // 方案A：模拟进度条（通用可靠，不依赖浏览器事件）
-        function startSimProgress() {
+        // 页面打开后快速跑完进度条（2秒），然后立即启用播放按钮
+        function quickIntro() {
             const steps = [
-                { at:0,   pct:0,   text:'正在准备宝宝雷的播报...' },
-                { at:400,  pct:5,   text:'正在连接服务器...' },
-                { at:900,  pct:15,  text:'正在获取最新播报数据...' },
-                { at:1500, pct:30,  text:'正在加载音频内容...' },
-                { at:2100, pct:50,  text:'宝宝雷正在准备中...' },
-                { at:2800, pct:68,  text:'正在加载字幕和标签...' },
-                { at:3500, pct:82,  text:'马上就好，再等一下~' },
-                { at:4200, pct:90,  text:'正在加载音频内容...' },
+                { ms:0,   pct:0,   text:'正在准备宝宝雷的播报...' },
+                { ms:250, pct:15,  text:'正在连接服务器...' },
+                { ms:550, pct:35,  text:'正在加载音频内容...' },
+                { ms:900, pct:60,  text:'宝宝雷正在准备中...' },
+                { ms:1300,pct:80,  text:'马上就好，再等一下~' },
+                { ms:1700,pct:95,  text:'正在加载字幕和标签...' },
             ];
-
-            let started = Date.now();
-            loaderInterval = setInterval(() => {
-                if (loadDone) { clearInterval(loaderInterval); return; }
-                // 如果原生事件可用，听原生的
-                if (canUseNative) { clearInterval(loaderInterval); return; }
-                const elapsed = Date.now() - started;
+            const start = Date.now();
+            const timer = setInterval(() => {
+                const elapsed = Date.now() - start;
                 let step = steps[0];
-                for (const s of steps) { if (elapsed >= s.at) step = s; }
-                setLoadUI(step.text, step.pct);
-                // 8秒后还没好就停住，等 canplay
-                if (elapsed > 8000) {
-                    setLoadUI('正在等待服务器响应...', 88);
-                    clearInterval(loaderInterval);
+                for (const s of steps) { if (elapsed >= s.ms) step = s; }
+                loadingStatus.textContent = step.text;
+                loadingProgressFill.style.width = step.pct + '%';
+                loadingProgressText.textContent = Math.round(step.pct) + '%';
+                if (elapsed >= 2000) {
+                    clearInterval(timer);
+                    // 2秒后直接完成，不等 canplay
+                    loadingOverlay.classList.add('hidden');
+                    btnPlay.disabled = false;
+                    btnPlay.textContent = '▶️';
+                    audioLoadStatus.textContent = '✅ 点击播放按钮开始收听';
+                    audioLoadStatus.className = 'audio-load-status ready';
+                    audioLoadStatus.style.display = 'flex';
+                    setTimeout(() => { audioLoadStatus.style.display = 'none'; }, 4000);
+                    loadDone = true;
                 }
-            }, 200);
+            }, 150);
         }
 
-        function retryLoad() {
-            btnRetry.style.display = 'none';
-            loadingOverlay.classList.remove('hidden');
-            audioLoadStatus.style.display = 'flex';
-            audioLoadStatus.textContent = '⏳ 正在重新加载音频...';
-            audioLoadStatus.className = 'audio-load-status';
-            loadDone = false;
-            canUseNative = false;
-            setLoadUI('正在重新连接...', 0);
-            startSimProgress();
-            audio.load();
-        }
-
-        // 方案B：监听原生 progress 事件（精确但非所有浏览器支持）
-        audio.addEventListener('progress', () => {
+        // 兜底：canplay 触发说明浏览器主动预加载了（桌面端），那更好，提前就绪
+        audio.addEventListener('canplay', () => {
             if (loadDone) return;
-            if (!audio.buffered.length) return;
-            const end = audio.buffered.end(audio.buffered.length - 1);
-            const dur = audio.duration;
-            if (!dur || dur <= 0) return;
-            const pct = Math.min(99, Math.floor((end / dur) * 100));
-            canUseNative = true;
-            if (pct >= 15) { // 原生进度一旦超过模拟就切过去
-                setLoadUI('正在加载宝宝雷的播报...', pct);
-            }
+            durationEl.textContent = formatTime(audio.duration || 421);
+            btnPlay.disabled = false;
+            btnPlay.textContent = '▶️';
+            audioLoadStatus.textContent = '✅ 准备就绪，点击即可收听';
+            audioLoadStatus.className = 'audio-load-status ready';
+            audioLoadStatus.style.display = 'flex';
+            setTimeout(() => { audioLoadStatus.style.display = 'none'; }, 4000);
+            loadingOverlay.classList.add('hidden');
+            loadDone = true;
         });
-
-        audio.addEventListener('canplay', () => finishLoading());
-        audio.addEventListener('canplaythrough', () => finishLoading());
 
         audio.addEventListener('loadedmetadata', () => {
             durationEl.textContent = formatTime(audio.duration);
-            if (!loadDone) {
-                // 元数据加载成功说明连接通了
-                setLoadUI('正在加载宝宝雷的播报...', 40);
-                canUseNative = true;
-            }
-        });
-
-        audio.addEventListener('error', () => {
-            clearInterval(loaderInterval);
-            loadDone = true;
-            loadingPaw.classList.remove('done');
-            setLoadUI('加载失败，请检查网络后重试', 0);
-            btnRetry.style.display = 'block';
-            audioLoadStatus.textContent = '⚠️ 音频加载失败，请点击重试按钮';
-            audioLoadStatus.className = 'audio-load-status error';
-            audioLoadStatus.style.display = 'flex';
-            btnPlay.disabled = true;
-            btnPlay.textContent = '⏳';
         });
 
         audio.addEventListener('waiting', () => {
@@ -851,15 +799,20 @@
         });
 
         audio.addEventListener('playing', () => {
-            if (!loadDone) finishLoading();
-            currentSectionEl.textContent = '🎧 今日新闻资讯播报';
             audioLoadStatus.style.display = 'none';
+        });
+
+        audio.addEventListener('ended', () => {
+            btnPlay.textContent = '▶️';
+            playerCard.classList.remove('playing');
+            isPlaying = false;
+            currentSectionEl.textContent = '✅ 播报完毕，宝宝雷下班啦~';
+            updateSubtitles(999);
         });
 
         // ===== 初始化 =====
         renderSubtitles();
-        startSimProgress();
-        audio.load();
+        quickIntro();
 
         // ===== 字幕切换 =====
         function renderSubtitles() {
@@ -943,17 +896,16 @@
 
         // 播放/暂停
         btnPlay.addEventListener('click', () => {
-            if (audio.readyState < 2) return; // 还没加载完
             if (isPlaying) {
                 audio.pause();
                 btnPlay.textContent = '▶️';
                 playerCard.classList.remove('playing');
             } else {
                 audio.play().catch(err => {
-                    console.error('播放失败:', err);
                     audioLoadStatus.style.display = 'flex';
-                    audioLoadStatus.textContent = '⚠️ 播放失败，请重试';
+                    audioLoadStatus.textContent = '⚠️ 播放失败，请稍后重试';
                     audioLoadStatus.className = 'audio-load-status error';
+                    return;
                 });
                 btnPlay.textContent = '⏸️';
                 playerCard.classList.add('playing');
@@ -989,17 +941,17 @@
 
         // 点击宝宝雷照片播放/暂停
         petImage.addEventListener('click', () => {
-            if (audio.readyState >= 2) btnPlay.click();
+            btnPlay.click();
         });
 
         // ===== 标签点击跳转 =====
         document.getElementById('tagsGrid').addEventListener('click', (e) => {
             const tag = e.target.closest('.tag');
             if (!tag) return;
-            if (audio.readyState < 2) return;
             const sectionKey = tag.dataset.section;
             const sec = SECTION_MAP[sectionKey];
-            if (!sec || !audio.duration) return;
+            if (!sec) return;
+            if (!audio.duration) { audio.duration = 421; }
 
             audio.currentTime = sec.start;
             activeIdx = -1;
