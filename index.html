@@ -238,6 +238,30 @@
             padding: 1px 0; min-height: 16px;
         }
 
+        /* ===== 分类标签 ===== */
+        .tags-area {
+            display: flex; flex-wrap: wrap; justify-content: center;
+            gap: 4px; margin-top: 2px;
+        }
+        .tag {
+            display: flex; align-items: center; justify-content: center; gap: 2px;
+            padding: 3px 8px; border-radius: 11px;
+            font-size: 10px; font-weight: 600; cursor: pointer;
+            border: 1.5px solid rgba(74,144,217,0.2);
+            background: linear-gradient(135deg, rgba(74,144,217,0.04), rgba(255,217,61,0.06));
+            color: var(--text-soft);
+            transition: all 0.2s; font-family: inherit; white-space: nowrap;
+        }
+        .tag:hover { background: rgba(74,144,217,0.12); border-color: var(--blue); color: var(--blue-deep); }
+        .tag:active { transform: scale(0.93); }
+        .tag.active-tag {
+            background: linear-gradient(135deg, var(--blue), var(--blue-deep));
+            color: white; border-color: transparent;
+            box-shadow: 0 2px 8px var(--shadow-blue);
+        }
+        .tag-emoji { font-size: 11px; }
+        .tag-text { font-size: 10px; }
+
         .footer {
             margin-top: 2px; font-size: 9px; color: #A0B5CC;
             display: flex; align-items: center; justify-content: center; gap: 3px;
@@ -293,6 +317,9 @@
             .controls { gap: 8px; }
             .date-select { font-size: 12px; padding: 3px 8px; max-width: 140px; }
             .module-tab { padding: 4px 12px; font-size: 11px; }
+            .tag { padding: 2px 6px; border-radius: 9px; }
+            .tag-emoji { font-size: 10px; }
+            .tag-text { font-size: 9px; }
         }
     </style>
 </head>
@@ -349,6 +376,9 @@
             <span id="duration">00:00</span>
         </div>
         <div class="current-section" id="currentSection">🎧 准备收听...</div>
+
+        <!-- 分类标签 -->
+        <div class="tags-area" id="tagsArea"></div>
 
         <!-- 控制 -->
         <div class="controls">
@@ -443,6 +473,7 @@
         currentTimeEl.textContent = formatTime(audio.currentTime);
         updateSectionDisplay(audio.currentTime);
         updateSubtitles(audio.currentTime);
+        updateTagHighlight(audio.currentTime);
     });
 
     audio.addEventListener('ended', () => {
@@ -480,6 +511,7 @@
         const day = archiveData.days[date];
         if (!day || !day.modules[module]) {
             subtitleInner.innerHTML = '<div class="no-content">😴 这一天还没有' + (module==='ai'?'AI要闻':'每日新闻')+'哦~<br>选择其他日期试试</div>';
+            tagsArea.innerHTML = '';
             inlineLoader.classList.remove('show');
             btnPlay.disabled = true;
             return;
@@ -492,6 +524,7 @@
             currentData = await fetchJSON(mod.subtitle_file);
         } catch(e) {
             subtitleInner.innerHTML = '<div class="no-content">⚠️ 数据加载失败，请刷新重试</div>';
+            tagsArea.innerHTML = '';
             inlineLoader.classList.remove('show');
             return;
         }
@@ -504,8 +537,9 @@
         const dateCn = day.date_cn + ' · ' + day.weekday_cn;
         mainTitle.textContent = '宝宝雷の' + mod.title;
 
-        // 渲染字幕
+        // 渲染字幕 + 标签
         renderSubtitles();
+        renderTags();
         inlineLoader.classList.remove('show');
 
         // 等 canplay 或超时
@@ -677,6 +711,53 @@
             t.classList.toggle('active', t.dataset.module === mod);
         });
         await loadContent(currentDate, mod);
+    });
+
+    // ===== 分类标签 =====
+    const tagsArea = document.getElementById('tagsArea');
+
+    function renderTags() {
+        if (!currentData || !currentData.sections) {
+            tagsArea.innerHTML = '';
+            return;
+        }
+        tagsArea.innerHTML = Object.entries(currentData.sections).map(([key, sec]) =>
+            `<button class="tag" data-sec="${key}">
+                <span class="tag-emoji">${sec.emoji||'🔹'}</span>
+                <span class="tag-text">${sec.name}</span>
+            </button>`
+        ).join('');
+        
+        // 高亮当前播放板块
+        updateTagHighlight(currentAudioSrc ? (audio.currentTime || 0) : 0);
+    }
+
+    function updateTagHighlight(time) {
+        const key = getCurrentSection(time);
+        tagsArea.querySelectorAll('.tag').forEach(t => {
+            t.classList.toggle('active-tag', t.dataset.sec === key);
+        });
+    }
+
+    tagsArea.addEventListener('click', e => {
+        const tag = e.target.closest('.tag');
+        if (!tag || !currentData) return;
+        const key = tag.dataset.sec;
+        const sec = currentData.sections[key];
+        if (!sec) return;
+        // seek to section start
+        audio.currentTime = sec.start;
+        activeIdx = -1;
+        updateSubtitles(sec.start);
+        updateSectionDisplay(sec.start);
+        updateTagHighlight(sec.start);
+        // auto play
+        if (!isPlaying) {
+            audio.play().catch(()=>{});
+            btnPlay.textContent = '⏸️';
+            playerCard.classList.add('playing');
+            isPlaying = true;
+        }
     });
 
     // ===== 播放控制 =====
