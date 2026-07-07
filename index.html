@@ -26,14 +26,23 @@
 
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Microsoft YaHei', 'Segoe UI', sans-serif;
-            background: linear-gradient(170deg, #FFFBE6 0%, #E8F2FF 40%, #D6E9FF 70%, #FFFBE6 100%);
-            min-height: 100vh;
+            background: url('https://images.unsplash.com/photo-1506744038136-46273834b4fb?w=1920&q=80') center/cover no-repeat fixed;
+            height: 100vh;
+            height: 100dvh;
             display: flex;
             justify-content: center;
             align-items: center;
-            padding: 16px;
+            padding: 8px;
             position: relative;
-            overflow-x: hidden;
+            overflow: hidden;
+        }
+        body::before {
+            content: '';
+            position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(255,255,255,0.15);
+            backdrop-filter: blur(2px);
+            z-index: 0;
+            pointer-events: none;
         }
 
         .bg-paws {
@@ -126,78 +135,67 @@
         .player-card {
             background: rgba(255,255,255,0.92);
             backdrop-filter: blur(24px);
-            border-radius: 32px;
+            border-radius: 28px;
             box-shadow: 0 8px 40px var(--shadow-blue), 0 4px 16px rgba(0,0,0,0.05);
-            padding: 28px 22px 22px;
+            padding: 14px 16px 10px;
             width: 100%;
             max-width: 430px;
+            max-height: calc(100vh - 16px);
+            max-height: calc(100dvh - 16px);
             text-align: center;
             position: relative;
             z-index: 1;
             border: 2px solid rgba(74,144,217,0.08);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
         }
 
         .date-badge {
             display: inline-flex; align-items: center; gap: 4px;
             background: linear-gradient(135deg, #FFFBEA, #FFF5C2);
             color: #B8860B;
-            padding: 5px 16px; border-radius: 20px;
-            font-size: 13px; font-weight: 600;
-            margin-bottom: 14px;
+            padding: 4px 14px; border-radius: 20px;
+            font-size: 12px; font-weight: 600;
+            margin-bottom: 8px;
             border: 1px solid rgba(255, 217, 61, 0.3);
             box-shadow: 0 2px 8px var(--shadow-yellow);
         }
 
         .title {
-            font-size: 22px; font-weight: 700; color: var(--text);
-            margin-bottom: 4px;
+            font-size: 20px; font-weight: 700; color: var(--text);
+            margin-bottom: 6px;
             display: flex; align-items: center; justify-content: center; gap: 6px;
         }
 
-        .subtitle {
-            font-size: 12px; color: var(--text-soft); margin-bottom: 14px; opacity: 0.8;
-        }
-
         .pet-hero {
-            position: relative; margin: 0 auto 10px;
-            width: 120px; height: 120px;
+            position: relative; margin: 0 auto 6px;
+            width: 80px; height: 80px;
         }
 
         .pet-hero img {
-            width: 120px; height: 120px; border-radius: 50%;
+            width: 80px; height: 80px; border-radius: 50%;
             object-fit: cover;
-            border: 3px solid #FFF;
-            box-shadow: 0 6px 24px var(--shadow-blue), 0 2px 8px rgba(0,0,0,0.08);
+            border: 2.5px solid #FFF;
+            box-shadow: 0 4px 16px var(--shadow-blue), 0 2px 8px rgba(0,0,0,0.08);
             transition: transform 0.3s ease;
             cursor: pointer;
         }
         .pet-hero img:hover { transform: scale(1.04) rotate(3deg); }
 
-        .pet-hero::after {
-            content: '🐾'; position: absolute; bottom: -4px; right: -4px;
-            font-size: 20px; background: var(--white); border-radius: 50%;
-            width: 30px; height: 30px;
-            display: flex; align-items: center; justify-content: center;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.08); border: 2px solid #FFF;
-        }
-
-        .pet-name {
-            font-size: 13px; font-weight: 600; color: var(--blue-deep);
-            margin-bottom: 10px;
-            display: flex; align-items: center; justify-content: center; gap: 4px;
-        }
-
         /* ===== 字幕区域 ===== */
         .subtitle-box {
             width: 100%;
-            height: 260px;
+            flex: 1;
+            min-height: 120px;
+            max-height: 220px;
             overflow-y: auto;
             overflow-x: hidden;
-            border-radius: 16px;
+            border-radius: 14px;
             background: linear-gradient(180deg, rgba(74,144,217,0.06) 0%, rgba(255,217,61,0.08) 100%);
             border: 1.5px solid rgba(74,144,217,0.12);
-            margin: 8px 0 10px;
-            padding: 6px 0;
+            margin: 4px 0 6px;
+            padding: 4px 0;
             position: relative;
             scroll-behavior: auto;
         }
@@ -226,27 +224,35 @@
         }
 
         .sub-line {
-            min-height: 34px;
+            min-height: 28px;
             display: flex;
             align-items: center;
             justify-content: center;
-            padding: 5px 20px;
-            font-size: 14px;
+            padding: 3px 16px;
+            font-size: 13px;
             font-weight: 500;
             color: #7A8FA5;
-            line-height: 1.6;
+            line-height: 1.5;
             text-align: center;
             transition: all 0.35s ease;
             opacity: 0.45;
             transform: scale(0.92);
             white-space: normal;
             word-break: break-all;
+            cursor: pointer;
+            user-select: none;
+            -webkit-tap-highlight-color: transparent;
+        }
+        .sub-line:hover {
+            opacity: 0.7;
+            background: rgba(74,144,217,0.06);
+            border-radius: 10px;
         }
 
         .sub-line.active {
             color: var(--text);
             font-weight: 700;
-            font-size: 17px;
+            font-size: 15px;
             opacity: 1;
             transform: scale(1);
             text-shadow: 0 1px 2px rgba(0,0,0,0.05);
@@ -268,12 +274,12 @@
         }
 
         .sub-section-tag {
-            min-height: 26px;
+            min-height: 22px;
             display: flex;
             align-items: center;
             justify-content: center;
-            padding: 2px 16px;
-            font-size: 12px;
+            padding: 1px 16px;
+            font-size: 11px;
             font-weight: 700;
             color: var(--blue-deep);
             letter-spacing: 1px;
@@ -311,27 +317,27 @@
 
         .time-info {
             display: flex; justify-content: space-between;
-            font-size: 12px; color: #8EA0B5; margin-bottom: 6px;
+            font-size: 11px; color: #8EA0B5; margin-bottom: 2px;
             font-variant-numeric: tabular-nums;
         }
 
         .controls {
             display: flex; align-items: center; justify-content: center;
-            gap: 18px; margin: 4px 0 8px;
+            gap: 14px; margin: 2px 0 4px;
         }
 
         .btn {
-            width: 46px; height: 46px; border-radius: 50%; border: none;
+            width: 40px; height: 40px; border-radius: 50%; border: none;
             cursor: pointer; display: flex; align-items: center; justify-content: center;
-            font-size: 18px; transition: all 0.25s cubic-bezier(0.4,0,0.2,1);
+            font-size: 16px; transition: all 0.25s cubic-bezier(0.4,0,0.2,1);
             outline: none; -webkit-tap-highlight-color: transparent;
         }
 
         .btn-play {
-            width: 64px; height: 64px;
+            width: 52px; height: 52px;
             background: linear-gradient(135deg, var(--blue), var(--blue-deep));
-            color: white; font-size: 26px;
-            box-shadow: 0 6px 20px rgba(74,144,217,0.4), 0 2px 6px rgba(74,144,217,0.2);
+            color: white; font-size: 22px;
+            box-shadow: 0 4px 16px rgba(74,144,217,0.4), 0 2px 6px rgba(74,144,217,0.2);
             transition: all 0.3s ease;
         }
         .btn-play:disabled {
@@ -357,8 +363,8 @@
         .speed-btn {
             background: linear-gradient(135deg, var(--blue-light), var(--blue-soft));
             color: var(--blue-deep); border: none;
-            border-radius: 18px; padding: 7px 18px;
-            font-size: 13px; font-weight: 600; cursor: pointer;
+            border-radius: 14px; padding: 5px 14px;
+            font-size: 12px; font-weight: 600; cursor: pointer;
             transition: all 0.2s;
             box-shadow: 0 2px 8px var(--shadow-blue);
         }
@@ -398,22 +404,22 @@
 
         /* 分类标签 */
         .tags-area {
-            margin-top: 12px; padding-top: 12px;
+            margin-top: 6px; padding-top: 6px;
             border-top: 1.5px dashed rgba(74,144,217,0.15);
         }
         .tags-title {
-            font-size: 11px; color: var(--text-soft); margin-bottom: 8px;
+            font-size: 10px; color: var(--text-soft); margin-bottom: 5px;
             letter-spacing: 1px; opacity: 0.7;
         }
         .tags-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            gap: 6px;
+            gap: 4px;
         }
         .tag {
-            display: flex; align-items: center; justify-content: center; gap: 3px;
-            padding: 8px 4px; border-radius: 14px;
-            font-size: 11px; font-weight: 600; cursor: pointer;
+            display: flex; align-items: center; justify-content: center; gap: 2px;
+            padding: 6px 3px; border-radius: 12px;
+            font-size: 10px; font-weight: 600; cursor: pointer;
             border: none; outline: none;
             transition: all 0.25s cubic-bezier(0.4,0,0.2,1);
             -webkit-tap-highlight-color: transparent;
@@ -436,8 +442,8 @@
         .tag:active { transform: scale(0.93); }
         .tag-yellow:hover { background: linear-gradient(135deg, var(--yellow), var(--yellow-light)); }
         .tag-blue:hover { background: linear-gradient(135deg, var(--blue), var(--blue-light)); color: white; }
-        .tag .tag-emoji { font-size: 14px; }
-        .tag .tag-text { font-size: 11px; }
+        .tag .tag-emoji { font-size: 12px; }
+        .tag .tag-text { font-size: 10px; }
         .tag.active-tag { transform: translateY(-2px) scale(1.03); }
         .tag-yellow.active-tag {
             background: linear-gradient(135deg, #FFD93D, #FFC107);
@@ -450,15 +456,15 @@
         }
 
         .current-section {
-            font-size: 12px; font-weight: 600;
-            color: var(--blue-deep); margin-top: 8px;
-            padding: 4px 0; min-height: 22px;
+            font-size: 11px; font-weight: 600;
+            color: var(--blue-deep); margin-top: 2px;
+            padding: 2px 0; min-height: 18px;
             transition: all 0.3s;
         }
 
         .footer {
-            margin-top: 10px; font-size: 11px; color: #A0B5CC;
-            display: flex; align-items: center; justify-content: center; gap: 4px;
+            margin-top: 4px; font-size: 10px; color: #A0B5CC;
+            display: flex; align-items: center; justify-content: center; gap: 3px;
         }
         .footer .heart { color: #FF6B8A; animation: heartbeat 1.5s ease-in-out infinite; }
 
@@ -483,16 +489,24 @@
         .deco.bottom-right { bottom: 18px; right: 14px; font-size: 16px; }
 
         @media (max-width: 400px) {
-            .player-card { padding: 20px 14px 14px; border-radius: 26px; }
-            .pet-hero { width: 100px; height: 100px; }
-            .pet-hero img { width: 100px; height: 100px; }
-            .title { font-size: 19px; }
-            .subtitle-box { height: 200px; }
-            .sub-line { font-size: 13px; }
-            .sub-line.active { font-size: 14px; }
-            .tags-grid { gap: 5px; }
-            .tag { padding: 7px 3px; border-radius: 12px; }
+            .player-card { padding: 12px 12px 8px; border-radius: 22px; }
+            .pet-hero { width: 64px; height: 64px; }
+            .pet-hero img { width: 64px; height: 64px; }
+            .title { font-size: 17px; }
+            .subtitle-box { min-height: 100px; max-height: 180px; }
+            .sub-line { font-size: 12px; min-height: 24px; padding: 2px 12px; }
+            .sub-line.active { font-size: 13px; }
+            .tags-grid { gap: 3px; }
+            .tag { padding: 5px 2px; border-radius: 10px; font-size: 9px; }
+            .tag .tag-emoji { font-size: 11px; }
+            .tag .tag-text { font-size: 9px; }
+            .btn { width: 34px; height: 34px; font-size: 14px; }
+            .btn-play { width: 44px; height: 44px; font-size: 20px; }
+            .speed-btn { padding: 4px 10px; font-size: 11px; }
+            .controls { gap: 10px; margin: 1px 0 2px; }
             .loading-progress-bar { width: 160px; }
+            .deco { display: none; }
+            .footer { font-size: 9px; margin-top: 2px; }
         }
     </style>
 </head>
@@ -519,12 +533,10 @@
         <h1 class="title">
             <span>🐶</span>宝宝雷の新闻电台<span>🎙️</span>
         </h1>
-        <p class="subtitle">🐾 萌宠播报 + 滚动字幕，戳标签直达 🐾</p>
 
         <div class="pet-hero">
             <img src="baobaolei.jpg" alt="宝宝雷" id="petImage">
         </div>
-        <div class="pet-name">🦴 今天宝宝雷为你播报 🦴</div>
 
         <!-- 音频加载状态 -->
         <div class="audio-load-status" id="audioLoadStatus">
@@ -1060,6 +1072,35 @@
 
             tag.style.transform = 'scale(0.88)';
             setTimeout(() => { tag.style.transform = ''; }, 150);
+        });
+
+        // ===== 字幕行点击跳转 =====
+        subtitleInner.addEventListener('click', (e) => {
+            const line = e.target.closest('.sub-line');
+            if (!line) return;
+            const idx = parseInt(line.dataset.idx);
+            if (isNaN(idx) || !SUBTITLES[idx]) return;
+            const targetTime = SUBTITLES[idx].time;
+            if (targetTime === undefined) return;
+
+            // 如果没有duration（音频未加载），设置一个默认值
+            if (!audio.duration) { audio.duration = 421; }
+
+            audio.currentTime = targetTime;
+            activeIdx = -1;
+            updateSectionDisplay(targetTime);
+            updateSubtitles(targetTime);
+
+            if (!isPlaying) {
+                audio.play().catch(() => {});
+                btnPlay.textContent = '⏸️';
+                playerCard.classList.add('playing');
+                isPlaying = true;
+            }
+
+            // 点击反馈动画
+            line.style.transform = 'scale(0.95)';
+            setTimeout(() => { line.style.transform = ''; }, 150);
         });
     </script>
 </body>
