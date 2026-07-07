@@ -1,0 +1,21 @@
+{
+  "updated": "2026-07-07T16:30:00+08:00",
+  "days": {
+    "2026-07-07": {
+      "date_cn": "2026年7月7日",
+      "weekday_cn": "星期二",
+      "modules": {
+        "news": {
+          "audio": "news_2026-07-07.mp3",
+          "title": "每日新闻",
+          "subtitle_file": "data/2026-07-07/news.json"
+        },
+        "ai": {
+          "audio": "ai_2026-07-07.mp3",
+          "title": "AI要闻",
+          "subtitle_file": "data/2026-07-07/ai.json"
+        }
+      }
+    }
+  }
+}

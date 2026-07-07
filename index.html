@@ -6,7 +6,7 @@
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>宝宝雷の新闻电台 · 2026年7月7日</title>
+    <title>宝宝雷の新闻电台</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
 
@@ -24,34 +24,23 @@
             --card-bg: #FFFFFF;
             --shadow-yellow: rgba(255, 217, 61, 0.3);
             --shadow-blue: rgba(74, 144, 217, 0.2);
-            --red: #FF6B6B;
         }
 
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Microsoft YaHei', 'Segoe UI', sans-serif;
             background: url('https://images.unsplash.com/photo-1506744038136-46273834b4fb?w=1920&q=80') center/cover no-repeat fixed;
-            height: 100vh;
-            height: 100dvh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 8px;
-            position: relative;
-            overflow: hidden;
+            height: 100vh; height: 100dvh;
+            display: flex; justify-content: center; align-items: center;
+            padding: 8px; position: relative; overflow: hidden;
         }
         body::before {
-            content: '';
-            position: fixed; top: 0; left: 0; right: 0; bottom: 0;
-            background: rgba(255,255,255,0.15);
-            backdrop-filter: blur(2px);
-            z-index: 0;
-            pointer-events: none;
+            content: ''; position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(255,255,255,0.15); backdrop-filter: blur(2px);
+            z-index: 0; pointer-events: none;
         }
-
         .bg-paws {
             position: fixed; top: 0; left: 0; right: 0; bottom: 0;
-            pointer-events: none; z-index: 0;
-            opacity: 0.06;
+            pointer-events: none; z-index: 0; opacity: 0.05;
             background-image:
                 url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100'%3E%3Ctext x='10' y='70' font-size='35' fill='%234A90D9'%3E🐾%3C/text%3E%3C/svg%3E"),
                 url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100'%3E%3Ctext x='50' y='40' font-size='20' fill='%23FFD93D'%3E⭐%3C/text%3E%3C/svg%3E");
@@ -59,1052 +48,764 @@
             background-position: 0 0, 50px 50px;
         }
 
-        /* ========== 加载覆盖层 ========== */
-        .loading-overlay {
-            position: fixed; top: 0; left: 0; right: 0; bottom: 0;
-            background: rgba(255, 251, 230, 0.95);
-            backdrop-filter: blur(8px);
-            display: flex; flex-direction: column;
-            align-items: center; justify-content: center;
-            z-index: 100;
-            transition: opacity 0.5s ease, visibility 0.5s ease;
-        }
-        .loading-overlay.hidden {
-            opacity: 0; visibility: hidden; pointer-events: none;
-        }
-
-        .loading-paw {
-            width: 70px; height: 70px;
-            display: flex; align-items: center; justify-content: center;
-            animation: paw-spin 1.5s ease-in-out infinite;
-        }
-        @keyframes paw-spin {
-            0%   { transform: rotate(0deg) scale(1); }
-            25%  { transform: rotate(15deg) scale(1.15); }
-            50%  { transform: rotate(0deg) scale(1); }
-            75%  { transform: rotate(-15deg) scale(1.15); }
-            100% { transform: rotate(0deg) scale(1); }
-        }
-        .loading-paw.done {
-            animation: paw-bounce 0.5s ease-out;
-        }
-        @keyframes paw-bounce {
-            0% { transform: scale(0.5); }
-            50% { transform: scale(1.3); }
-            100% { transform: scale(1); }
-        }
-
-        .loading-status {
-            margin-top: 16px;
-            font-size: 16px; font-weight: 700;
-            color: var(--text);
-            text-align: center;
-            transition: all 0.3s;
-        }
-
-        .loading-progress-bar {
-            width: 200px; height: 8px;
-            background: #E8E0C8;
-            border-radius: 10px;
-            margin-top: 14px;
-            overflow: hidden;
-            box-shadow: inset 0 1px 3px rgba(0,0,0,0.1);
-        }
-        .loading-progress-fill {
-            height: 100%; width: 0%;
-            background: linear-gradient(90deg, var(--yellow), var(--blue));
-            border-radius: 10px;
-            transition: width 0.3s ease;
-        }
-        .loading-progress-text {
-            font-size: 13px; color: var(--text-soft); margin-top: 6px;
-            font-weight: 600;
-        }
-
-        .loading-retry {
-            display: none;
-            margin-top: 16px;
-            padding: 10px 28px;
-            background: linear-gradient(135deg, var(--blue), var(--blue-deep));
-            color: white; border: none; border-radius: 22px;
-            font-size: 15px; font-weight: 600; cursor: pointer;
-            box-shadow: 0 4px 16px rgba(74,144,217,0.3);
-            transition: transform 0.2s;
-        }
-        .loading-retry:hover { transform: scale(1.05); }
-        .loading-retry:active { transform: scale(0.95); }
-
-        /* ========== 播放卡片 ========== */
+        /* ===== 主卡片 ===== */
         .player-card {
             background: rgba(255,255,255,0.92);
             backdrop-filter: blur(24px);
             border-radius: 28px;
             box-shadow: 0 8px 40px var(--shadow-blue), 0 4px 16px rgba(0,0,0,0.05);
-            padding: 14px 16px 10px;
-            width: 100%;
-            max-width: 430px;
-            max-height: calc(100vh - 16px);
-            max-height: calc(100dvh - 16px);
-            text-align: center;
-            position: relative;
-            z-index: 1;
+            padding: 12px 16px 10px;
+            width: 100%; max-width: 430px;
+            max-height: calc(100vh - 16px); max-height: calc(100dvh - 16px);
+            text-align: center; position: relative; z-index: 1;
             border: 2px solid rgba(74,144,217,0.08);
-            display: flex;
-            flex-direction: column;
-            overflow: hidden;
+            display: flex; flex-direction: column; overflow: hidden;
         }
 
-        .date-badge {
-            display: inline-flex; align-items: center; gap: 4px;
-            background: linear-gradient(135deg, #FFFBEA, #FFF5C2);
-            color: #B8860B;
-            padding: 4px 14px; border-radius: 20px;
-            font-size: 12px; font-weight: 600;
-            margin-bottom: 8px;
-            border: 1px solid rgba(255, 217, 61, 0.3);
-            box-shadow: 0 2px 8px var(--shadow-yellow);
+        /* ===== 日期导航 ===== */
+        .date-nav {
+            display: flex; align-items: center; justify-content: center;
+            gap: 6px; margin-bottom: 6px;
         }
+        .date-nav-btn {
+            width: 28px; height: 28px; border-radius: 50%; border: none;
+            background: var(--blue-light); color: var(--blue-deep);
+            font-size: 12px; cursor: pointer; display: flex; align-items: center; justify-content: center;
+            transition: all 0.2s; flex-shrink: 0;
+        }
+        .date-nav-btn:hover { background: var(--blue); color: white; }
+        .date-nav-btn:active { transform: scale(0.9); }
+        .date-nav-btn:disabled { opacity: 0.3; cursor: default; pointer-events: none; }
 
-        .title {
-            font-size: 20px; font-weight: 700; color: var(--text);
+        .date-select {
+            padding: 4px 10px; border-radius: 16px;
+            border: 1.5px solid rgba(74,144,217,0.2);
+            background: linear-gradient(135deg, var(--blue-light), var(--white));
+            font-size: 13px; font-weight: 600; color: var(--blue-deep);
+            font-family: inherit; cursor: pointer; outline: none;
+            -webkit-appearance: none; appearance: none;
+            text-align: center; max-width: 160px;
+        }
+        .date-select option { text-align: center; }
+
+        /* ===== 模块标签 ===== */
+        .module-tabs {
+            display: flex; gap: 6px; justify-content: center;
             margin-bottom: 6px;
-            display: flex; align-items: center; justify-content: center; gap: 6px;
+        }
+        .module-tab {
+            padding: 5px 16px; border-radius: 16px;
+            font-size: 12px; font-weight: 600; cursor: pointer;
+            border: 1.5px solid transparent;
+            transition: all 0.25s; font-family: inherit;
+            background: rgba(74,144,217,0.06); color: var(--text-soft);
+        }
+        .module-tab:hover { background: rgba(74,144,217,0.12); }
+        .module-tab.active {
+            background: linear-gradient(135deg, var(--blue), var(--blue-deep));
+            color: white; border-color: transparent;
+            box-shadow: 0 3px 12px var(--shadow-blue);
         }
 
+        /* ===== 宠物头像 + 标题 ===== */
+        .header-row {
+            display: flex; align-items: center; justify-content: center;
+            gap: 10px; margin-bottom: 4px;
+        }
         .pet-hero {
-            position: relative; margin: 0 auto 6px;
-            width: 80px; height: 80px;
+            width: 44px; height: 44px; flex-shrink: 0;
         }
-
         .pet-hero img {
-            width: 80px; height: 80px; border-radius: 50%;
-            object-fit: cover;
-            border: 2.5px solid #FFF;
-            box-shadow: 0 4px 16px var(--shadow-blue), 0 2px 8px rgba(0,0,0,0.08);
-            transition: transform 0.3s ease;
+            width: 44px; height: 44px; border-radius: 50%;
+            object-fit: cover; border: 2px solid #FFF;
+            box-shadow: 0 3px 12px var(--shadow-blue);
             cursor: pointer;
         }
-        .pet-hero img:hover { transform: scale(1.04) rotate(3deg); }
+        .title {
+            font-size: 17px; font-weight: 700; color: var(--text);
+        }
 
-        /* ===== 字幕区域 ===== */
+        /* ===== 加载指示 ===== */
+        .inline-loader {
+            display: none; align-items: center; justify-content: center; gap: 6px;
+            padding: 6px; font-size: 12px; color: var(--text-soft);
+            animation: pulse-text 1.5s ease-in-out infinite;
+        }
+        .inline-loader.show { display: flex; }
+        @keyframes pulse-text { 0%,100%{opacity:1} 50%{opacity:0.5} }
+
+        /* ===== 字幕 ===== */
         .subtitle-box {
-            width: 100%;
-            flex: 1;
-            min-height: 120px;
-            max-height: 220px;
-            overflow-y: auto;
-            overflow-x: hidden;
+            width: 100%; flex: 1; min-height: 100px; max-height: 220px;
+            overflow-y: auto; overflow-x: hidden;
             border-radius: 14px;
             background: linear-gradient(180deg, rgba(74,144,217,0.06) 0%, rgba(255,217,61,0.08) 100%);
             border: 1.5px solid rgba(74,144,217,0.12);
-            margin: 4px 0 6px;
-            padding: 4px 0;
-            position: relative;
-            scroll-behavior: auto;
+            margin: 4px 0 4px; padding: 4px 0; position: relative;
         }
-
-        /* 自定义滚动条 */
-        .subtitle-box::-webkit-scrollbar {
-            width: 5px;
-        }
-        .subtitle-box::-webkit-scrollbar-track {
-            background: transparent;
-            border-radius: 10px;
-        }
-        .subtitle-box::-webkit-scrollbar-thumb {
-            background: rgba(74,144,217,0.25);
-            border-radius: 10px;
-        }
-        .subtitle-box::-webkit-scrollbar-thumb:hover {
-            background: rgba(74,144,217,0.45);
-        }
-
-        /* 滚动条出现时右侧留一点 padding */
-        .subtitle-inner {
-            display: flex;
-            flex-direction: column;
-            padding-right: 2px;
-        }
+        .subtitle-box::-webkit-scrollbar { width: 5px; }
+        .subtitle-box::-webkit-scrollbar-track { background: transparent; border-radius: 10px; }
+        .subtitle-box::-webkit-scrollbar-thumb { background: rgba(74,144,217,0.25); border-radius: 10px; }
+        .subtitle-inner { display: flex; flex-direction: column; padding-right: 2px; }
 
         .sub-line {
-            min-height: 28px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 3px 16px;
-            font-size: 13px;
-            font-weight: 500;
-            color: #7A8FA5;
-            line-height: 1.5;
-            text-align: center;
-            transition: all 0.35s ease;
-            opacity: 0.45;
-            transform: scale(0.92);
-            white-space: normal;
-            word-break: break-all;
-            cursor: pointer;
-            user-select: none;
-            -webkit-tap-highlight-color: transparent;
+            min-height: 26px; display: flex; align-items: center; justify-content: center;
+            padding: 3px 16px; font-size: 12px; font-weight: 500;
+            color: #7A8FA5; line-height: 1.5; text-align: center;
+            transition: all 0.35s ease; opacity: 0.45; transform: scale(0.92);
+            white-space: normal; word-break: break-all;
+            cursor: pointer; user-select: none;
         }
-        .sub-line:hover {
-            opacity: 0.7;
-            background: rgba(74,144,217,0.06);
-            border-radius: 10px;
-        }
-
+        .sub-line:hover { opacity: 0.7; background: rgba(74,144,217,0.06); border-radius: 10px; }
         .sub-line.active {
-            color: var(--text);
-            font-weight: 700;
-            font-size: 15px;
-            opacity: 1;
-            transform: scale(1);
-            text-shadow: 0 1px 2px rgba(0,0,0,0.05);
+            color: var(--text); font-weight: 700; font-size: 14px;
+            opacity: 1; transform: scale(1);
         }
-
-        .sub-line.active::before {
-            content: '🐾 ';
-            font-size: 12px;
-            vertical-align: middle;
-        }
-
-        .sub-line.prev {
-            opacity: 0.55;
-            transform: scale(0.95);
-        }
-
-        .sub-line.future {
-            opacity: 0.3;
-        }
-
+        .sub-line.active::before { content: '🐾 '; font-size: 10px; }
+        .sub-line.prev { opacity: 0.55; transform: scale(0.95); }
+        .sub-line.future { opacity: 0.3; }
         .sub-section-tag {
-            min-height: 22px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 1px 16px;
-            font-size: 11px;
-            font-weight: 700;
-            color: var(--blue-deep);
-            letter-spacing: 1px;
-            transition: all 0.35s ease;
-            opacity: 0;
-            transform: translateY(-4px);
+            min-height: 20px; display: flex; align-items: center; justify-content: center;
+            padding: 1px 16px; font-size: 11px; font-weight: 700;
+            color: var(--blue-deep); letter-spacing: 1px;
+            transition: all 0.35s ease; opacity: 0; transform: translateY(-4px);
         }
-        .sub-section-tag.visible {
-            opacity: 1;
-            transform: translateY(0);
+        .sub-section-tag.visible { opacity: 1; transform: translateY(0); }
+
+        .no-content {
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            height: 100%; color: var(--text-soft); font-size: 14px; gap: 4px;
         }
 
+        /* ===== 进度条 + 控制 ===== */
         .progress-bar {
             width: 100%; height: 5px; background: #EDF2FA;
             border-radius: 10px; margin: 0; cursor: pointer; position: relative; overflow: visible;
-            touch-action: none; /* 禁止浏览器默认滚动，让用户能拖拽进度条 */
+            touch-action: none;
         }
-        .progress-bar::before {
-            content: ''; position: absolute; inset: -10px 0;
-            /* 扩大触摸区域，5px 的实际条上下各扩展 10px 的隐形可点击区域 */
-        }
+        .progress-bar::before { content: ''; position: absolute; inset: -10px 0; }
         .progress-fill {
-            height: 100%;
-            background: linear-gradient(90deg, var(--yellow), #FFC107, var(--blue));
-            border-radius: 10px; width: 0%;
-            transition: width 0.15s linear;
-            position: relative;
+            height: 100%; background: linear-gradient(90deg, var(--yellow), #FFC107, var(--blue));
+            border-radius: 10px; width: 0%; transition: width 0.15s linear; position: relative;
         }
         .progress-fill::after {
-            content: ''; position: absolute; right: -7px; top: -4px;
-            width: 14px; height: 14px; background: #FFF;
-            border: 3px solid var(--blue); border-radius: 50%;
-            box-shadow: 0 2px 8px rgba(74,144,217,0.3);
+            content: ''; position: absolute; right: -6px; top: -3px;
+            width: 12px; height: 12px; background: #FFF;
+            border: 2.5px solid var(--blue); border-radius: 50%;
+            box-shadow: 0 2px 6px rgba(74,144,217,0.3);
         }
 
         .time-info {
             display: flex; justify-content: space-between;
-            font-size: 11px; color: #8EA0B5; margin-bottom: 2px;
+            font-size: 10px; color: #8EA0B5; margin-bottom: 2px;
             font-variant-numeric: tabular-nums;
         }
 
         .controls {
             display: flex; align-items: center; justify-content: center;
-            gap: 14px; margin: 2px 0 4px;
+            gap: 12px; margin: 1px 0 2px;
         }
-
         .btn {
-            width: 40px; height: 40px; border-radius: 50%; border: none;
+            width: 36px; height: 36px; border-radius: 50%; border: none;
             cursor: pointer; display: flex; align-items: center; justify-content: center;
-            font-size: 16px; transition: all 0.25s cubic-bezier(0.4,0,0.2,1);
-            outline: none; -webkit-tap-highlight-color: transparent;
+            font-size: 14px; transition: all 0.25s; outline: none;
         }
-
         .btn-play {
-            width: 52px; height: 52px;
+            width: 48px; height: 48px;
             background: linear-gradient(135deg, var(--blue), var(--blue-deep));
-            color: white; font-size: 22px;
-            box-shadow: 0 4px 16px rgba(74,144,217,0.4), 0 2px 6px rgba(74,144,217,0.2);
-            transition: all 0.3s ease;
+            color: white; font-size: 20px;
+            box-shadow: 0 4px 16px rgba(74,144,217,0.4);
         }
-        .btn-play:disabled {
-            background: #C0CCDA;
-            box-shadow: none;
-            cursor: not-allowed;
-            opacity: 0.6;
-        }
+        .btn-play:disabled { background: #C0CCDA; box-shadow: none; cursor: not-allowed; opacity: 0.6; }
         .btn-play:hover:not(:disabled) { transform: scale(1.06); }
         .btn-play:active:not(:disabled) { transform: scale(0.94); }
-
         .btn-sm {
             background: var(--white); color: var(--blue);
-            border: 2px solid var(--blue-soft); font-size: 16px;
+            border: 2px solid var(--blue-soft); font-size: 14px;
         }
-        .btn-sm:hover {
-            background: linear-gradient(135deg, var(--blue), var(--blue-deep));
-            color: white; border-color: transparent;
-            transform: translateY(-2px); box-shadow: 0 4px 12px var(--shadow-blue);
-        }
-        .btn-sm:active { transform: scale(0.92); }
-
+        .btn-sm:hover { background: var(--blue); color: white; border-color: transparent; }
         .speed-btn {
             background: linear-gradient(135deg, var(--blue-light), var(--blue-soft));
             color: var(--blue-deep); border: none;
-            border-radius: 14px; padding: 5px 14px;
-            font-size: 12px; font-weight: 600; cursor: pointer;
-            transition: all 0.2s;
-            box-shadow: 0 2px 8px var(--shadow-blue);
-        }
-        .speed-btn:hover {
-            background: linear-gradient(135deg, var(--blue), var(--blue-deep));
-            color: white; transform: translateY(-1px);
-        }
-
-        /* ========== 音频加载状态条（卡片内） ========== */
-        .audio-load-status {
-            display: none;
-            align-items: center; justify-content: center; gap: 8px;
-            padding: 8px 14px; margin: 0 0 8px;
-            border-radius: 12px;
-            font-size: 13px; font-weight: 600;
-            background: #FFF9E6;
-            color: #B8860B;
-            border: 1px solid rgba(255, 217, 61, 0.3);
-            animation: pulse-hint 2s ease-in-out infinite;
-        }
-        .audio-load-status.ready {
-            background: #E8F5E9;
-            color: #2E7D32;
-            border-color: rgba(76,175,80,0.3);
-            animation: none;
-        }
-        .audio-load-status.error {
-            background: #FFEBEE;
-            color: #C62828;
-            border-color: rgba(244,67,54,0.3);
-            animation: none;
-        }
-        @keyframes pulse-hint {
-            0%,100% { opacity: 1; }
-            50% { opacity: 0.7; }
-        }
-
-        /* 分类标签 */
-        .tags-area {
-            margin-top: 6px; padding-top: 6px;
-            border-top: 1.5px dashed rgba(74,144,217,0.15);
-        }
-        .tags-title {
-            font-size: 10px; color: var(--text-soft); margin-bottom: 5px;
-            letter-spacing: 1px; opacity: 0.7;
-        }
-        .tags-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 4px;
-        }
-        .tag {
-            display: flex; align-items: center; justify-content: center; gap: 2px;
-            padding: 6px 3px; border-radius: 12px;
-            font-size: 10px; font-weight: 600; cursor: pointer;
-            border: none; outline: none;
-            transition: all 0.25s cubic-bezier(0.4,0,0.2,1);
-            -webkit-tap-highlight-color: transparent;
-            user-select: none;
-            font-family: inherit;
-        }
-        .tag-yellow {
-            background: linear-gradient(135deg, #FFFBEA, #FFF5C2);
-            color: #B8860B;
-            border: 1.5px solid rgba(255, 217, 61, 0.3);
-            box-shadow: 0 2px 6px var(--shadow-yellow);
-        }
-        .tag-blue {
-            background: linear-gradient(135deg, #F0F7FF, #D0E4FF);
-            color: #2E6CB5;
-            border: 1.5px solid rgba(74, 144, 217, 0.2);
+            border-radius: 12px; padding: 4px 12px;
+            font-size: 11px; font-weight: 600; cursor: pointer;
             box-shadow: 0 2px 6px var(--shadow-blue);
-        }
-        .tag:hover { transform: translateY(-2px); box-shadow: 0 4px 14px rgba(0,0,0,0.1); }
-        .tag:active { transform: scale(0.93); }
-        .tag-yellow:hover { background: linear-gradient(135deg, var(--yellow), var(--yellow-light)); }
-        .tag-blue:hover { background: linear-gradient(135deg, var(--blue), var(--blue-light)); color: white; }
-        .tag .tag-emoji { font-size: 12px; }
-        .tag .tag-text { font-size: 10px; }
-        .tag.active-tag { transform: translateY(-2px) scale(1.03); }
-        .tag-yellow.active-tag {
-            background: linear-gradient(135deg, #FFD93D, #FFC107);
-            box-shadow: 0 4px 16px var(--shadow-yellow);
-        }
-        .tag-blue.active-tag {
-            background: linear-gradient(135deg, var(--blue), var(--blue-deep));
-            color: white;
-            box-shadow: 0 4px 16px var(--shadow-blue);
         }
 
         .current-section {
-            font-size: 11px; font-weight: 600;
-            color: var(--blue-deep); margin-top: 2px;
-            padding: 2px 0; min-height: 18px;
-            transition: all 0.3s;
+            font-size: 10px; font-weight: 600;
+            color: var(--blue-deep); margin-top: 1px;
+            padding: 1px 0; min-height: 16px;
         }
 
         .footer {
-            margin-top: 4px; font-size: 10px; color: #A0B5CC;
+            margin-top: 2px; font-size: 9px; color: #A0B5CC;
             display: flex; align-items: center; justify-content: center; gap: 3px;
         }
-        .footer .heart { color: #FF6B8A; animation: heartbeat 1.5s ease-in-out infinite; }
 
-        @keyframes heartbeat {
-            0%,100%{transform:scale(1)} 14%{transform:scale(1.15)} 28%{transform:scale(1)} 42%{transform:scale(1.15)}
-        }
-
-        .playing .pet-hero img {
-            animation: gentle-bounce 2s ease-in-out infinite;
-        }
+        .playing .pet-hero img { animation: gentle-bounce 2s ease-in-out infinite; }
         @keyframes gentle-bounce {
-            0%,100%{transform:translateY(0) scale(1)}
-            50%{transform:translateY(-6px) scale(1.03)}
+            0%,100%{transform:translateY(0) scale(1)} 50%{transform:translateY(-4px) scale(1.03)}
         }
 
-        .deco {
-            position: absolute; pointer-events: none; opacity: 0.12;
+        /* ===== 加载覆盖层（初始） ===== */
+        .loading-overlay {
+            position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(255,251,230,0.95); backdrop-filter: blur(8px);
+            display: flex; flex-direction: column;
+            align-items: center; justify-content: center;
+            z-index: 100; transition: opacity 0.5s ease, visibility 0.5s ease;
         }
-        .deco.top-left { top: 10px; left: 14px; font-size: 18px; }
-        .deco.top-right { top: 12px; right: 12px; font-size: 16px; }
-        .deco.bottom-left { bottom: 14px; left: 12px; font-size: 14px; }
-        .deco.bottom-right { bottom: 18px; right: 14px; font-size: 16px; }
+        .loading-overlay.hidden { opacity: 0; visibility: hidden; pointer-events: none; }
+        .loading-paw {
+            width: 50px; height: 50px;
+            display: flex; align-items: center; justify-content: center;
+            animation: paw-spin 1.5s ease-in-out infinite;
+        }
+        @keyframes paw-spin {
+            0%{transform:rotate(0) scale(1)} 25%{transform:rotate(15deg) scale(1.15)}
+            50%{transform:rotate(0) scale(1)} 75%{transform:rotate(-15deg) scale(1.15)}
+            100%{transform:rotate(0) scale(1)}
+        }
+        .loading-status {
+            margin-top: 12px; font-size: 14px; font-weight: 700;
+            color: var(--text); text-align: center;
+        }
+        .loading-progress-bar {
+            width: 180px; height: 6px; background: #E8E0C8;
+            border-radius: 10px; margin-top: 12px; overflow: hidden;
+        }
+        .loading-progress-fill {
+            height: 100%; width: 0%;
+            background: linear-gradient(90deg, var(--yellow), var(--blue));
+            border-radius: 10px; transition: width 0.3s ease;
+        }
 
         @media (max-width: 400px) {
-            .player-card { padding: 12px 12px 8px; border-radius: 22px; }
-            .pet-hero { width: 64px; height: 64px; }
-            .pet-hero img { width: 64px; height: 64px; }
-            .title { font-size: 17px; }
-            .subtitle-box { min-height: 100px; max-height: 180px; }
-            .sub-line { font-size: 12px; min-height: 24px; padding: 2px 12px; }
-            .sub-line.active { font-size: 13px; }
-            .tags-grid { gap: 3px; }
-            .tag { padding: 5px 2px; border-radius: 10px; font-size: 9px; }
-            .tag .tag-emoji { font-size: 11px; }
-            .tag .tag-text { font-size: 9px; }
-            .btn { width: 34px; height: 34px; font-size: 14px; }
-            .btn-play { width: 44px; height: 44px; font-size: 20px; }
-            .speed-btn { padding: 4px 10px; font-size: 11px; }
-            .controls { gap: 10px; margin: 1px 0 2px; }
-            .loading-progress-bar { width: 160px; }
-            .deco { display: none; }
-            .footer { font-size: 9px; margin-top: 2px; }
+            .player-card { padding: 10px 10px 8px; border-radius: 20px; }
+            .pet-hero, .pet-hero img { width: 36px; height: 36px; }
+            .title { font-size: 15px; }
+            .subtitle-box { min-height: 80px; max-height: 160px; }
+            .sub-line { font-size: 11px; min-height: 22px; padding: 2px 10px; }
+            .sub-line.active { font-size: 12px; }
+            .btn { width: 32px; height: 32px; font-size: 13px; }
+            .btn-play { width: 42px; height: 42px; font-size: 18px; }
+            .controls { gap: 8px; }
+            .date-select { font-size: 12px; padding: 3px 8px; max-width: 140px; }
+            .module-tab { padding: 4px 12px; font-size: 11px; }
         }
     </style>
 </head>
 <body>
     <div class="bg-paws"></div>
 
-    <!-- ========== 加载覆盖层 ========== -->
+    <!-- ===== 初始加载 ===== -->
     <div class="loading-overlay" id="loadingOverlay">
-        <div class="loading-paw" id="loadingPaw">🐾</div>
-        <div class="loading-status" id="loadingStatus">正在连接服务器...</div>
+        <div class="loading-paw">🐾</div>
+        <div class="loading-status" id="loadingStatus">宝宝雷正在准备...</div>
         <div class="loading-progress-bar">
             <div class="loading-progress-fill" id="loadingProgressFill"></div>
         </div>
-        <div class="loading-progress-text" id="loadingProgressText">0%</div>
-        <button class="loading-retry" id="btnRetry" onclick="location.reload()">🔄 刷新页面</button>
     </div>
 
     <div class="player-card" id="playerCard">
-        <div class="deco top-left">🦴</div>
-        <div class="deco top-right">🎾</div>
-
-        <div class="date-badge">📅 2026年7月7日 · 星期二</div>
-
-        <h1 class="title">
-            <span>🐶</span>宝宝雷の新闻电台<span>🎙️</span>
-        </h1>
-
-        <div class="pet-hero">
-            <img src="baobaolei.jpg" alt="宝宝雷" id="petImage">
+        <!-- 日期导航 -->
+        <div class="date-nav">
+            <button class="date-nav-btn" id="btnDatePrev" title="前一天">◀</button>
+            <select class="date-select" id="dateSelect"></select>
+            <button class="date-nav-btn" id="btnDateNext" title="后一天">▶</button>
         </div>
 
-        <!-- 音频加载状态 -->
-        <div class="audio-load-status" id="audioLoadStatus">
-            ⏳ 正在加载音频...
+        <!-- 模块标签 -->
+        <div class="module-tabs" id="moduleTabs">
+            <button class="module-tab active" data-module="news">📰 每日新闻</button>
+            <button class="module-tab" data-module="ai">🤖 AI要闻</button>
         </div>
 
-        <!-- ===== 滚动字幕 ===== -->
+        <!-- 头部：头像 + 标题 -->
+        <div class="header-row">
+            <div class="pet-hero">
+                <img src="baobaolei.jpg" alt="宝宝雷" id="petImage">
+            </div>
+            <h1 class="title" id="mainTitle">宝宝雷の新闻电台</h1>
+        </div>
+
+        <!-- 内联加载 -->
+        <div class="inline-loader" id="inlineLoader">🐾 正在加载...</div>
+
+        <!-- 字幕 -->
         <div class="subtitle-box" id="subtitleBox">
-            <div class="subtitle-inner" id="subtitleInner"></div>
-        </div>
-
-        <div class="progress-bar" id="progressBar">
-            <div class="progress-fill" id="progressFill"></div>
-        </div>
-
-        <div class="time-info">
-            <span id="currentTime">00:00</span>
-            <span id="duration">07:01</span>
-        </div>
-
-        <div class="current-section" id="currentSection">🎧 准备收听...</div>
-
-        <div class="controls">
-            <button class="btn btn-sm" id="btnRewind" title="后退15秒">⏪</button>
-            <button class="btn btn-play" id="btnPlay" disabled>⏳</button>
-            <button class="btn btn-sm" id="btnForward" title="前进15秒">⏩</button>
-        </div>
-
-        <div>
-            <button class="speed-btn" id="btnSpeed">1.0x</button>
-        </div>
-
-        <!-- 分类标签 -->
-        <div class="tags-area">
-            <div class="tags-title">✦ 点一下直达你想听的内容 ✦</div>
-            <div class="tags-grid" id="tagsGrid">
-                <button class="tag tag-yellow" data-section="finance">
-                    <span class="tag-emoji">💰</span><span class="tag-text">财经</span>
-                </button>
-                <button class="tag tag-blue" data-section="politics">
-                    <span class="tag-emoji">🌍</span><span class="tag-text">国际政治</span>
-                </button>
-                <button class="tag tag-yellow" data-section="ai">
-                    <span class="tag-emoji">🤖</span><span class="tag-text">AI</span>
-                </button>
-                <button class="tag tag-blue" data-section="livelihood">
-                    <span class="tag-emoji">🏠</span><span class="tag-text">国内民生</span>
-                </button>
-                <button class="tag tag-yellow" data-section="tech">
-                    <span class="tag-emoji">🔬</span><span class="tag-text">硬科技</span>
-                </button>
-                <button class="tag tag-blue" data-section="energy">
-                    <span class="tag-emoji">⛽</span><span class="tag-text">能源大宗</span>
-                </button>
-                <button class="tag tag-yellow" data-section="military">
-                    <span class="tag-emoji">🎖️</span><span class="tag-text">军事安全</span>
-                </button>
-                <button class="tag tag-blue" data-section="health">
-                    <span class="tag-emoji">🏥</span><span class="tag-text">健康医疗</span>
-                </button>
-                <button class="tag tag-yellow" data-section="disaster">
-                    <span class="tag-emoji">🚨</span><span class="tag-text">灾害安全</span>
-                </button>
+            <div class="subtitle-inner" id="subtitleInner">
+                <div class="no-content">点击上方标签选择播报类型</div>
             </div>
         </div>
 
+        <!-- 进度条 -->
+        <div class="progress-bar" id="progressBar">
+            <div class="progress-fill" id="progressFill"></div>
+        </div>
+        <div class="time-info">
+            <span id="currentTime">00:00</span>
+            <span id="duration">00:00</span>
+        </div>
+        <div class="current-section" id="currentSection">🎧 准备收听...</div>
+
+        <!-- 控制 -->
+        <div class="controls">
+            <button class="btn btn-sm" id="btnRewind">⏪</button>
+            <button class="btn btn-play" id="btnPlay" disabled>▶️</button>
+            <button class="btn btn-sm" id="btnForward">⏩</button>
+        </div>
+        <div><button class="speed-btn" id="btnSpeed">1.0x</button></div>
+
         <div class="footer">
-            <span>Made with</span><span class="heart">❤️</span><span>by WorkBuddy · 每日更新</span>
+            <span>Made with ❤️ by WorkBuddy · 每日更新</span>
         </div>
     </div>
 
-    <audio id="audio" preload="auto">
-        <source src="news_2026-07-07.mp3" type="audio/mpeg">
-    </audio>
+    <audio id="audio" preload="auto"></audio>
 
     <script>
-        // ========== 字幕数据 ==========
-        const SUBTITLES = [
-            {time:0,   text:"汪汪！各位主人好，今天是2026年7月7日"},
-            {time:4,   text:"星期二，小暑节气。宝宝雷为你播报今日新闻~"},
-            {time:10,  text:"", section:"finance"},
-            {time:12,  text:"美股三大指数集体收涨，纳指涨超百分之一"},
-            {time:17,  text:"费城半导体指数大涨超百分之四"},
-            {time:24,  text:"AMD涨超百分之九，特斯拉涨百分之六点六九"},
-            {time:29,  text:"央行落地一万亿元逆回购，净投放两千亿元"},
-            {time:34,  text:"下半年货币政策偏向宽松"},
-            {time:38,  text:"美国六月非农大幅不及预期"},
-            {time:41,  text:"市场押注美联储九月开启降息"},
-            {time:46,  text:"腾讯大幅减持快手，持股降至百分之九点三七"},
-            {time:51,  text:"三星Q2业绩超预期，半导体需求强劲"},
-            {time:55,  text:"A股半年报预告大面积预喜"},
-            {time:59,  text:"六十九家公司中六十二家预喜"},
-            {time:63,  text:"", section:"politics"},
-            {time:67,  text:"北约峰会今天在安卡拉开幕，32国领导人齐聚"},
-            {time:73,  text:"土耳其外长称中国是不可阻挡的超级力量"},
-            {time:77,  text:"特朗普分别致电普京和泽连斯基"},
-            {time:82,  text:"俄方表示愿政治解决冲突"},
-            {time:86,  text:"泽连斯基称战争已具备结束条件"},
-            {time:92,  text:"王毅外长访问丹麦、瑞典、芬兰、挪威四国"},
-            {time:98,  text:"踩着中欧关系关键节点"},
-            {time:102, text:"纳米比亚总统对中国进行国事访问"},
-            {time:108, text:"中非合作持续升温"},
-            {time:113, text:"", section:"ai"},
-            {time:117, text:"GPT-5.6 Sol预览版内测结果曝光"},
-            {time:122, text:"性能更强成本减半，每百万Token仅五美元"},
-            {time:128, text:"美团开源万亿参数大模型 LongCat-2.0"},
-            {time:133, text:"国内首个用五万张国产卡完成训练推理"},
-            {time:139, text:"Anthropic发现Claude内部J空间结构"},
-            {time:145, text:"类似人类大脑全局工作空间，引发AI意识讨论"},
-            {time:150, text:"AI模型本地化加速，2028年前沿模型可笔记本运行"},
-            {time:156, text:"AI制药新突破，百奥几何命中率达百分之十八点七"},
-            {time:163, text:"", section:"livelihood"},
-            {time:174, text:"七月起社保缴费基数全面改革"},
-            {time:178, text:"绩效工资、年终奖、加班费全部纳入"},
-            {time:182, text:"金税四期打通税务与人社数据"},
-            {time:186, text:"超龄劳动者权益保障新规落地"},
-            {time:190, text:"城乡居民基础养老金上调"},
-            {time:194, text:"职工养老金调整方案也在筹备中"},
-            {time:198, text:"广西南宁防汛升至一级应急响应"},
-            {time:202, text:"多座水库出现险情，发布洪水红色预警"},
-            {time:208, text:"多所高校严防AI穿戴设备作弊"},
-            {time:214, text:"", section:"tech"},
-            {time:219, text:"全球半导体七月集体涨价"},
-            {time:222, text:"近二十家厂商集中提价，涨幅百分之五到二十五"},
-            {time:228, text:"AI抢占高端晶圆产能蔓延至全产业链"},
-            {time:233, text:"天问二号探测器成功抵达目标小行星"},
-            {time:238, text:"中国\"人造太阳\"计划2030年前实现核聚变发电"},
-            {time:243, text:"SpaceX星舰V3首飞在即"},
-            {time:247, text:"马斯克规划2026年底发射5艘无人星舰前往火星"},
-            {time:253, text:"千帆极轨十五组卫星成功发射"},
-            {time:258, text:"推进低轨卫星互联网组网建设"},
-            {time:263, text:"", section:"energy"},
-            {time:267, text:"黄金失守4130美元，月跌幅超百分之四"},
-            {time:272, text:"OPEC+增产叠加需求疲软，油价持续承压"},
-            {time:276, text:"WTI原油报68.55美元每桶"},
-            {time:281, text:"美国战略石油储备降至1983年以来最低"},
-            {time:286, text:"咖啡期货暴涨，阿拉比卡单日涨超百分之十六"},
-            {time:292, text:"极端天气冲击全球咖啡主产区"},
-            {time:297, text:"白银和铂金反弹，市场避险情绪波动"},
-            {time:302, text:"", section:"military"},
-            {time:307, text:"北约国防工业论坛同日召开"},
-            {time:311, text:"聚焦跨大西洋国防生产与投资创新"},
-            {time:316, text:"BlueHammer漏洞使Defender沦为勒索软件跳板"},
-            {time:321, text:"CVSS评分7.8，攻击者可利用提权"},
-            {time:326, text:"普京同意政治解决俄乌冲突"},
-            {time:330, text:"冲突推动反无人机雷达小型化需求"},
-            {time:336, text:"特朗普称伊朗极度渴望达成协议"},
-            {time:340, text:"美伊核谈判可能进入新阶段"},
-            {time:347, text:"", section:"health"},
-            {time:352, text:"557个药品通过2026年国家医保目录初审"},
-            {time:357, text:"形式审查通过率达百分之九十二"},
-            {time:362, text:"医保支付DRG DIP改革全面推开"},
-            {time:366, text:"商保创新药目录首次与医保目录同步调整"},
-            {time:372, text:"多层次医疗保障体系建设迈出实质性一步"},
-            {time:377, text:"", section:"disaster"},
-            {time:382, text:"湖北黄石黄冈遭遇龙卷风，8人遇难1人失联"},
-            {time:387, text:"新疆慕士塔格峰暴风雪致3名登山者遇难"},
-            {time:392, text:"广西南宁多座水库出现险情"},
-            {time:396, text:"六部门联合部署安全生产打非治违行动"},
-            {time:401, text:"七月为洪涝、台风和地质灾害高发期"},
-            {time:408, text:"感谢收听今天的播报，明天再见，汪汪！"}
-        ];
+    // ===== 全局状态 =====
+    let archiveData = null;
+    let currentDate = '';
+    let currentModule = 'news';
+    let currentData = null;       // { subtitles, sections, duration }
+    let currentAudioSrc = '';
+    let audioReady = false;
+    let activeIdx = -1;
+    let isPlaying = false;
+    const speeds = [0.75, 1.0, 1.25, 1.5, 1.75, 2.0];
+    let speedIdx = 1;
 
-        // ========== 分类时间戳映射 ==========
-        const SECTION_MAP = {
-            finance:    { name: '财经',            emoji: '💰', start: 0,   end: 65.8 },
-            politics:   { name: '国际政治',         emoji: '🌍', start: 65.8,end: 117.3 },
-            ai:         { name: 'AI',              emoji: '🤖', start: 117.3,end: 174.2 },
-            livelihood: { name: '国内民生',         emoji: '🏠', start: 174.2,end: 219.2 },
-            tech:       { name: '硬科技产业',       emoji: '🔬', start: 219.2,end: 267.2 },
-            energy:     { name: '能源与大宗商品',   emoji: '⛽', start: 267.2,end: 306.9 },
-            military:   { name: '军事与地缘安全',   emoji: '🎖️', start: 306.9,end: 352.2 },
-            health:     { name: '健康与公共卫生',   emoji: '🏥', start: 352.2,end: 382.1 },
-            disaster:   { name: '突发灾害与公共安全',emoji: '🚨', start: 382.1,end: 421.1 },
-            ending:     { name: '播报结束',         emoji: '🐾', start: 421.1,end: 999 },
-        };
+    // ===== DOM =====
+    const audio = document.getElementById('audio');
+    const btnPlay = document.getElementById('btnPlay');
+    const btnRewind = document.getElementById('btnRewind');
+    const btnForward = document.getElementById('btnForward');
+    const btnSpeed = document.getElementById('btnSpeed');
+    const progressBar = document.getElementById('progressBar');
+    const progressFill = document.getElementById('progressFill');
+    const currentTimeEl = document.getElementById('currentTime');
+    const durationEl = document.getElementById('duration');
+    const playerCard = document.getElementById('playerCard');
+    const petImage = document.getElementById('petImage');
+    const currentSectionEl = document.getElementById('currentSection');
+    const subtitleBox = document.getElementById('subtitleBox');
+    const subtitleInner = document.getElementById('subtitleInner');
+    const mainTitle = document.getElementById('mainTitle');
+    const inlineLoader = document.getElementById('inlineLoader');
+    const dateSelect = document.getElementById('dateSelect');
+    const btnDatePrev = document.getElementById('btnDatePrev');
+    const btnDateNext = document.getElementById('btnDateNext');
+    const loadingOverlay = document.getElementById('loadingOverlay');
+    const loadingStatus = document.getElementById('loadingStatus');
+    const loadingProgressFill = document.getElementById('loadingProgressFill');
 
-        // ========== DOM 元素 ==========
-        const audio = document.getElementById('audio');
-        const btnPlay = document.getElementById('btnPlay');
-        const btnRewind = document.getElementById('btnRewind');
-        const btnForward = document.getElementById('btnForward');
-        const btnSpeed = document.getElementById('btnSpeed');
-        const progressBar = document.getElementById('progressBar');
-        const progressFill = document.getElementById('progressFill');
-        const currentTimeEl = document.getElementById('currentTime');
-        const durationEl = document.getElementById('duration');
-        const playerCard = document.getElementById('playerCard');
-        const petImage = document.getElementById('petImage');
-        const currentSectionEl = document.getElementById('currentSection');
-        const subtitleBox = document.getElementById('subtitleBox');
-        const subtitleInner = document.getElementById('subtitleInner');
+    // ===== 工具函数 =====
+    function formatTime(s) {
+        const m = Math.floor(s / 60);
+        const sec = Math.floor(s % 60);
+        return String(m).padStart(2,'0') + ':' + String(sec).padStart(2,'0');
+    }
 
-        // 加载相关元素
-        const loadingOverlay = document.getElementById('loadingOverlay');
-        const loadingStatus = document.getElementById('loadingStatus');
-        const loadingProgressFill = document.getElementById('loadingProgressFill');
-        const loadingProgressText = document.getElementById('loadingProgressText');
-        const loadingPaw = document.getElementById('loadingPaw');
-        const btnRetry = document.getElementById('btnRetry');
-        const audioLoadStatus = document.getElementById('audioLoadStatus');
-
-        let isPlaying = false;
-        let activeIdx = -1;
-        const speeds = [0.75, 1.0, 1.25, 1.5, 1.75, 2.0];
-        let speedIdx = 1;
-
-        function formatTime(seconds) {
-            const m = Math.floor(seconds / 60);
-            const s = Math.floor(seconds % 60);
-            return String(m).padStart(2,'0') + ':' + String(s).padStart(2,'0');
+    function getCurrentSection(time) {
+        if (!currentData || !currentData.sections) return null;
+        for (const [key, sec] of Object.entries(currentData.sections)) {
+            if (time >= sec.start && time < sec.end) return key;
         }
+        return null;
+    }
 
-        function getCurrentSection(time) {
-            for (const [key, sec] of Object.entries(SECTION_MAP)) {
-                if (time >= sec.start && time < sec.end) return key;
-            }
-            return 'intro';
-        }
+    // ===== 音频事件 =====
+    let canplayFired = false;
+    audio.addEventListener('canplay', () => {
+        if (canplayFired) return;
+        canplayFired = true;
+        audioReady = true;
+        durationEl.textContent = formatTime(audio.duration || currentData?.duration || 0);
+        btnPlay.disabled = false;
+        btnPlay.textContent = '▶️';
+        currentSectionEl.textContent = '✅ 准备就绪，点击播放';
+        inlineLoader.classList.remove('show');
+    });
 
-        function updateSectionDisplay(time) {
-            const key = getCurrentSection(time);
-            if (key === 'intro') {
-                currentSectionEl.textContent = '🎧 今日新闻资讯播报';
-            } else if (key === 'ending') {
-                currentSectionEl.textContent = '🐾 今日播报结束，宝宝雷下班啦~';
-            } else {
-                const sec = SECTION_MAP[key];
-                currentSectionEl.textContent = sec.emoji + ' 正在收听：' + sec.name;
-            }
-
-            document.querySelectorAll('.tag').forEach(tag => {
-                tag.classList.toggle('active-tag', tag.dataset.section === key);
-            });
-        }
-
-        // ===== 简洁可靠的加载流程 =====
-        // 移动端浏览器忽略 preload="auto"，音频只在点击播放时才真正下载。
-        // 所以不用等 canplay，快速动画 → 亮播放按钮 → 点击即播。
-
-        let loadDone = false;
-
-        // 页面打开后快速跑完进度条（2秒），然后立即启用播放按钮
-        function quickIntro() {
-            const steps = [
-                { ms:0,   pct:0,   text:'正在准备宝宝雷的播报...' },
-                { ms:250, pct:15,  text:'正在连接服务器...' },
-                { ms:550, pct:35,  text:'正在加载音频内容...' },
-                { ms:900, pct:60,  text:'宝宝雷正在准备中...' },
-                { ms:1300,pct:80,  text:'马上就好，再等一下~' },
-                { ms:1700,pct:95,  text:'正在加载字幕和标签...' },
-            ];
-            const start = Date.now();
-            const timer = setInterval(() => {
-                const elapsed = Date.now() - start;
-                let step = steps[0];
-                for (const s of steps) { if (elapsed >= s.ms) step = s; }
-                loadingStatus.textContent = step.text;
-                loadingProgressFill.style.width = step.pct + '%';
-                loadingProgressText.textContent = Math.round(step.pct) + '%';
-                if (elapsed >= 2000) {
-                    clearInterval(timer);
-                    // 2秒后直接完成，不等 canplay
-                    loadingOverlay.classList.add('hidden');
-                    btnPlay.disabled = false;
-                    btnPlay.textContent = '▶️';
-                    audioLoadStatus.textContent = '✅ 点击播放按钮开始收听';
-                    audioLoadStatus.className = 'audio-load-status ready';
-                    audioLoadStatus.style.display = 'flex';
-                    setTimeout(() => { audioLoadStatus.style.display = 'none'; }, 4000);
-                    loadDone = true;
-                }
-            }, 150);
-        }
-
-        // 兜底：canplay 触发说明浏览器主动预加载了（桌面端），那更好，提前就绪
-        audio.addEventListener('canplay', () => {
-            if (loadDone) return;
-            durationEl.textContent = formatTime(audio.duration || 421);
-            btnPlay.disabled = false;
-            btnPlay.textContent = '▶️';
-            audioLoadStatus.textContent = '✅ 准备就绪，点击即可收听';
-            audioLoadStatus.className = 'audio-load-status ready';
-            audioLoadStatus.style.display = 'flex';
-            setTimeout(() => { audioLoadStatus.style.display = 'none'; }, 4000);
-            loadingOverlay.classList.add('hidden');
-            loadDone = true;
-        });
-
-        audio.addEventListener('loadedmetadata', () => {
+    audio.addEventListener('loadedmetadata', () => {
+        if (audio.duration && isFinite(audio.duration)) {
             durationEl.textContent = formatTime(audio.duration);
-        });
+        }
+    });
 
-        audio.addEventListener('waiting', () => {
-            currentSectionEl.textContent = '⏳ 缓冲中...';
-        });
+    audio.addEventListener('timeupdate', () => {
+        if (!audio.duration) return;
+        const pct = (audio.currentTime / audio.duration) * 100;
+        progressFill.style.width = pct + '%';
+        currentTimeEl.textContent = formatTime(audio.currentTime);
+        updateSectionDisplay(audio.currentTime);
+        updateSubtitles(audio.currentTime);
+    });
 
-        audio.addEventListener('playing', () => {
-            audioLoadStatus.style.display = 'none';
-        });
+    audio.addEventListener('ended', () => {
+        btnPlay.textContent = '▶️';
+        playerCard.classList.remove('playing');
+        isPlaying = false;
+        currentSectionEl.textContent = '✅ 播报完毕，宝宝雷下班啦~';
+        if (currentData?.subtitles) {
+            updateSubtitles(currentData.duration + 10);
+        }
+    });
 
-        audio.addEventListener('ended', () => {
-            btnPlay.textContent = '▶️';
-            playerCard.classList.remove('playing');
-            isPlaying = false;
-            currentSectionEl.textContent = '✅ 播报完毕，宝宝雷下班啦~';
-            updateSubtitles(999);
-        });
+    audio.addEventListener('waiting', () => { currentSectionEl.textContent = '⏳ 缓冲中...'; });
+    audio.addEventListener('playing', () => { canplayFired = true; });
 
-        // ===== 初始化 =====
+    // ===== 加载数据 =====
+    async function fetchJSON(url) {
+        const resp = await fetch(url, { cache: 'no-store' });
+        if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
+        return resp.json();
+    }
+
+    async function loadContent(date, module) {
+        inlineLoader.classList.add('show');
+        canplayFired = false; audioReady = false;
+        btnPlay.disabled = true; btnPlay.textContent = '▶️';
+        currentData = null;
+        subtitleInner.innerHTML = '<div class="no-content">⏳ 加载中...</div>';
+        progressFill.style.width = '0%';
+        currentTimeEl.textContent = '00:00';
+        durationEl.textContent = '00:00';
+        currentSectionEl.textContent = '🎧 加载中...';
+        activeIdx = -1;
+
+        const day = archiveData.days[date];
+        if (!day || !day.modules[module]) {
+            subtitleInner.innerHTML = '<div class="no-content">😴 这一天还没有' + (module==='ai'?'AI要闻':'每日新闻')+'哦~<br>选择其他日期试试</div>';
+            inlineLoader.classList.remove('show');
+            btnPlay.disabled = true;
+            return;
+        }
+
+        const mod = day.modules[module];
+        currentAudioSrc = mod.audio;
+
+        try {
+            currentData = await fetchJSON(mod.subtitle_file);
+        } catch(e) {
+            subtitleInner.innerHTML = '<div class="no-content">⚠️ 数据加载失败，请刷新重试</div>';
+            inlineLoader.classList.remove('show');
+            return;
+        }
+
+        // 设置音频源
+        audio.src = mod.audio + '?t=' + Date.now();
+        audio.load();
+
+        // 更新标题
+        const dateCn = day.date_cn + ' · ' + day.weekday_cn;
+        mainTitle.textContent = '宝宝雷の' + mod.title;
+
+        // 渲染字幕
         renderSubtitles();
-        quickIntro();
+        inlineLoader.classList.remove('show');
 
-        // ===== 字幕切换 =====
-        let userScrolling = false;
-        let userScrollTimer = null;
-        let programmaticScroll = false;
-
-        function renderSubtitles() {
-            subtitleInner.innerHTML = SUBTITLES.map((s, i) => {
-                if (s.section) {
-                    const names = {
-                        finance:'财经', politics:'国际政治', ai:'AI', livelihood:'国内民生',
-                        tech:'硬科技产业', energy:'能源与大宗商品', military:'军事与地缘安全',
-                        health:'健康与公共卫生', disaster:'突发灾害与公共安全'
-                    };
-                    return `<div class="sub-section-tag" data-idx="${i}">🔹 ${names[s.section]}</div>`;
-                }
-                return `<div class="sub-line" data-idx="${i}">${s.text}</div>`;
-            }).join('');
-            activeIdx = -1;
-        }
-
-        // 检测用户手动滚动：暂停自动滚动 3 秒
-        subtitleBox.addEventListener('scroll', () => {
-            if (programmaticScroll) return;  // 程序触发的滚动不算
-            userScrolling = true;
-            if (userScrollTimer) clearTimeout(userScrollTimer);
-            userScrollTimer = setTimeout(() => {
-                userScrolling = false;
-            }, 3000);
-        }, { passive: true });
-
-        function autoScrollToLine(activeEl) {
-            if (!activeEl) return;
-            const boxH = subtitleBox.clientHeight;
-            const elTop = activeEl.offsetTop;
-            const elH = activeEl.offsetHeight;
-            const targetScroll = elTop - boxH / 2 + elH / 2;
-            // 如果目标行已经在可视区内（±30px 容差），不做大幅滚动
-            const currentScroll = subtitleBox.scrollTop;
-            const visibleTop = currentScroll;
-            const visibleBottom = currentScroll + boxH;
-            const elCenter = elTop + elH / 2;
-            if (elCenter > visibleTop + 40 && elCenter < visibleBottom - 40) return;
-
-            programmaticScroll = true;
-            subtitleBox.scrollTo({ top: Math.max(0, targetScroll), behavior: 'smooth' });
-            setTimeout(() => { programmaticScroll = false; }, 400);
-        }
-
-        function updateSubtitles(time) {
-            let target = -1;
-            for (let i = SUBTITLES.length - 1; i >= 0; i--) {
-                if (time >= SUBTITLES[i].time) {
-                    target = i;
-                    break;
-                }
-            }
-            if (target === activeIdx) return;
-            activeIdx = target;
-
-            const lines = subtitleInner.querySelectorAll('.sub-line, .sub-section-tag');
-            lines.forEach((el, i) => {
-                const idx = parseInt(el.dataset.idx);
-                el.classList.remove('active', 'prev', 'future', 'visible');
-
-                if (SUBTITLES[idx] && SUBTITLES[idx].section) {
-                    const secName = SUBTITLES[idx].section;
-                    const curSec = getCurrentSection(time);
-                    if (secName === curSec) {
-                        el.classList.add('visible');
-                    }
-                } else if (idx === target) {
-                    el.classList.add('active');
-                } else if (idx < target) {
-                    el.classList.add('prev');
-                } else {
-                    el.classList.add('future');
-                }
-            });
-
-            if (target >= 0 && !userScrolling) {
-                const activeEl = subtitleInner.querySelector(`[data-idx="${target}"]`);
-                autoScrollToLine(activeEl);
-            }
-        }
-
-        audio.addEventListener('timeupdate', () => {
-            if (audio.duration) {
-                const pct = (audio.currentTime / audio.duration) * 100;
-                progressFill.style.width = pct + '%';
-                currentTimeEl.textContent = formatTime(audio.currentTime);
-                updateSectionDisplay(audio.currentTime);
-                updateSubtitles(audio.currentTime);
-            }
-        });
-
-        // 进度条拖拽 / 点击跳转（支持鼠标和触摸）
-        // 策略：拖拽过程中只更新视觉效果，松手时才真正 seek，避免频繁 currentTime 赋值被浏览器丢弃
-        let isDragging = false, dragPct = 0;
-
-        function getPctFromEvent(e) {
-            const rect = progressBar.getBoundingClientRect();
-            const x = e.clientX !== undefined ? e.clientX : e.touches?.[0]?.clientX ?? 0;
-            return Math.max(0, Math.min(1, (x - rect.left) / rect.width));
-        }
-
-        function updateDragUI(pct) {
-            const newTime = audio.duration ? pct * audio.duration : 0;
-            progressFill.style.width = (pct * 100) + '%';
-            currentTimeEl.textContent = formatTime(newTime);
-            activeIdx = -1;
-            if (audio.duration) {
-                updateSubtitles(newTime);
-                updateSectionDisplay(newTime);
-            }
-        }
-
-        function doSeek(pct) {
-            if (!audio.duration) return;
-            const newTime = pct * audio.duration;
-            audio.currentTime = newTime;
-        }
-
-        progressBar.addEventListener('pointerdown', (e) => {
-            e.preventDefault();
-            isDragging = true;
-            progressBar.setPointerCapture(e.pointerId);
-            dragPct = getPctFromEvent(e);
-            updateDragUI(dragPct);
-        });
-
-        progressBar.addEventListener('pointermove', (e) => {
-            if (!isDragging) return;
-            dragPct = getPctFromEvent(e);
-            updateDragUI(dragPct);
-        });
-
-        progressBar.addEventListener('pointerup', () => {
-            if (!isDragging) return;
-            isDragging = false;
-            // 松手时真正 seek 到最终位置
-            doSeek(dragPct);
-        });
-
-        progressBar.addEventListener('pointercancel', () => {
-            if (!isDragging) return;
-            isDragging = false;
-            doSeek(dragPct);
-        });
-
-        // 播放/暂停
-        btnPlay.addEventListener('click', () => {
-            if (isPlaying) {
-                audio.pause();
+        // 等 canplay 或超时
+        setTimeout(() => {
+            if (!canplayFired && audio.duration && isFinite(audio.duration)) {
+                canplayFired = true; audioReady = true;
+                durationEl.textContent = formatTime(audio.duration);
+                btnPlay.disabled = false;
                 btnPlay.textContent = '▶️';
-                playerCard.classList.remove('playing');
-            } else {
-                audio.play().catch(err => {
-                    audioLoadStatus.style.display = 'flex';
-                    audioLoadStatus.textContent = '⚠️ 播放失败，请稍后重试';
-                    audioLoadStatus.className = 'audio-load-status error';
-                    return;
-                });
-                btnPlay.textContent = '⏸️';
-                playerCard.classList.add('playing');
+                currentSectionEl.textContent = '✅ 准备就绪，点击播放';
+                inlineLoader.classList.remove('show');
             }
-            isPlaying = !isPlaying;
+        }, 3000);
+    }
+
+    // ===== 字幕渲染 =====
+    function renderSubtitles() {
+        if (!currentData || !currentData.subtitles) {
+            subtitleInner.innerHTML = '<div class="no-content">暂无字幕</div>';
+            return;
+        }
+        const names = {
+            finance:'财经', politics:'国际政治', ai:'AI', livelihood:'国内民生',
+            tech:'硬科技产业', energy:'能源与大宗商品', military:'军事与地缘安全',
+            health:'健康与公共卫生', disaster:'突发灾害与公共安全',
+            models:'大模型军备竞赛', waic:'WAIC倒计时', video:'AI视频赛道',
+            un:'联合国警告', capital:'资本市场之辩', europe:'欧洲AI自主',
+            robot:'人形机器人', chip:'半导体涨价', pharma:'AI制药', security:'安全隐忧'
+        };
+        subtitleInner.innerHTML = currentData.subtitles.map((s, i) => {
+            if (s.section) {
+                return `<div class="sub-section-tag" data-idx="${i}">🔹 ${names[s.section] || s.section}</div>`;
+            }
+            return `<div class="sub-line" data-idx="${i}">${s.text}</div>`;
+        }).join('');
+        activeIdx = -1;
+    }
+
+    let userScrolling = false, userScrollTimer = null, programmaticScroll = false;
+
+    subtitleBox.addEventListener('scroll', () => {
+        if (programmaticScroll) return;
+        userScrolling = true;
+        if (userScrollTimer) clearTimeout(userScrollTimer);
+        userScrollTimer = setTimeout(() => { userScrolling = false; }, 3000);
+    }, { passive: true });
+
+    function autoScrollToLine(activeEl) {
+        if (!activeEl) return;
+        const boxH = subtitleBox.clientHeight;
+        const elTop = activeEl.offsetTop;
+        const elH = activeEl.offsetHeight;
+        const targetScroll = elTop - boxH / 2 + elH / 2;
+        const currentScroll = subtitleBox.scrollTop;
+        const visibleTop = currentScroll;
+        const visibleBottom = currentScroll + boxH;
+        const elCenter = elTop + elH / 2;
+        if (elCenter > visibleTop + 40 && elCenter < visibleBottom - 40) return;
+        programmaticScroll = true;
+        subtitleBox.scrollTo({ top: Math.max(0, targetScroll), behavior: 'smooth' });
+        setTimeout(() => { programmaticScroll = false; }, 400);
+    }
+
+    function updateSubtitles(time) {
+        if (!currentData || !currentData.subtitles) return;
+        const subs = currentData.subtitles;
+        let target = -1;
+        for (let i = subs.length - 1; i >= 0; i--) {
+            if (time >= subs[i].time) { target = i; break; }
+        }
+        if (target === activeIdx) return;
+        activeIdx = target;
+
+        const lines = subtitleInner.querySelectorAll('.sub-line, .sub-section-tag');
+        lines.forEach(el => {
+            const idx = parseInt(el.dataset.idx);
+            el.classList.remove('active', 'prev', 'future', 'visible');
+            if (subs[idx] && subs[idx].section) {
+                const curSec = getCurrentSection(time);
+                if (subs[idx].section === curSec) el.classList.add('visible');
+            } else if (idx === target) {
+                el.classList.add('active');
+            } else if (idx < target) {
+                el.classList.add('prev');
+            } else {
+                el.classList.add('future');
+            }
         });
 
-        audio.addEventListener('ended', () => {
+        if (target >= 0 && !userScrolling) {
+            const activeEl = subtitleInner.querySelector(`[data-idx="${target}"]`);
+            autoScrollToLine(activeEl);
+        }
+    }
+
+    function updateSectionDisplay(time) {
+        if (!currentData || !currentData.sections) return;
+        const key = getCurrentSection(time);
+        if (!key) { currentSectionEl.textContent = '🎧 今日播报'; return; }
+        const sec = currentData.sections[key];
+        currentSectionEl.textContent = (sec.emoji||'') + ' ' + sec.name;
+    }
+
+    // ===== 日期导航 =====
+    function buildDateNav() {
+        const days = Object.keys(archiveData.days).sort();
+        dateSelect.innerHTML = days.map(d => {
+            const day = archiveData.days[d];
+            const mods = Object.keys(day.modules);
+            const icons = mods.map(m => m==='ai'?'🤖':'📰').join('');
+            return `<option value="${d}">${day.date_cn} ${icons}</option>`;
+        }).join('');
+
+        // 默认选今天或最新
+        const today = '2026-07-07';
+        if (archiveData.days[today]) currentDate = today;
+        else currentDate = days[days.length - 1] || today;
+
+        dateSelect.value = currentDate;
+        updateDateNavButtons(days);
+    }
+
+    function updateDateNavButtons(days) {
+        if (!days) days = Object.keys(archiveData.days).sort();
+        const idx = days.indexOf(currentDate);
+        btnDatePrev.disabled = idx <= 0;
+        btnDateNext.disabled = idx >= days.length - 1;
+    }
+
+    async function goToDate(date) {
+        if (date === currentDate) return;
+        currentDate = date;
+        dateSelect.value = date;
+        updateDateNavButtons();
+
+        // 检查当前模块是否在该日期可用
+        const day = archiveData.days[date];
+        if (day && !day.modules[currentModule]) {
+            // 自动切换到可用的模块
+            currentModule = Object.keys(day.modules)[0] || 'news';
+            document.querySelectorAll('.module-tab').forEach(t => {
+                t.classList.toggle('active', t.dataset.module === currentModule);
+            });
+        }
+        await loadContent(date, currentModule);
+    }
+
+    dateSelect.addEventListener('change', () => goToDate(dateSelect.value));
+    btnDatePrev.addEventListener('click', () => {
+        const days = Object.keys(archiveData.days).sort();
+        const idx = days.indexOf(currentDate);
+        if (idx > 0) goToDate(days[idx - 1]);
+    });
+    btnDateNext.addEventListener('click', () => {
+        const days = Object.keys(archiveData.days).sort();
+        const idx = days.indexOf(currentDate);
+        if (idx < days.length - 1) goToDate(days[idx + 1]);
+    });
+
+    // ===== 模块切换 =====
+    document.getElementById('moduleTabs').addEventListener('click', async (e) => {
+        const tab = e.target.closest('.module-tab');
+        if (!tab) return;
+        const mod = tab.dataset.module;
+        if (mod === currentModule) return;
+
+        currentModule = mod;
+        document.querySelectorAll('.module-tab').forEach(t => {
+            t.classList.toggle('active', t.dataset.module === mod);
+        });
+        await loadContent(currentDate, mod);
+    });
+
+    // ===== 播放控制 =====
+    btnPlay.addEventListener('click', () => {
+        if (!audioReady) {
+            currentSectionEl.textContent = '⏳ 音频还在加载，请稍等...';
+            return;
+        }
+        if (isPlaying) {
+            audio.pause();
             btnPlay.textContent = '▶️';
             playerCard.classList.remove('playing');
-            isPlaying = false;
-            currentSectionEl.textContent = '✅ 播报完毕，宝宝雷下班啦~';
-            updateSubtitles(999);
-        });
+        } else {
+            audio.play().catch(err => {
+                currentSectionEl.textContent = '⚠️ 播放失败，请稍后重试';
+                return;
+            });
+            btnPlay.textContent = '⏸️';
+            playerCard.classList.add('playing');
+        }
+        isPlaying = !isPlaying;
+    });
 
-        btnRewind.addEventListener('click', () => {
-            const nt = Math.max(0, audio.currentTime - 15);
-            audio.currentTime = nt;
-            activeIdx = -1; updateSubtitles(nt);
-        });
+    btnRewind.addEventListener('click', () => {
+        const nt = Math.max(0, audio.currentTime - 15);
+        audio.currentTime = nt; activeIdx = -1; updateSubtitles(nt);
+    });
+    btnForward.addEventListener('click', () => {
+        const nt = Math.min(audio.duration || 0, audio.currentTime + 15);
+        audio.currentTime = nt; activeIdx = -1; updateSubtitles(nt);
+    });
+    btnSpeed.addEventListener('click', () => {
+        speedIdx = (speedIdx + 1) % speeds.length;
+        audio.playbackRate = speeds[speedIdx];
+        btnSpeed.textContent = speeds[speedIdx] + 'x';
+    });
+    petImage.addEventListener('click', () => btnPlay.click());
 
-        btnForward.addEventListener('click', () => {
-            const nt = Math.min(audio.duration || 0, audio.currentTime + 15);
-            audio.currentTime = nt;
-            activeIdx = -1; updateSubtitles(nt);
-        });
+    // ===== 进度条拖拽 =====
+    let isDragging = false, dragPct = 0;
+    function getPct(e) {
+        const rect = progressBar.getBoundingClientRect();
+        const x = e.clientX !== undefined ? e.clientX : e.touches?.[0]?.clientX ?? 0;
+        return Math.max(0, Math.min(1, (x - rect.left) / rect.width));
+    }
+    function updateDragUI(pct) {
+        const t = audio.duration ? pct * audio.duration : 0;
+        progressFill.style.width = (pct*100)+'%';
+        currentTimeEl.textContent = formatTime(t);
+        activeIdx = -1;
+        if (audio.duration) { updateSubtitles(t); updateSectionDisplay(t); }
+    }
+    progressBar.addEventListener('pointerdown', e => {
+        e.preventDefault(); isDragging = true;
+        progressBar.setPointerCapture(e.pointerId);
+        dragPct = getPct(e); updateDragUI(dragPct);
+    });
+    progressBar.addEventListener('pointermove', e => {
+        if (!isDragging) return;
+        dragPct = getPct(e); updateDragUI(dragPct);
+    });
+    progressBar.addEventListener('pointerup', () => {
+        if (!isDragging) return;
+        isDragging = false;
+        if (audio.duration) audio.currentTime = dragPct * audio.duration;
+    });
+    progressBar.addEventListener('pointercancel', () => {
+        if (!isDragging) return;
+        isDragging = false;
+        if (audio.duration) audio.currentTime = dragPct * audio.duration;
+    });
 
-        btnSpeed.addEventListener('click', () => {
-            speedIdx = (speedIdx + 1) % speeds.length;
-            audio.playbackRate = speeds[speedIdx];
-            btnSpeed.textContent = speeds[speedIdx] + 'x';
-        });
+    // ===== 字幕点击跳转 =====
+    subtitleInner.addEventListener('click', e => {
+        const line = e.target.closest('.sub-line');
+        if (!line || !currentData) return;
+        const idx = parseInt(line.dataset.idx);
+        if (isNaN(idx) || !currentData.subtitles[idx]) return;
+        const t = currentData.subtitles[idx].time;
+        if (t === undefined) return;
+        if (!audio.duration && currentData.duration) audio.duration = currentData.duration;
+        audio.currentTime = t; activeIdx = -1;
+        updateSectionDisplay(t); updateSubtitles(t);
+        if (!isPlaying) {
+            audio.play().catch(()=>{});
+            btnPlay.textContent = '⏸️'; playerCard.classList.add('playing');
+            isPlaying = true;
+        }
+        line.style.transform = 'scale(0.95)';
+        setTimeout(() => { line.style.transform = ''; }, 150);
+    });
 
-        // 点击宝宝雷照片播放/暂停
-        petImage.addEventListener('click', () => {
-            btnPlay.click();
-        });
+    // ===== 初始化 =====
+    (async function init() {
+        // 模拟加载动画
+        const steps = [
+            { ms:0, pct:0 }, { ms:200, pct:15 }, { ms:500, pct:35 },
+            { ms:800, pct:60 }, { ms:1200, pct:80 }, { ms:1500, pct:95 },
+        ];
+        const start = Date.now();
+        const timer = setInterval(() => {
+            const elapsed = Date.now() - start;
+            let s = steps[0];
+            for (const st of steps) { if (elapsed >= st.ms) s = st; }
+            loadingProgressFill.style.width = s.pct + '%';
+            if (elapsed >= 1800) clearInterval(timer);
+        }, 100);
 
-        // ===== 标签点击跳转 =====
-        document.getElementById('tagsGrid').addEventListener('click', (e) => {
-            const tag = e.target.closest('.tag');
-            if (!tag) return;
-            const sectionKey = tag.dataset.section;
-            const sec = SECTION_MAP[sectionKey];
-            if (!sec) return;
-            if (!audio.duration) { audio.duration = 421; }
+        try {
+            archiveData = await fetchJSON('archive.json');
+        } catch(e) {
+            loadingStatus.textContent = '⚠️ 连接失败，请刷新重试';
+            return;
+        }
 
-            audio.currentTime = sec.start;
-            activeIdx = -1;
-            updateSectionDisplay(sec.start);
-            updateSubtitles(sec.start);
+        buildDateNav();
 
-            if (!isPlaying) {
-                audio.play().catch(() => {});
-                btnPlay.textContent = '⏸️';
-                playerCard.classList.add('playing');
-                isPlaying = true;
-            }
+        // 确定默认模块
+        const day = archiveData.days[currentDate];
+        if (day && !day.modules[currentModule]) {
+            currentModule = Object.keys(day.modules)[0] || 'news';
+            document.querySelectorAll('.module-tab').forEach(t => {
+                t.classList.toggle('active', t.dataset.module === currentModule);
+            });
+        }
 
-            tag.style.transform = 'scale(0.88)';
-            setTimeout(() => { tag.style.transform = ''; }, 150);
-        });
-
-        // ===== 字幕行点击跳转 =====
-        subtitleInner.addEventListener('click', (e) => {
-            const line = e.target.closest('.sub-line');
-            if (!line) return;
-            const idx = parseInt(line.dataset.idx);
-            if (isNaN(idx) || !SUBTITLES[idx]) return;
-            const targetTime = SUBTITLES[idx].time;
-            if (targetTime === undefined) return;
-
-            // 如果没有duration（音频未加载），设置一个默认值
-            if (!audio.duration) { audio.duration = 421; }
-
-            audio.currentTime = targetTime;
-            activeIdx = -1;
-            updateSectionDisplay(targetTime);
-            updateSubtitles(targetTime);
-
-            if (!isPlaying) {
-                audio.play().catch(() => {});
-                btnPlay.textContent = '⏸️';
-                playerCard.classList.add('playing');
-                isPlaying = true;
-            }
-
-            // 点击反馈动画
-            line.style.transform = 'scale(0.95)';
-            setTimeout(() => { line.style.transform = ''; }, 150);
-        });
+        await loadContent(currentDate, currentModule);
+        loadingOverlay.classList.add('hidden');
+    })();
     </script>
 </body>
 </html>
