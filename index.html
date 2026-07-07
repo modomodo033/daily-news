@@ -513,7 +513,6 @@
     </div>
 
     <audio id="audio" preload="auto"></audio>
-    <audio id="dogBarkAudio" preload="auto" src="dog_bark.wav"></audio>
 
     <script>
     // ===== 漂浮粒子 =====
@@ -598,18 +597,13 @@
     kissDismiss.addEventListener('click', (e) => {
         e.stopPropagation();
         hideKiss();
-        // 重播：先狗叫再内容
-        dogBarkPlayed = false;
+        // 重播
         audio.currentTime = 0;
-        dogBarkAudio.currentTime = 0;
-        dogBarkAudio.play().then(() => {
+        audio.play().then(() => {
             btnPlay.textContent = '⏸️';
             playerCard.classList.add('playing');
             isPlaying = true;
         }).catch(() => {});
-        dogBarkAudio.onended = () => {
-            audio.play().catch(()=>{});
-        };
     });
 
     function hideKiss() {
@@ -1008,9 +1002,6 @@
     });
 
     // ===== 播放控制 =====
-    const dogBarkAudio = document.getElementById('dogBarkAudio');
-    let dogBarkPlayed = false; // 每个 session 只播一次狗叫
-
     btnPlay.addEventListener('click', () => {
         if (!audioReady) {
             currentSectionEl.textContent = '⏳ 音频还在加载，请稍等...';
@@ -1018,40 +1009,18 @@
         }
         if (isPlaying) {
             audio.pause();
-            dogBarkAudio.pause();
             btnPlay.textContent = '▶️';
             playerCard.classList.remove('playing');
             isPlaying = false;
         } else {
-            // 先播放狗叫声，再自动播放内容
-            if (!dogBarkPlayed) {
-                dogBarkPlayed = true;
-                dogBarkAudio.currentTime = 0;
-                dogBarkAudio.volume = 0.8;
-                dogBarkAudio.play().then(() => {
-                    btnPlay.textContent = '⏸️';
-                    playerCard.classList.add('playing');
-                    isPlaying = true;
-                }).catch(() => {
-                    // 狗叫播放失败，直接播内容
-                    startMainAudio();
-                });
-                // 狗叫结束后自动播内容
-                dogBarkAudio.onended = () => {
-                    startMainAudio();
-                };
-            } else {
-                startMainAudio();
-            }
+            audio.play().catch(err => {
+                currentSectionEl.textContent = '⚠️ 播放失败，请稍后重试';
+            });
+            btnPlay.textContent = '⏸️';
+            playerCard.classList.add('playing');
+            isPlaying = true;
         }
     });
-
-    function startMainAudio() {
-        dogBarkAudio.onended = null;
-        audio.play().catch(err => {
-            currentSectionEl.textContent = '⚠️ 播放失败，请稍后重试';
-        });
-    }
 
     btnRewind.addEventListener('click', () => {
         const nt = Math.max(0, audio.currentTime - 15);
