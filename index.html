@@ -686,6 +686,23 @@
         updateTagHighlight(audio.currentTime);
     });
 
+    // 缓冲事件——标签跳转时需要等待数据
+    audio.addEventListener('waiting', () => {
+        if (pendingSeekSec && currentData) {
+            const sec = currentData.sections[pendingSeekSec];
+            if (sec) currentSectionEl.textContent = '⏳ 正在缓冲「' + sec.name + '」...';
+        }
+    });
+
+    audio.addEventListener('canplay', () => {
+        if (pendingSeekSec && currentData) {
+            const sec = currentData.sections[pendingSeekSec];
+            if (sec) {
+                currentSectionEl.textContent = '🎧 ' + (sec.emoji||'') + ' ' + sec.name + ' 即将播放～';
+            }
+        }
+    });
+
     audio.addEventListener('ended', () => {
         btnPlay.textContent = '▶️';
         playerCard.classList.remove('playing');
@@ -941,23 +958,79 @@
         });
     }
 
+    // ===== 标签点击跳转 =====
+    let pendingSeekSec = null;
+    let seekTimeout = null;
+
+    function seekToSection(sec, key) {
+        // 显示加载状态
+        currentSectionEl.textContent = '⏳ 正在跳转到 ' + sec.name + '...';
+        pendingSeekSec = key;
+
+        // 先更新视觉状态（字幕、标签高亮），让用户立即看到反馈
+        activeIdx = -1;
+        updateSubtitles(sec.start);
+        updateTagHighlight(sec.start);
+
+        // 执行 seek
+        audio.currentTime = sec.start;
+
+        // 超时保护：15秒后如果还没 seeked，强制开始播放
+        if (seekTimeout) clearTimeout(seekTimeout);
+        seekTimeout = setTimeout(() => {
+            if (pendingSeekSec === key) {
+                // seek 可能因为音频未缓冲完成而延迟
+                currentSectionEl.textContent = '⏳ 正在缓冲音频，马上就来...';
+                // 直接尝试播放，浏览器会自动等待缓冲
+                audio.play().then(() => {
+                    currentSectionEl.textContent = (sec.emoji||'') + ' ' + sec.name;
+                    btnPlay.textContent = '⏸️';
+                    playerCard.classList.add('playing');
+                    isPlaying = true;
+                    pendingSeekSec = null;
+                }).catch(() => {
+                    currentSectionEl.textContent = '❌ 加载失败，请确保网络畅通后重试';
+                    pendingSeekSec = null;
+                });
+            }
+        }, 15000);
+    }
+
+    audio.addEventListener('seeked', () => {
+        if (!pendingSeekSec || !currentData) return;
+        const key = pendingSeekSec;
+        const sec = currentData.sections[key];
+        if (!sec) { pendingSeekSec = null; return; }
+
+        // 确认 seek 成功到达目标位置
+        if (seekTimeout) clearTimeout(seekTimeout);
+        pendingSeekSec = null;
+
+        // 更新字幕（可能时间和 sec.start 略有偏差）
+        activeIdx = -1;
+        updateSubtitles(audio.currentTime);
+        updateSectionDisplay(audio.currentTime);
+        updateTagHighlight(audio.currentTime);
+
+        currentSectionEl.textContent = (sec.emoji||'') + ' ' + sec.name;
+
+        // 开始播放
+        if (!isPlaying || audio.paused) {
+            audio.play().then(() => {
+                btnPlay.textContent = '⏸️';
+                playerCard.classList.add('playing');
+                isPlaying = true;
+            }).catch(() => {});
+        }
+    });
+
     tagsArea.addEventListener('click', e => {
         const tag = e.target.closest('.tag');
         if (!tag || !currentData) return;
         const key = tag.dataset.sec;
         const sec = currentData.sections[key];
         if (!sec) return;
-        audio.currentTime = sec.start;
-        activeIdx = -1;
-        updateSubtitles(sec.start);
-        updateSectionDisplay(sec.start);
-        updateTagHighlight(sec.start);
-        if (!isPlaying) {
-            audio.play().catch(()=>{});
-            btnPlay.textContent = '⏸️';
-            playerCard.classList.add('playing');
-            isPlaying = true;
-        }
+        seekToSection(sec, key);
     });
 
     // ===== 播放控制 =====
