@@ -889,40 +889,57 @@
         });
 
         // 进度条拖拽 / 点击跳转（支持鼠标和触摸）
-        let isDragging = false;
+        // 策略：拖拽过程中只更新视觉效果，松手时才真正 seek，避免频繁 currentTime 赋值被浏览器丢弃
+        let isDragging = false, dragPct = 0;
 
-        function seekFromEvent(e) {
-            if (!audio.duration) return;
+        function getPctFromEvent(e) {
             const rect = progressBar.getBoundingClientRect();
             const x = e.clientX !== undefined ? e.clientX : e.touches?.[0]?.clientX ?? 0;
-            const pct = Math.max(0, Math.min(1, (x - rect.left) / rect.width));
-            const newTime = pct * audio.duration;
-            audio.currentTime = newTime;
+            return Math.max(0, Math.min(1, (x - rect.left) / rect.width));
+        }
+
+        function updateDragUI(pct) {
+            const newTime = audio.duration ? pct * audio.duration : 0;
             progressFill.style.width = (pct * 100) + '%';
             currentTimeEl.textContent = formatTime(newTime);
             activeIdx = -1;
-            updateSubtitles(newTime);
-            updateSectionDisplay(newTime);
+            if (audio.duration) {
+                updateSubtitles(newTime);
+                updateSectionDisplay(newTime);
+            }
+        }
+
+        function doSeek(pct) {
+            if (!audio.duration) return;
+            const newTime = pct * audio.duration;
+            audio.currentTime = newTime;
         }
 
         progressBar.addEventListener('pointerdown', (e) => {
             e.preventDefault();
             isDragging = true;
             progressBar.setPointerCapture(e.pointerId);
-            seekFromEvent(e);
+            dragPct = getPctFromEvent(e);
+            updateDragUI(dragPct);
         });
 
         progressBar.addEventListener('pointermove', (e) => {
             if (!isDragging) return;
-            seekFromEvent(e);
+            dragPct = getPctFromEvent(e);
+            updateDragUI(dragPct);
         });
 
         progressBar.addEventListener('pointerup', () => {
+            if (!isDragging) return;
             isDragging = false;
+            // 松手时真正 seek 到最终位置
+            doSeek(dragPct);
         });
 
         progressBar.addEventListener('pointercancel', () => {
+            if (!isDragging) return;
             isDragging = false;
+            doSeek(dragPct);
         });
 
         // 播放/暂停
