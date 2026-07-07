@@ -12,38 +12,30 @@
         * { margin: 0; padding: 0; box-sizing: border-box; }
 
         :root {
-            --pink: #FF6B9D;
-            --pink-light: #FFB8D0;
-            --pink-soft: #FFF0F5;
-            --purple: #A855F7;
-            --purple-light: #DDD6FE;
-            --blue: #60A5FA;
-            --blue-deep: #3B82F6;
-            --blue-light: #DBEAFE;
-            --yellow: #FBBF24;
-            --yellow-light: #FEF3C7;
-            --mint: #34D399;
-            --mint-light: #D1FAE5;
-            --text: #1E1B4B;
-            --text-soft: #6B7280;
+            --sky: #87CEEB;
+            --sky-deep: #5BA4CF;
+            --sky-light: #D4EEF7;
+            --sky-soft: #EBF6FA;
+            --goose: #FFF1A8;
+            --goose-deep: #F9E15B;
+            --goose-light: #FFF9D4;
+            --green: #86C34E;
+            --green-deep: #6DA83A;
+            --green-light: #E8F5D8;
+            --text: #2C3E50;
+            --text-soft: #7F8C8D;
             --white: #FFFFFF;
         }
 
         body {
             font-family: 'ZCOOL KuaiLe', 'PingFang SC', 'Microsoft YaHei', sans-serif;
-            background: linear-gradient(135deg, #FFF0F5 0%, #F3E8FF 25%, #DBEAFE 50%, #FEF3C7 75%, #D1FAE5 100%);
-            background-size: 400% 400%;
-            animation: gradient-shift 12s ease-in-out infinite;
+            background: linear-gradient(180deg, #EBF6FA 0%, #D4EEF7 30%, #FFF9D4 60%, #E8F5D8 100%);
+            background-size: 100% 100%;
             height: 100vh; height: 100dvh;
             display: flex; justify-content: center; align-items: center;
             padding: 4px; position: relative; overflow: hidden;
         }
 
-        @keyframes gradient-shift {
-            0%{background-position:0% 50%} 25%{background-position:100% 0%}
-            50%{background-position:100% 100%} 75%{background-position:0% 100%}
-            100%{background-position:0% 50%}
-        }
 
         /* ===== 漂浮粒子 ===== */
         .particles {
@@ -73,18 +65,14 @@
             display: flex; flex-direction: column;
             border: 3px solid transparent;
             background-clip: padding-box;
-            box-shadow: 0 0 30px rgba(168,85,247,0.2), 0 0 60px rgba(96,165,250,0.15), 0 8px 40px rgba(0,0,0,0.05);
+            box-shadow: 0 4px 20px rgba(91,164,207,0.15), 0 8px 40px rgba(0,0,0,0.06);
         }
         .player-card::before {
             content: ''; position: absolute; inset: -3px; border-radius: 30px;
-            padding: 3px; background: linear-gradient(135deg, #FF6B9D, #A855F7, #60A5FA, #FBBF24, #34D399);
-            background-size: 300% 300%; animation: border-glow 4s ease-in-out infinite;
+            padding: 3px; background: linear-gradient(135deg, #87CEEB, #FFF1A8, #86C34E);
             -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
             -webkit-mask-composite: xor; mask-composite: exclude;
             pointer-events: none; z-index: -1;
-        }
-        @keyframes border-glow {
-            0%{background-position:0% 50%} 50%{background-position:100% 50%} 100%{background-position:0% 50%}
         }
 
         /* ===== 日期导航 ===== */
@@ -94,20 +82,20 @@
         }
         .date-nav-btn {
             width: 34px; height: 34px; border-radius: 50%; border: none;
-            background: linear-gradient(135deg, var(--pink-light), var(--purple-light));
-            color: var(--purple); font-size: 14px; cursor: pointer;
+            background: linear-gradient(135deg, var(--sky-light), var(--white));
+            color: var(--sky-deep); font-size: 14px; cursor: pointer;
             display: flex; align-items: center; justify-content: center;
             transition: all 0.3s; flex-shrink: 0; font-weight: 700;
-            box-shadow: 0 2px 8px rgba(168,85,247,0.2);
+            box-shadow: 0 2px 8px rgba(91,164,207,0.2);
         }
-        .date-nav-btn:hover { transform: scale(1.1); box-shadow: 0 4px 16px rgba(168,85,247,0.3); }
+        .date-nav-btn:hover { transform: scale(1.1); box-shadow: 0 4px 16px rgba(91,164,207,0.3); }
         .date-nav-btn:active { transform: scale(0.9); }
         .date-nav-btn:disabled { opacity: 0.3; cursor: default; pointer-events: none; }
 
         .date-select {
             padding: 7px 14px; border-radius: 20px;
-            border: 2px solid rgba(168,85,247,0.25);
-            background: linear-gradient(135deg, rgba(255,255,255,0.9), rgba(221,214,254,0.5));
+            border: 2px solid rgba(91,164,207,0.25);
+            background: linear-gradient(135deg, rgba(255,255,255,0.9), var(--sky-soft));
             font-size: 14px; font-weight: 700; color: var(--text);
             font-family: inherit; cursor: pointer; outline: none;
             -webkit-appearance: none; appearance: none;
@@ -123,22 +111,17 @@
         .module-tab {
             padding: 8px 20px; border-radius: 22px;
             font-size: 15px; font-weight: 700; cursor: pointer;
-            border: 2.5px solid rgba(168,85,247,0.2);
+            border: 2.5px solid rgba(91,164,207,0.2);
             transition: all 0.3s cubic-bezier(0.4,0,0.2,1);
             font-family: inherit;
             background: rgba(255,255,255,0.7); color: var(--text-soft);
             box-shadow: 0 2px 8px rgba(0,0,0,0.04);
         }
-        .module-tab:hover { transform: translateY(-2px); box-shadow: 0 4px 16px rgba(168,85,247,0.15); }
+        .module-tab:hover { transform: translateY(-2px); box-shadow: 0 4px 16px rgba(91,164,207,0.15); }
         .module-tab.active {
-            background: linear-gradient(135deg, #FF6B9D, #A855F7);
+            background: linear-gradient(135deg, var(--sky), var(--sky-deep));
             color: white; border-color: transparent;
-            box-shadow: 0 4px 20px rgba(168,85,247,0.4), 0 0 30px rgba(255,107,157,0.3);
-            animation: tab-pulse 2s ease-in-out infinite;
-        }
-        @keyframes tab-pulse {
-            0%,100%{box-shadow: 0 4px 20px rgba(168,85,247,0.4), 0 0 30px rgba(255,107,157,0.3)}
-            50%{box-shadow: 0 4px 30px rgba(168,85,247,0.6), 0 0 50px rgba(255,107,157,0.5)}
+            box-shadow: 0 4px 20px rgba(91,164,207,0.35);
         }
 
         /* ===== 头部 ===== */
@@ -152,7 +135,7 @@
         .pet-hero img {
             width: 56px; height: 56px; border-radius: 50%;
             object-fit: cover; cursor: pointer;
-            box-shadow: 0 0 20px rgba(255,107,157,0.4), 0 0 40px rgba(168,85,247,0.2);
+            box-shadow: 0 0 16px rgba(135,206,235,0.4), 0 0 30px rgba(255,241,168,0.2);
             border: 3px solid #FFF;
             transition: transform 0.3s;
         }
@@ -167,7 +150,7 @@
         .title {
             font-size: 20px; font-weight: 700; color: var(--text);
             letter-spacing: 1px;
-            background: linear-gradient(135deg, #FF6B9D, #A855F7, #60A5FA);
+            background: linear-gradient(135deg, var(--sky), var(--green));
             -webkit-background-clip: text; -webkit-text-fill-color: transparent;
             background-clip: text;
         }
@@ -186,13 +169,13 @@
             width: 100%; flex: 1 1 0; min-height: 0;
             overflow-y: auto; overflow-x: hidden;
             border-radius: 18px;
-            background: linear-gradient(180deg, rgba(255,107,157,0.04) 0%, rgba(168,85,247,0.05) 50%, rgba(96,165,250,0.04) 100%);
-            border: 2px solid rgba(168,85,247,0.1);
+            background: linear-gradient(180deg, rgba(135,206,235,0.04) 0%, rgba(255,241,168,0.06) 50%, rgba(134,195,78,0.04) 100%);
+            border: 2px solid rgba(135,206,235,0.12);
             margin: 6px 0; padding: 8px 0; position: relative;
         }
         .subtitle-box::-webkit-scrollbar { width: 6px; }
         .subtitle-box::-webkit-scrollbar-track { background: transparent; border-radius: 10px; }
-        .subtitle-box::-webkit-scrollbar-thumb { background: linear-gradient(180deg, var(--pink-light), var(--purple-light)); border-radius: 10px; }
+        .subtitle-box::-webkit-scrollbar-thumb { background: linear-gradient(180deg, var(--sky), var(--green)); border-radius: 10px; }
         .subtitle-inner { display: flex; flex-direction: column; padding-right: 2px; min-height: 100%; }
 
         .sub-line {
@@ -206,20 +189,20 @@
             border-radius: 12px; margin: 1px 8px;
         }
         .sub-line.active {
-            color: #FF6B9D; font-weight: 800; font-size: 17px;
-            background: linear-gradient(135deg, rgba(255,107,157,0.08), rgba(168,85,247,0.06));
-            text-shadow: 0 0 20px rgba(255,107,157,0.2);
-            box-shadow: 0 0 20px rgba(255,107,157,0.1);
+            color: var(--sky-deep); font-weight: 800; font-size: 17px;
+            background: linear-gradient(135deg, rgba(135,206,235,0.1), rgba(134,195,78,0.08));
+            text-shadow: none;
+            box-shadow: 0 0 12px rgba(135,206,235,0.1);
         }
         .sub-line.active::before { content: '🐾 '; font-size: 14px; }
-        .sub-line.prev { opacity: 0.5; color: #A78BFA; }
+        .sub-line.prev { opacity: 0.5; color: #7FA8B8; }
         .sub-line.future { opacity: 0.25; }
         .sub-section-tag {
             min-height: 26px; display: flex; align-items: center; justify-content: center;
             padding: 6px 16px; margin: 4px 8px;
             font-size: 13px; font-weight: 700;
-            background: linear-gradient(135deg, rgba(168,85,247,0.08), rgba(255,107,157,0.06));
-            color: var(--purple); letter-spacing: 2px;
+            background: linear-gradient(135deg, rgba(135,206,235,0.1), rgba(134,195,78,0.08));
+            color: var(--sky-deep); letter-spacing: 2px;
             border-radius: 14px;
             transition: all 0.35s ease; opacity: 0; transform: translateY(-6px);
         }
@@ -232,26 +215,21 @@
 
         /* ===== 进度条 ===== */
         .progress-bar {
-            width: 100%; height: 10px; background: rgba(168,85,247,0.1);
+            width: 100%; height: 10px; background: rgba(135,206,235,0.12);
             border-radius: 10px; cursor: pointer; position: relative; overflow: visible;
             touch-action: none; flex-shrink: 0;
         }
         .progress-bar::before { content: ''; position: absolute; inset: -12px 0; }
         .progress-fill {
             height: 100%;
-            background: linear-gradient(90deg, #FF6B9D, #A855F7, #60A5FA, #FBBF24);
-            background-size: 200% 100%;
-            animation: progress-shine 2s linear infinite;
+            background: linear-gradient(90deg, var(--sky), var(--goose-deep), var(--green));
             border-radius: 10px; width: 0%; transition: width 0.1s linear; position: relative;
-        }
-        @keyframes progress-shine {
-            0%{background-position:200% 0} 100%{background-position:0% 0}
         }
         .progress-fill::after {
             content: ''; position: absolute; right: -8px; top: -4px;
             width: 18px; height: 18px; background: #FFF;
-            border: 3px solid var(--purple); border-radius: 50%;
-            box-shadow: 0 0 16px rgba(168,85,247,0.5), 0 2px 8px rgba(0,0,0,0.1);
+            border: 3px solid var(--sky-deep); border-radius: 50%;
+            box-shadow: 0 0 12px rgba(135,206,235,0.4), 0 2px 8px rgba(0,0,0,0.08);
         }
 
         .time-info {
@@ -271,37 +249,33 @@
         }
         .btn-play {
             width: 64px; height: 64px;
-            background: linear-gradient(135deg, #FF6B9D, #A855F7);
+            background: linear-gradient(135deg, var(--sky), var(--sky-deep));
             color: white; font-size: 26px;
-            box-shadow: 0 0 24px rgba(255,107,157,0.5), 0 0 48px rgba(168,85,247,0.3);
-            animation: play-glow 2s ease-in-out infinite;
-        }
-        @keyframes play-glow {
-            0%,100%{box-shadow: 0 0 24px rgba(255,107,157,0.5), 0 0 48px rgba(168,85,247,0.3)}
-            50%{box-shadow: 0 0 36px rgba(255,107,157,0.75), 0 0 64px rgba(168,85,247,0.5)}
+            box-shadow: 0 4px 24px rgba(135,206,235,0.5);
+            transition: all 0.25s;
         }
         .btn-play:disabled { background: #D1D5DB; box-shadow: none; cursor: not-allowed; opacity: 0.5; animation: none; }
         .btn-play:hover:not(:disabled) { transform: scale(1.08); }
         .btn-play:active:not(:disabled) { transform: scale(0.92); }
         .btn-sm {
-            background: rgba(255,255,255,0.8); color: var(--purple);
-            border: 2.5px solid var(--purple-light); font-size: 16px;
-            box-shadow: 0 2px 8px rgba(168,85,247,0.15);
+            background: rgba(255,255,255,0.8); color: var(--sky-deep);
+            border: 2.5px solid var(--sky-light); font-size: 16px;
+            box-shadow: 0 2px 8px rgba(135,206,235,0.15);
         }
-        .btn-sm:hover { background: var(--purple); color: white; border-color: transparent; }
+        .btn-sm:hover { background: var(--sky); color: white; border-color: transparent; }
         .btn-sm:active { transform: scale(0.9); }
         .speed-btn {
-            background: linear-gradient(135deg, rgba(168,85,247,0.1), rgba(255,107,157,0.1));
-            color: var(--purple); border: 2px solid rgba(168,85,247,0.25);
+            background: linear-gradient(135deg, rgba(135,206,235,0.1), rgba(134,195,78,0.1));
+            color: var(--sky-deep); border: 2px solid rgba(135,206,235,0.25);
             border-radius: 16px; padding: 5px 18px;
             font-size: 13px; font-weight: 700; cursor: pointer;
             font-family: inherit; transition: all 0.2s;
         }
-        .speed-btn:hover { background: rgba(168,85,247,0.2); }
+        .speed-btn:hover { background: rgba(135,206,235,0.2); }
 
         .current-section {
             font-size: 13px; font-weight: 700;
-            background: linear-gradient(135deg, #FF6B9D, #A855F7);
+            background: linear-gradient(135deg, var(--sky-deep), var(--green-deep));
             -webkit-background-clip: text; -webkit-text-fill-color: transparent;
             background-clip: text;
             padding: 2px 0; min-height: 20px; flex-shrink: 0;
@@ -316,29 +290,24 @@
             display: flex; align-items: center; justify-content: center; gap: 4px;
             padding: 6px 14px; border-radius: 16px;
             font-size: 12px; font-weight: 700; cursor: pointer;
-            border: 2px solid rgba(168,85,247,0.15);
+            border: 2px solid rgba(135,206,235,0.2);
             background: rgba(255,255,255,0.8); color: var(--text-soft);
             transition: all 0.2s cubic-bezier(0.4,0,0.2,1);
             font-family: inherit; white-space: nowrap;
             box-shadow: 0 1px 4px rgba(0,0,0,0.04);
         }
-        .tag:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(168,85,247,0.2); border-color: var(--purple); }
+        .tag:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(135,206,235,0.2); border-color: var(--sky); }
         .tag:active { transform: scale(0.93); }
         .tag.active-tag {
-            background: linear-gradient(135deg, #FF6B9D, #A855F7);
+            background: linear-gradient(135deg, var(--sky), var(--sky-deep));
             color: white; border-color: transparent;
-            box-shadow: 0 0 16px rgba(255,107,157,0.4), 0 0 30px rgba(168,85,247,0.2);
-            animation: tag-glow 1.5s ease-in-out infinite;
-        }
-        @keyframes tag-glow {
-            0%,100%{box-shadow: 0 0 16px rgba(255,107,157,0.4)}
-            50%{box-shadow: 0 0 24px rgba(255,107,157,0.7), 0 0 40px rgba(168,85,247,0.4)}
+            box-shadow: 0 2px 12px rgba(135,206,235,0.4);
         }
         .tag-emoji { font-size: 14px; }
         .tag-text { font-size: 12px; }
 
         .footer {
-            font-size: 10px; color: #C4B5FD;
+            font-size: 10px; color: #A0B8C8;
             display: flex; align-items: center; justify-content: center; gap: 4px;
             flex-shrink: 0; margin-top: 2px;
         }
@@ -367,15 +336,15 @@
         .kiss-pet {
             width: 140px; height: 140px; border-radius: 50%;
             object-fit: cover; border: 5px solid #FFF;
-            box-shadow: 0 0 40px rgba(255,107,157,0.6), 0 0 80px rgba(168,85,247,0.4);
+            box-shadow: 0 0 40px rgba(135,206,235,0.6), 0 0 80px rgba(134,195,78,0.4);
             animation: kiss-bounce 0.8s ease-in-out infinite, kiss-glow 1.5s ease-in-out infinite;
         }
         @keyframes kiss-bounce {
             0%,100%{transform:translateY(0) scale(1)} 50%{transform:translateY(-20px) scale(1.05)}
         }
         @keyframes kiss-glow {
-            0%,100%{box-shadow: 0 0 40px rgba(255,107,157,0.6), 0 0 80px rgba(168,85,247,0.4)}
-            50%{box-shadow: 0 0 60px rgba(255,107,157,0.9), 0 0 100px rgba(168,85,247,0.6)}
+            0%,100%{box-shadow: 0 0 40px rgba(135,206,235,0.6), 0 0 80px rgba(134,195,78,0.4)}
+            50%{box-shadow: 0 0 60px rgba(135,206,235,0.9), 0 0 100px rgba(134,195,78,0.6)}
         }
         .kiss-emoji {
             font-size: 64px; animation: kiss-fly 0.6s ease-out infinite;
@@ -388,7 +357,7 @@
         .kiss-text {
             font-family: 'ZCOOL KuaiLe', sans-serif;
             font-size: 32px; font-weight: 700; color: #FFF;
-            text-shadow: 0 0 30px rgba(255,107,157,0.8), 0 0 60px rgba(168,85,247,0.6);
+            text-shadow: 0 0 30px rgba(135,206,235,0.8), 0 0 60px rgba(134,195,78,0.6);
             animation: kiss-text 1s ease-in-out infinite;
         }
         @keyframes kiss-text {
@@ -409,18 +378,18 @@
         .kiss-dismiss {
             margin-top: 24px; padding: 10px 30px;
             border-radius: 24px; border: none;
-            background: linear-gradient(135deg, #FF6B9D, #A855F7);
+            background: linear-gradient(135deg, var(--sky), var(--green));
             color: white; font-size: 16px; font-weight: 700;
             cursor: pointer; font-family: inherit;
             box-shadow: 0 4px 20px rgba(168,85,247,0.4);
             transition: all 0.3s;
         }
-        .kiss-dismiss:hover { transform: scale(1.05); box-shadow: 0 6px 30px rgba(168,85,247,0.6); }
+        .kiss-dismiss:hover { transform: scale(1.05); box-shadow: 0 6px 30px rgba(135,206,235,0.6); }
 
         /* ===== 加载覆盖层 ===== */
         .loading-overlay {
             position: fixed; top: 0; left: 0; right: 0; bottom: 0;
-            background: linear-gradient(135deg, rgba(255,240,245,0.97), rgba(243,232,255,0.97));
+            background: linear-gradient(135deg, rgba(235,246,250,0.97), rgba(255,249,212,0.97));
             backdrop-filter: blur(8px);
             display: flex; flex-direction: column;
             align-items: center; justify-content: center;
@@ -442,12 +411,12 @@
             font-family: 'ZCOOL KuaiLe', 'PingFang SC', 'Microsoft YaHei', sans-serif;
         }
         .loading-progress-bar {
-            width: 220px; height: 10px; background: rgba(168,85,247,0.15);
+            width: 220px; height: 10px; background: rgba(135,206,235,0.15);
             border-radius: 10px; margin-top: 16px; overflow: hidden;
         }
         .loading-progress-fill {
             height: 100%; width: 0%;
-            background: linear-gradient(90deg, #FF6B9D, #A855F7, #60A5FA);
+            background: linear-gradient(90deg, var(--sky), var(--goose-deep), var(--green));
             border-radius: 10px; transition: width 0.4s ease;
         }
 
@@ -479,8 +448,8 @@
             <div class="kiss-hearts" id="kissHearts"></div>
             <img class="kiss-pet" src="baobaolei.jpg" alt="宝宝雷">
             <div class="kiss-emoji">😘</div>
-            <div class="kiss-text">爸爸妈妈播报完毕<br>爱你们哦～</div>
-            <button class="kiss-dismiss" id="kissDismiss">🐾 再看一次</button>
+            <div class="kiss-text">爸爸妈妈今日播报完毕<br>雷子永远爱你们呦</div>
+            <button class="kiss-dismiss" id="kissDismiss">🐾 重新播报</button>
         </div>
     </div>
 
@@ -544,6 +513,7 @@
     </div>
 
     <audio id="audio" preload="auto"></audio>
+    <audio id="dogBarkAudio" preload="auto" src="dog_bark.wav"></audio>
 
     <script>
     // ===== 漂浮粒子 =====
@@ -628,14 +598,18 @@
     kissDismiss.addEventListener('click', (e) => {
         e.stopPropagation();
         hideKiss();
-        // 重播
+        // 重播：先狗叫再内容
+        dogBarkPlayed = false;
         audio.currentTime = 0;
-        if (!isPlaying) {
-            audio.play().catch(()=>{});
+        dogBarkAudio.currentTime = 0;
+        dogBarkAudio.play().then(() => {
             btnPlay.textContent = '⏸️';
             playerCard.classList.add('playing');
             isPlaying = true;
-        }
+        }).catch(() => {});
+        dogBarkAudio.onended = () => {
+            audio.play().catch(()=>{});
+        };
     });
 
     function hideKiss() {
@@ -707,7 +681,7 @@
         btnPlay.textContent = '▶️';
         playerCard.classList.remove('playing');
         isPlaying = false;
-        currentSectionEl.textContent = '✅ 播报完毕，爱你们哦～';
+        currentSectionEl.textContent = '✅ 爸爸妈妈今日播报完毕，雷子永远爱你们呦～';
         if (currentData?.subtitles) {
             updateSubtitles(currentData.duration + 10);
         }
@@ -716,7 +690,7 @@
     });
 
     audio.addEventListener('waiting', () => { currentSectionEl.textContent = '⏳ 缓冲中...'; });
-    audio.addEventListener('playing', () => { canplayFired = true; });
+    audio.addEventListener('playing', () => { canplayFired = true; isPlaying = true; });
 
     // ===== 加载数据 =====
     async function fetchJSON(url) {
@@ -1034,6 +1008,9 @@
     });
 
     // ===== 播放控制 =====
+    const dogBarkAudio = document.getElementById('dogBarkAudio');
+    let dogBarkPlayed = false; // 每个 session 只播一次狗叫
+
     btnPlay.addEventListener('click', () => {
         if (!audioReady) {
             currentSectionEl.textContent = '⏳ 音频还在加载，请稍等...';
@@ -1041,18 +1018,40 @@
         }
         if (isPlaying) {
             audio.pause();
+            dogBarkAudio.pause();
             btnPlay.textContent = '▶️';
             playerCard.classList.remove('playing');
+            isPlaying = false;
         } else {
-            audio.play().catch(err => {
-                currentSectionEl.textContent = '⚠️ 播放失败，请稍后重试';
-                return;
-            });
-            btnPlay.textContent = '⏸️';
-            playerCard.classList.add('playing');
+            // 先播放狗叫声，再自动播放内容
+            if (!dogBarkPlayed) {
+                dogBarkPlayed = true;
+                dogBarkAudio.currentTime = 0;
+                dogBarkAudio.volume = 0.8;
+                dogBarkAudio.play().then(() => {
+                    btnPlay.textContent = '⏸️';
+                    playerCard.classList.add('playing');
+                    isPlaying = true;
+                }).catch(() => {
+                    // 狗叫播放失败，直接播内容
+                    startMainAudio();
+                });
+                // 狗叫结束后自动播内容
+                dogBarkAudio.onended = () => {
+                    startMainAudio();
+                };
+            } else {
+                startMainAudio();
+            }
         }
-        isPlaying = !isPlaying;
     });
+
+    function startMainAudio() {
+        dogBarkAudio.onended = null;
+        audio.play().catch(err => {
+            currentSectionEl.textContent = '⚠️ 播放失败，请稍后重试';
+        });
+    }
 
     btnRewind.addEventListener('click', () => {
         const nt = Math.max(0, audio.currentTime - 15);
