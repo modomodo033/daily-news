@@ -35,7 +35,6 @@
             overflow-x: hidden;
         }
 
-        /* 装饰爪印 + 星星背景 */
         .bg-paws {
             position: fixed; top: 0; left: 0; right: 0; bottom: 0;
             pointer-events: none; z-index: 0;
@@ -59,7 +58,6 @@
             position: relative;
             z-index: 1;
             border: 2px solid rgba(74,144,217,0.08);
-            transition: box-shadow 0.3s;
         }
 
         .date-badge {
@@ -80,16 +78,16 @@
         }
 
         .subtitle {
-            font-size: 12px; color: var(--text-soft); margin-bottom: 18px; opacity: 0.8;
+            font-size: 12px; color: var(--text-soft); margin-bottom: 14px; opacity: 0.8;
         }
 
         .pet-hero {
-            position: relative; margin: 0 auto 14px;
-            width: 150px; height: 150px;
+            position: relative; margin: 0 auto 10px;
+            width: 120px; height: 120px;
         }
 
         .pet-hero img {
-            width: 150px; height: 150px; border-radius: 50%;
+            width: 120px; height: 120px; border-radius: 50%;
             object-fit: cover;
             border: 3px solid #FFF;
             box-shadow: 0 6px 24px var(--shadow-blue), 0 2px 8px rgba(0,0,0,0.08);
@@ -100,22 +98,102 @@
 
         .pet-hero::after {
             content: '🐾'; position: absolute; bottom: -4px; right: -4px;
-            font-size: 24px; background: var(--white); border-radius: 50%;
-            width: 36px; height: 36px;
+            font-size: 20px; background: var(--white); border-radius: 50%;
+            width: 30px; height: 30px;
             display: flex; align-items: center; justify-content: center;
             box-shadow: 0 2px 8px rgba(0,0,0,0.08); border: 2px solid #FFF;
         }
 
         .pet-name {
-            font-size: 14px; font-weight: 600; color: var(--blue-deep);
-            margin-bottom: 14px;
-            display: flex; align-items: center; justify-content: center; gap: 6px;
+            font-size: 13px; font-weight: 600; color: var(--blue-deep);
+            margin-bottom: 10px;
+            display: flex; align-items: center; justify-content: center; gap: 4px;
+        }
+
+        /* ===== 字幕区域 ===== */
+        .subtitle-box {
+            width: 100%;
+            height: 96px;
+            overflow: hidden;
+            border-radius: 16px;
+            background: linear-gradient(180deg, rgba(74,144,217,0.06) 0%, rgba(255,217,61,0.08) 100%);
+            border: 1.5px solid rgba(74,144,217,0.12);
+            margin: 8px 0 10px;
+            padding: 4px 0;
+            position: relative;
+        }
+
+        .subtitle-inner {
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.35s cubic-bezier(0.4,0,0.2,1);
+            will-change: transform;
+        }
+
+        .sub-line {
+            min-height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 4px 16px;
+            font-size: 15px;
+            font-weight: 500;
+            color: #7A8FA5;
+            line-height: 1.5;
+            text-align: center;
+            transition: all 0.35s ease;
+            opacity: 0.45;
+            transform: scale(0.92);
+            white-space: nowrap;
+        }
+
+        .sub-line.active {
+            color: var(--text);
+            font-weight: 700;
+            font-size: 17px;
+            opacity: 1;
+            transform: scale(1);
+            text-shadow: 0 1px 2px rgba(0,0,0,0.05);
+        }
+
+        .sub-line.active::before {
+            content: '🐾 ';
+            font-size: 12px;
+            vertical-align: middle;
+        }
+
+        .sub-line.prev {
+            opacity: 0.55;
+            transform: scale(0.95);
+        }
+
+        .sub-line.future {
+            opacity: 0.3;
+        }
+
+        /* 字幕顶部小标题 */
+        .sub-section-tag {
+            min-height: 26px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2px 16px;
+            font-size: 12px;
+            font-weight: 700;
+            color: var(--blue-deep);
+            letter-spacing: 1px;
+            transition: all 0.35s ease;
+            opacity: 0;
+            transform: translateY(-4px);
+        }
+        .sub-section-tag.visible {
+            opacity: 1;
+            transform: translateY(0);
         }
 
         .progress-bar {
             width: 100%; height: 5px; background: #EDF2FA;
-            border-radius: 10px; margin: 12px 0 8px;
-            cursor: pointer; position: relative; overflow: visible;
+            border-radius: 10px; margin: 0; cursor: pointer; position: relative; overflow: visible;
         }
         .progress-fill {
             height: 100%;
@@ -133,13 +211,13 @@
 
         .time-info {
             display: flex; justify-content: space-between;
-            font-size: 12px; color: #8EA0B5; margin-bottom: 10px;
+            font-size: 12px; color: #8EA0B5; margin-bottom: 6px;
             font-variant-numeric: tabular-nums;
         }
 
         .controls {
             display: flex; align-items: center; justify-content: center;
-            gap: 18px; margin: 6px 0 10px;
+            gap: 18px; margin: 4px 0 8px;
         }
 
         .btn {
@@ -182,33 +260,30 @@
             color: white; transform: translateY(-1px);
         }
 
-        /* 可爱标签区域 */
+        /* 分类标签 */
         .tags-area {
-            margin-top: 16px; padding-top: 14px;
+            margin-top: 12px; padding-top: 12px;
             border-top: 1.5px dashed rgba(74,144,217,0.15);
         }
         .tags-title {
-            font-size: 11px; color: var(--text-soft); margin-bottom: 10px;
+            font-size: 11px; color: var(--text-soft); margin-bottom: 8px;
             letter-spacing: 1px; opacity: 0.7;
         }
         .tags-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            gap: 8px;
+            gap: 6px;
         }
         .tag {
-            display: flex; align-items: center; justify-content: center; gap: 4px;
-            padding: 10px 6px; border-radius: 16px;
-            font-size: 12px; font-weight: 600; cursor: pointer;
+            display: flex; align-items: center; justify-content: center; gap: 3px;
+            padding: 8px 4px; border-radius: 14px;
+            font-size: 11px; font-weight: 600; cursor: pointer;
             border: none; outline: none;
             transition: all 0.25s cubic-bezier(0.4,0,0.2,1);
             -webkit-tap-highlight-color: transparent;
-            position: relative; overflow: hidden;
             user-select: none;
             font-family: inherit;
         }
-
-        /* 交替黄蓝配色 */
         .tag-yellow {
             background: linear-gradient(135deg, #FFFBEA, #FFF5C2);
             color: #B8860B;
@@ -221,66 +296,40 @@
             border: 1.5px solid rgba(74, 144, 217, 0.2);
             box-shadow: 0 2px 6px var(--shadow-blue);
         }
-
-        .tag:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 6px 20px rgba(0,0,0,0.1);
-        }
-        .tag:active {
-            transform: scale(0.93);
-        }
-
+        .tag:hover { transform: translateY(-2px); box-shadow: 0 4px 14px rgba(0,0,0,0.1); }
+        .tag:active { transform: scale(0.93); }
         .tag-yellow:hover { background: linear-gradient(135deg, var(--yellow), var(--yellow-light)); }
         .tag-blue:hover { background: linear-gradient(135deg, var(--blue), var(--blue-light)); color: white; }
-
-        .tag .tag-emoji { font-size: 16px; }
-        .tag .tag-text { font-size: 12px; }
-
-        /* 标签上的可爱小装饰 */
-        .tag::before {
-            content: '';
-            position: absolute; top: -8px; right: -8px;
-            width: 14px; height: 14px; background: var(--yellow);
-            border-radius: 50%; opacity: 0;
-            transition: opacity 0.2s;
-        }
-        .tag.active-tag::before { opacity: 1; }
-
-        .tag.active-tag {
-            transform: translateY(-3px) scale(1.03);
-        }
+        .tag .tag-emoji { font-size: 14px; }
+        .tag .tag-text { font-size: 11px; }
+        .tag.active-tag { transform: translateY(-2px) scale(1.03); }
         .tag-yellow.active-tag {
             background: linear-gradient(135deg, #FFD93D, #FFC107);
-            box-shadow: 0 6px 20px var(--shadow-yellow);
+            box-shadow: 0 4px 16px var(--shadow-yellow);
         }
         .tag-blue.active-tag {
             background: linear-gradient(135deg, var(--blue), var(--blue-deep));
             color: white;
-            box-shadow: 0 6px 20px var(--shadow-blue);
+            box-shadow: 0 4px 16px var(--shadow-blue);
         }
 
         .current-section {
-            font-size: 13px; font-weight: 600;
-            color: var(--blue-deep);
-            margin-top: 10px;
-            padding: 6px 0;
-            min-height: 24px;
+            font-size: 12px; font-weight: 600;
+            color: var(--blue-deep); margin-top: 8px;
+            padding: 4px 0; min-height: 22px;
             transition: all 0.3s;
         }
 
         .footer {
-            margin-top: 12px; font-size: 11px; color: #A0B5CC;
+            margin-top: 10px; font-size: 11px; color: #A0B5CC;
             display: flex; align-items: center; justify-content: center; gap: 4px;
         }
-        .footer .heart {
-            color: #FF6B8A; animation: heartbeat 1.5s ease-in-out infinite;
-        }
+        .footer .heart { color: #FF6B8A; animation: heartbeat 1.5s ease-in-out infinite; }
 
         @keyframes heartbeat {
             0%,100%{transform:scale(1)} 14%{transform:scale(1.15)} 28%{transform:scale(1)} 42%{transform:scale(1.15)}
         }
 
-        /* 播放中动画 */
         .playing .pet-hero img {
             animation: gentle-bounce 2s ease-in-out infinite;
         }
@@ -298,12 +347,15 @@
         .deco.bottom-right { bottom: 18px; right: 14px; font-size: 16px; }
 
         @media (max-width: 400px) {
-            .player-card { padding: 22px 16px 16px; border-radius: 26px; }
-            .pet-hero { width: 130px; height: 130px; }
-            .pet-hero img { width: 130px; height: 130px; }
+            .player-card { padding: 20px 14px 14px; border-radius: 26px; }
+            .pet-hero { width: 100px; height: 100px; }
+            .pet-hero img { width: 100px; height: 100px; }
             .title { font-size: 19px; }
-            .tags-grid { grid-template-columns: repeat(3, 1fr); gap: 6px; }
-            .tag { padding: 8px 4px; border-radius: 14px; }
+            .subtitle-box { height: 84px; }
+            .sub-line { font-size: 14px; }
+            .sub-line.active { font-size: 15px; }
+            .tags-grid { gap: 5px; }
+            .tag { padding: 7px 3px; border-radius: 12px; }
         }
     </style>
 </head>
@@ -311,7 +363,6 @@
     <div class="bg-paws"></div>
 
     <div class="player-card" id="playerCard">
-        <!-- 装饰 -->
         <div class="deco top-left">🦴</div>
         <div class="deco top-right">🎾</div>
 
@@ -320,13 +371,16 @@
         <h1 class="title">
             <span>🐶</span>宝宝雷の新闻电台<span>🎙️</span>
         </h1>
-        <p class="subtitle">戳标签直达你关心的板块👇</p>
+        <p class="subtitle">🐾 萌宠播报 + 滚动字幕，戳标签直达 🐾</p>
 
         <div class="pet-hero">
             <img src="baobaolei.jpg" alt="宝宝雷" id="petImage">
         </div>
-        <div class="pet-name">
-            <span>🦴 今天宝宝雷为你播报 🦴</span>
+        <div class="pet-name">🦴 今天宝宝雷为你播报 🦴</div>
+
+        <!-- ===== 滚动字幕 ===== -->
+        <div class="subtitle-box" id="subtitleBox">
+            <div class="subtitle-inner" id="subtitleInner"></div>
         </div>
 
         <div class="progress-bar" id="progressBar">
@@ -335,7 +389,7 @@
 
         <div class="time-info">
             <span id="currentTime">00:00</span>
-            <span id="duration">07:15</span>
+            <span id="duration">07:01</span>
         </div>
 
         <div class="current-section" id="currentSection">🎧 准备收听...</div>
@@ -350,7 +404,7 @@
             <button class="speed-btn" id="btnSpeed">1.0x</button>
         </div>
 
-        <!-- 可爱的分类标签 -->
+        <!-- 分类标签 -->
         <div class="tags-area">
             <div class="tags-title">✦ 点一下直达你想听的内容 ✦</div>
             <div class="tags-grid" id="tagsGrid">
@@ -385,7 +439,7 @@
         </div>
 
         <div class="footer">
-            <span>Made with</span><span class="heart">❤️</span><span>by WorkBuddy AI · 每日更新</span>
+            <span>Made with</span><span class="heart">❤️</span><span>by WorkBuddy · 每日更新</span>
         </div>
     </div>
 
@@ -394,18 +448,105 @@
     </audio>
 
     <script>
+        // ========== 字幕数据 ==========
+        const SUBTITLES = [
+            {time:0,   text:"汪汪！各位主人好，今天是2026年7月7日"},
+            {time:4,   text:"星期二，小暑节气。宝宝雷为你播报今日新闻~"},
+            {time:10,  text:"", section:"财经"},
+            {time:12,  text:"美股三大指数集体收涨，纳指涨超百分之一"},
+            {time:17,  text:"费城半导体指数大涨超百分之四"},
+            {time:24,  text:"AMD涨超百分之九，特斯拉涨百分之六点六九"},
+            {time:29,  text:"央行落地一万亿元逆回购，净投放两千亿元"},
+            {time:34,  text:"下半年货币政策偏向宽松"},
+            {time:38,  text:"美国六月非农大幅不及预期"},
+            {time:41,  text:"市场押注美联储九月开启降息"},
+            {time:46,  text:"腾讯大幅减持快手，持股降至百分之九点三七"},
+            {time:51,  text:"三星Q2业绩超预期，半导体需求强劲"},
+            {time:55,  text:"A股半年报预告大面积预喜"},
+            {time:59,  text:"六十九家公司中六十二家预喜"},
+            {time:63,  text:"", section:"politics"},
+            {time:67,  text:"北约峰会今天在安卡拉开幕，32国领导人齐聚"},
+            {time:73,  text:"土耳其外长称中国是不可阻挡的超级力量"},
+            {time:77,  text:"特朗普分别致电普京和泽连斯基"},
+            {time:82,  text:"俄方表示愿政治解决冲突"},
+            {time:86,  text:"泽连斯基称战争已具备结束条件"},
+            {time:92,  text:"王毅外长访问丹麦、瑞典、芬兰、挪威四国"},
+            {time:98,  text:"踩着中欧关系关键节点"},
+            {time:102, text:"纳米比亚总统对中国进行国事访问"},
+            {time:108, text:"中非合作持续升温"},
+            {time:113, text:"", section:"ai"},
+            {time:117, text:"GPT-5.6 Sol预览版内测结果曝光"},
+            {time:122, text:"性能更强成本减半，每百万Token仅五美元"},
+            {time:128, text:"美团开源万亿参数大模型 LongCat-2.0"},
+            {time:133, text:"国内首个用五万张国产卡完成训练推理"},
+            {time:139, text:"Anthropic发现Claude内部J空间结构"},
+            {time:145, text:"类似人类大脑全局工作空间，引发AI意识讨论"},
+            {time:150, text:"AI模型本地化加速，2028年前沿模型可笔记本运行"},
+            {time:156, text:"AI制药新突破，百奥几何命中率达百分之十八点七"},
+            {time:163, text:"", section:"livelihood"},
+            {time:174, text:"七月起社保缴费基数全面改革"},
+            {time:178, text:"绩效工资、年终奖、加班费全部纳入"},
+            {time:182, text:"金税四期打通税务与人社数据"},
+            {time:186, text:"超龄劳动者权益保障新规落地"},
+            {time:190, text:"城乡居民基础养老金上调"},
+            {time:194, text:"职工养老金调整方案也在筹备中"},
+            {time:198, text:"广西南宁防汛升至一级应急响应"},
+            {time:202, text:"多座水库出现险情，发布洪水红色预警"},
+            {time:208, text:"多所高校严防AI穿戴设备作弊"},
+            {time:214, text:"", section:"tech"},
+            {time:219, text:"全球半导体七月集体涨价"},
+            {time:222, text:"近二十家厂商集中提价，涨幅百分之五到二十五"},
+            {time:228, text:"AI抢占高端晶圆产能蔓延至全产业链"},
+            {time:233, text:"天问二号探测器成功抵达目标小行星"},
+            {time:238, text:"中国"人造太阳"计划2030年前实现核聚变发电"},
+            {time:243, text:"SpaceX星舰V3首飞在即"},
+            {time:247, text:"马斯克规划2026年底发射5艘无人星舰前往火星"},
+            {time:253, text:"千帆极轨十五组卫星成功发射"},
+            {time:258, text:"推进低轨卫星互联网组网建设"},
+            {time:263, text:"", section:"energy"},
+            {time:267, text:"黄金失守4130美元，月跌幅超百分之四"},
+            {time:272, text:"OPEC+增产叠加需求疲软，油价持续承压"},
+            {time:276, text:"WTI原油报68.55美元每桶"},
+            {time:281, text:"美国战略石油储备降至1983年以来最低"},
+            {time:286, text:"咖啡期货暴涨，阿拉比卡单日涨超百分之十六"},
+            {time:292, text:"极端天气冲击全球咖啡主产区"},
+            {time:297, text:"白银和铂金反弹，市场避险情绪波动"},
+            {time:302, text:"", section:"military"},
+            {time:307, text:"北约国防工业论坛同日召开"},
+            {time:311, text:"聚焦跨大西洋国防生产与投资创新"},
+            {time:316, text:"BlueHammer漏洞使Defender沦为勒索软件跳板"},
+            {time:321, text:"CVSS评分7.8，攻击者可利用提权"},
+            {time:326, text:"普京同意政治解决俄乌冲突"},
+            {time:330, text:"冲突推动反无人机雷达小型化需求"},
+            {time:336, text:"特朗普称伊朗极度渴望达成协议"},
+            {time:340, text:"美伊核谈判可能进入新阶段"},
+            {time:347, text:"", section:"health"},
+            {time:352, text:"557个药品通过2026年国家医保目录初审"},
+            {time:357, text:"形式审查通过率达百分之九十二"},
+            {time:362, text:"医保支付DRG DIP改革全面推开"},
+            {time:366, text:"商保创新药目录首次与医保目录同步调整"},
+            {time:372, text:"多层次医疗保障体系建设迈出实质性一步"},
+            {time:377, text:"", section:"disaster"},
+            {time:382, text:"湖北黄石黄冈遭遇龙卷风，8人遇难1人失联"},
+            {time:387, text:"新疆慕士塔格峰暴风雪致3名登山者遇难"},
+            {time:392, text:"广西南宁多座水库出现险情"},
+            {time:396, text:"六部门联合部署安全生产打非治违行动"},
+            {time:401, text:"七月为洪涝、台风和地质灾害高发期"},
+            {time:408, text:"感谢收听今天的播报，明天再见，汪汪！"}
+        ];
+
         // ========== 分类时间戳映射 ==========
-        // 基于音频实际结构估算（总长约7分15秒=435秒）
         const SECTION_MAP = {
-            finance:    { name: '📈 财经',        emoji: '💰', start: 8,    end: 128 },
-            politics:   { name: '🌍 国际政治',     emoji: '🌍', start: 128,  end: 225 },
-            ai:         { name: '🤖 人工智能',     emoji: '🤖', start: 225,  end: 298 },
-            livelihood: { name: '🏠 国内民生',     emoji: '🏠', start: 298,  end: 356 },
-            tech:       { name: '🔬 硬科技产业',   emoji: '🔬', start: 356,  end: 400 },
-            energy:     { name: '⛽ 能源大宗',     emoji: '⛽', start: 400,  end: 432 },
-            military:   { name: '🎖️ 军事安全',     emoji: '🎖️', start: 432,  end: 465 },
-            health:     { name: '🏥 健康医疗',     emoji: '🏥', start: 465,  end: 495 },
-            disaster:   { name: '🚨 灾害安全',     emoji: '🚨', start: 495,  end: 555 },
+            finance:    { name: '财经',            emoji: '💰', start: 0,   end: 65.8 },
+            politics:   { name: '国际政治',         emoji: '🌍', start: 65.8,end: 117.3 },
+            ai:         { name: 'AI',              emoji: '🤖', start: 117.3,end: 174.2 },
+            livelihood: { name: '国内民生',         emoji: '🏠', start: 174.2,end: 219.2 },
+            tech:       { name: '硬科技产业',       emoji: '🔬', start: 219.2,end: 267.2 },
+            energy:     { name: '能源与大宗商品',   emoji: '⛽', start: 267.2,end: 306.9 },
+            military:   { name: '军事与地缘安全',   emoji: '🎖️', start: 306.9,end: 352.2 },
+            health:     { name: '健康与公共卫生',   emoji: '🏥', start: 352.2,end: 382.1 },
+            disaster:   { name: '突发灾害与公共安全',emoji: '🚨', start: 382.1,end: 421.1 },
+            ending:     { name: '播报结束',         emoji: '🐾', start: 421.1,end: 999 },
         };
 
         const audio = document.getElementById('audio');
@@ -420,8 +561,11 @@
         const playerCard = document.getElementById('playerCard');
         const petImage = document.getElementById('petImage');
         const currentSectionEl = document.getElementById('currentSection');
+        const subtitleBox = document.getElementById('subtitleBox');
+        const subtitleInner = document.getElementById('subtitleInner');
 
         let isPlaying = false;
+        let activeIdx = -1;
         const speeds = [0.75, 1.0, 1.25, 1.5, 1.75, 2.0];
         let speedIdx = 1;
 
@@ -431,12 +575,10 @@
             return String(m).padStart(2,'0') + ':' + String(s).padStart(2,'0');
         }
 
-        // 根据当前时间判断在哪个板块
         function getCurrentSection(time) {
             for (const [key, sec] of Object.entries(SECTION_MAP)) {
                 if (time >= sec.start && time < sec.end) return key;
             }
-            if (time >= 555) return 'ending';
             return 'intro';
         }
 
@@ -445,29 +587,81 @@
             if (key === 'intro') {
                 currentSectionEl.textContent = '🎧 今日新闻资讯播报';
             } else if (key === 'ending') {
-                currentSectionEl.textContent = '📌 今日播报结束，感谢收听~';
+                currentSectionEl.textContent = '🐾 今日播报结束，宝宝雷下班啦~';
             } else {
                 const sec = SECTION_MAP[key];
                 currentSectionEl.textContent = sec.emoji + ' 正在收听：' + sec.name;
             }
 
-            // 更新标签高亮
             document.querySelectorAll('.tag').forEach(tag => {
                 tag.classList.toggle('active-tag', tag.dataset.section === key);
             });
         }
 
+        // ===== 字幕切换 =====
+        function renderSubtitles() {
+            subtitleInner.innerHTML = SUBTITLES.map((s, i) => {
+                if (s.section) {
+                    // 板块标题行
+                    return `<div class="sub-section-tag" data-idx="${i}">🔹 ${s.section === 'finance' ? '财经' : s.section === 'politics' ? '国际政治' : s.section === 'ai' ? 'AI' : s.section === 'livelihood' ? '国内民生' : s.section === 'tech' ? '硬科技产业' : s.section === 'energy' ? '能源与大宗商品' : s.section === 'military' ? '军事与地缘安全' : s.section === 'health' ? '健康与公共卫生' : '突发灾害与公共安全'}</div>`;
+                }
+                return `<div class="sub-line" data-idx="${i}">${s.text}</div>`;
+            }).join('');
+            activeIdx = -1;
+        }
+
+        function updateSubtitles(time) {
+            // 找当前应该显示的字幕行
+            let target = -1;
+            for (let i = SUBTITLES.length - 1; i >= 0; i--) {
+                if (time >= SUBTITLES[i].time) {
+                    target = i;
+                    break;
+                }
+            }
+            if (target === activeIdx) return;
+            activeIdx = target;
+
+            // 更新所有行样式
+            const lines = subtitleInner.querySelectorAll('.sub-line, .sub-section-tag');
+            lines.forEach((el, i) => {
+                const idx = parseInt(el.dataset.idx);
+                el.classList.remove('active', 'prev', 'future', 'visible');
+
+                if (SUBTITLES[idx] && SUBTITLES[idx].section) {
+                    // 板块标题行：当前section可见
+                    const secName = SUBTITLES[idx].section;
+                    const curSec = getCurrentSection(time);
+                    if (secName === curSec) {
+                        el.classList.add('visible');
+                    }
+                } else if (idx === target) {
+                    el.classList.add('active');
+                } else if (idx < target) {
+                    el.classList.add('prev');
+                } else {
+                    el.classList.add('future');
+                }
+            });
+
+            // 滚动位置：让active行在字幕框中间偏上
+            if (target >= 0) {
+                const activeEl = subtitleInner.querySelector(`[data-idx="${target}"]`);
+                if (activeEl) {
+                    const boxH = subtitleBox.clientHeight;
+                    const elTop = activeEl.offsetTop;
+                    const elH = activeEl.offsetHeight;
+                    const scrollTo = Math.max(0, elTop - boxH / 2 + elH / 2);
+                    subtitleInner.style.transform = `translateY(-${scrollTo}px)`;
+                }
+            }
+        }
+
+        // ===== 初始化字幕 =====
+        renderSubtitles();
+
         audio.addEventListener('loadedmetadata', () => {
             durationEl.textContent = formatTime(audio.duration);
-            // 用实际时长修正时间戳
-            if (audio.duration && audio.duration > 0) {
-                const ratio = audio.duration / 580; // 基准约580秒
-                for (const key of Object.keys(SECTION_MAP)) {
-                    SECTION_MAP[key].start = Math.round(SECTION_MAP[key].start * ratio);
-                    SECTION_MAP[key].end = Math.round(SECTION_MAP[key].end * ratio);
-                }
-                durationEl.textContent = formatTime(audio.duration);
-            }
         });
 
         audio.addEventListener('timeupdate', () => {
@@ -476,15 +670,20 @@
                 progressFill.style.width = pct + '%';
                 currentTimeEl.textContent = formatTime(audio.currentTime);
                 updateSectionDisplay(audio.currentTime);
+                updateSubtitles(audio.currentTime);
             }
         });
 
-        // 点击进度条
+        // 点击进度条跳转
         progressBar.addEventListener('click', (e) => {
             if (!audio.duration) return;
             const rect = progressBar.getBoundingClientRect();
             const pct = (e.clientX - rect.left) / rect.width;
-            audio.currentTime = pct * audio.duration;
+            const newTime = pct * audio.duration;
+            audio.currentTime = newTime;
+            // 重置字幕状态
+            activeIdx = -1;
+            updateSubtitles(newTime);
         });
 
         // 播放/暂停
@@ -506,14 +705,19 @@
             playerCard.classList.remove('playing');
             isPlaying = false;
             currentSectionEl.textContent = '✅ 播报完毕，宝宝雷下班啦~';
+            updateSubtitles(999);
         });
 
         btnRewind.addEventListener('click', () => {
-            audio.currentTime = Math.max(0, audio.currentTime - 15);
+            const nt = Math.max(0, audio.currentTime - 15);
+            audio.currentTime = nt;
+            activeIdx = -1; updateSubtitles(nt);
         });
 
         btnForward.addEventListener('click', () => {
-            audio.currentTime = Math.min(audio.duration || 0, audio.currentTime + 15);
+            const nt = Math.min(audio.duration || 0, audio.currentTime + 15);
+            audio.currentTime = nt;
+            activeIdx = -1; updateSubtitles(nt);
         });
 
         btnSpeed.addEventListener('click', () => {
@@ -525,9 +729,8 @@
         // 点击宝宝雷照片播放/暂停
         petImage.addEventListener('click', () => btnPlay.click());
 
-        // ========== 标签点击跳转 ==========
-        const tagsGrid = document.getElementById('tagsGrid');
-        tagsGrid.addEventListener('click', (e) => {
+        // ===== 标签点击跳转 =====
+        document.getElementById('tagsGrid').addEventListener('click', (e) => {
             const tag = e.target.closest('.tag');
             if (!tag) return;
             const sectionKey = tag.dataset.section;
@@ -535,9 +738,10 @@
             if (!sec || !audio.duration) return;
 
             audio.currentTime = sec.start;
+            activeIdx = -1;
             updateSectionDisplay(sec.start);
+            updateSubtitles(sec.start);
 
-            // 如果没在播放，自动播放
             if (!isPlaying) {
                 audio.play();
                 btnPlay.textContent = '⏸️';
@@ -545,11 +749,8 @@
                 isPlaying = true;
             }
 
-            // 点击动画
             tag.style.transform = 'scale(0.88)';
-            setTimeout(() => {
-                tag.style.transform = '';
-            }, 150);
+            setTimeout(() => { tag.style.transform = ''; }, 150);
         });
     </script>
 </body>
