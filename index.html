@@ -3,26 +3,29 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>宝宝雷の每日新闻播报 · 2026年7月7日</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <title>宝宝雷の新闻电台 · 2026年7月7日</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        
+
         :root {
-            --warm-cream: #FFF9F0;
-            --warm-orange: #FFB067;
-            --deep-orange: #F0884A;
-            --soft-brown: #8D6E63;
-            --light-brown: #D7CCC8;
-            --cream-card: #FFFAF5;
-            --text-dark: #3E2723;
-            --text-soft: #6D4C41;
-            --accent-gold: #FFC107;
+            --yellow: #FFD93D;
+            --yellow-light: #FFF5C2;
+            --yellow-soft: #FFFBEA;
+            --blue: #4A90D9;
+            --blue-deep: #2E6CB5;
+            --blue-light: #E8F2FF;
+            --blue-soft: #D0E4FF;
+            --white: #FFFFFF;
+            --text: #1A2B4C;
+            --text-soft: #5A6F8A;
+            --card-bg: #FFFFFF;
+            --shadow-yellow: rgba(255, 217, 61, 0.3);
+            --shadow-blue: rgba(74, 144, 217, 0.2);
         }
-        
+
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Microsoft YaHei', 'Segoe UI', sans-serif;
-            background: linear-gradient(160deg, #FFF8F0 0%, #FFE4D6 30%, #FFD6BA 70%, #FFB896 100%);
+            background: linear-gradient(170deg, #FFFBE6 0%, #E8F2FF 40%, #D6E9FF 70%, #FFFBE6 100%);
             min-height: 100vh;
             display: flex;
             justify-content: center;
@@ -31,419 +34,380 @@
             position: relative;
             overflow-x: hidden;
         }
-        
-        /* 装饰性爪印背景 */
-        .paw-bg {
-            position: fixed;
-            top: 0; left: 0; right: 0; bottom: 0;
-            pointer-events: none;
-            z-index: 0;
-            opacity: 0.08;
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='80' height='80' viewBox='0 0 80 80'%3E%3Ctext x='5' y='55' font-size='40' fill='%23F0884A'%3E🐾%3C/text%3E%3C/svg%3E");
-            background-size: 80px 80px;
+
+        /* 装饰爪印 + 星星背景 */
+        .bg-paws {
+            position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+            pointer-events: none; z-index: 0;
+            opacity: 0.06;
+            background-image:
+                url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100'%3E%3Ctext x='10' y='70' font-size='35' fill='%234A90D9'%3E🐾%3C/text%3E%3C/svg%3E"),
+                url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100'%3E%3Ctext x='50' y='40' font-size='20' fill='%23FFD93D'%3E⭐%3C/text%3E%3C/svg%3E");
+            background-size: 100px 100px, 100px 100px;
+            background-position: 0 0, 50px 50px;
         }
-        
+
         .player-card {
-            background: rgba(255, 250, 245, 0.95);
-            backdrop-filter: blur(20px);
-            border-radius: 28px;
-            box-shadow: 0 12px 50px rgba(240, 136, 74, 0.18), 0 4px 20px rgba(0,0,0,0.06);
-            padding: 24px 20px 20px;
+            background: rgba(255,255,255,0.92);
+            backdrop-filter: blur(24px);
+            border-radius: 32px;
+            box-shadow: 0 8px 40px var(--shadow-blue), 0 4px 16px rgba(0,0,0,0.05);
+            padding: 28px 22px 22px;
             width: 100%;
-            max-width: 420px;
+            max-width: 430px;
             text-align: center;
             position: relative;
             z-index: 1;
-            border: 1px solid rgba(255, 176, 103, 0.15);
+            border: 2px solid rgba(74,144,217,0.08);
+            transition: box-shadow 0.3s;
         }
-        
+
         .date-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 4px;
-            background: linear-gradient(135deg, #FFE0B2, #FFCC80);
-            color: #6D4C41;
-            padding: 5px 16px;
-            border-radius: 20px;
-            font-size: 13px;
-            font-weight: 600;
-            margin-bottom: 12px;
-            box-shadow: 0 2px 8px rgba(240, 136, 74, 0.15);
+            display: inline-flex; align-items: center; gap: 4px;
+            background: linear-gradient(135deg, #FFFBEA, #FFF5C2);
+            color: #B8860B;
+            padding: 5px 16px; border-radius: 20px;
+            font-size: 13px; font-weight: 600;
+            margin-bottom: 14px;
+            border: 1px solid rgba(255, 217, 61, 0.3);
+            box-shadow: 0 2px 8px var(--shadow-yellow);
         }
-        
+
         .title {
-            font-size: 22px;
-            font-weight: 700;
-            color: var(--text-dark);
+            font-size: 22px; font-weight: 700; color: var(--text);
             margin-bottom: 4px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
+            display: flex; align-items: center; justify-content: center; gap: 6px;
         }
-        
+
         .subtitle {
-            font-size: 13px;
-            color: var(--text-soft);
-            margin-bottom: 16px;
-            opacity: 0.85;
+            font-size: 12px; color: var(--text-soft); margin-bottom: 18px; opacity: 0.8;
         }
-        
+
         .pet-hero {
-            position: relative;
-            margin: 0 auto 16px;
-            width: 160px;
-            height: 160px;
+            position: relative; margin: 0 auto 14px;
+            width: 150px; height: 150px;
         }
-        
+
         .pet-hero img {
-            width: 160px;
-            height: 160px;
-            border-radius: 50%;
+            width: 150px; height: 150px; border-radius: 50%;
             object-fit: cover;
-            border: 4px solid #FFF;
-            box-shadow: 0 8px 30px rgba(240, 136, 74, 0.35), 0 2px 8px rgba(0,0,0,0.1);
+            border: 3px solid #FFF;
+            box-shadow: 0 6px 24px var(--shadow-blue), 0 2px 8px rgba(0,0,0,0.08);
             transition: transform 0.3s ease;
-        }
-        
-        .pet-hero img:hover {
-            transform: scale(1.03) rotate(2deg);
-        }
-        
-        .pet-hero::after {
-            content: '🐾';
-            position: absolute;
-            bottom: -6px;
-            right: -6px;
-            font-size: 28px;
-            background: var(--warm-cream);
-            border-radius: 50%;
-            width: 40px;
-            height: 40px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-            border: 2px solid #FFF;
-        }
-        
-        .pet-name {
-            font-size: 15px;
-            font-weight: 600;
-            color: var(--deep-orange);
-            margin-bottom: 16px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 6px;
-        }
-        
-        .pet-name .bone {
-            font-size: 14px;
-        }
-        
-        .progress-bar {
-            width: 100%;
-            height: 5px;
-            background: #F5E6D3;
-            border-radius: 10px;
-            margin: 14px 0 8px;
             cursor: pointer;
-            position: relative;
-            overflow: hidden;
         }
-        
+        .pet-hero img:hover { transform: scale(1.04) rotate(3deg); }
+
+        .pet-hero::after {
+            content: '🐾'; position: absolute; bottom: -4px; right: -4px;
+            font-size: 24px; background: var(--white); border-radius: 50%;
+            width: 36px; height: 36px;
+            display: flex; align-items: center; justify-content: center;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08); border: 2px solid #FFF;
+        }
+
+        .pet-name {
+            font-size: 14px; font-weight: 600; color: var(--blue-deep);
+            margin-bottom: 14px;
+            display: flex; align-items: center; justify-content: center; gap: 6px;
+        }
+
+        .progress-bar {
+            width: 100%; height: 5px; background: #EDF2FA;
+            border-radius: 10px; margin: 12px 0 8px;
+            cursor: pointer; position: relative; overflow: visible;
+        }
         .progress-fill {
             height: 100%;
-            background: linear-gradient(90deg, #FFB067, #F0884A);
-            border-radius: 10px;
-            width: 0%;
-            transition: width 0.1s linear;
+            background: linear-gradient(90deg, var(--yellow), #FFC107, var(--blue));
+            border-radius: 10px; width: 0%;
+            transition: width 0.15s linear;
             position: relative;
         }
-        
         .progress-fill::after {
-            content: '';
-            position: absolute;
-            right: -6px;
-            top: -4px;
-            width: 14px;
-            height: 14px;
-            background: #FFF;
-            border: 3px solid #F0884A;
-            border-radius: 50%;
-            box-shadow: 0 2px 6px rgba(240, 136, 74, 0.4);
+            content: ''; position: absolute; right: -7px; top: -4px;
+            width: 14px; height: 14px; background: #FFF;
+            border: 3px solid var(--blue); border-radius: 50%;
+            box-shadow: 0 2px 8px rgba(74,144,217,0.3);
         }
-        
+
         .time-info {
-            display: flex;
-            justify-content: space-between;
-            font-size: 12px;
-            color: #A1887F;
-            margin-bottom: 14px;
+            display: flex; justify-content: space-between;
+            font-size: 12px; color: #8EA0B5; margin-bottom: 10px;
             font-variant-numeric: tabular-nums;
         }
-        
+
         .controls {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 18px;
-            margin: 8px 0 14px;
+            display: flex; align-items: center; justify-content: center;
+            gap: 18px; margin: 6px 0 10px;
         }
-        
+
         .btn {
-            width: 46px;
-            height: 46px;
-            border-radius: 50%;
-            border: none;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 18px;
-            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
-            outline: none;
-            -webkit-tap-highlight-color: transparent;
+            width: 46px; height: 46px; border-radius: 50%; border: none;
+            cursor: pointer; display: flex; align-items: center; justify-content: center;
+            font-size: 18px; transition: all 0.25s cubic-bezier(0.4,0,0.2,1);
+            outline: none; -webkit-tap-highlight-color: transparent;
         }
-        
+
         .btn-play {
-            width: 64px;
-            height: 64px;
-            background: linear-gradient(135deg, #FFB067, #F0884A);
-            color: white;
-            font-size: 26px;
-            box-shadow: 0 6px 20px rgba(240, 136, 74, 0.4), 0 2px 6px rgba(240, 136, 74, 0.2);
-            position: relative;
+            width: 64px; height: 64px;
+            background: linear-gradient(135deg, var(--blue), var(--blue-deep));
+            color: white; font-size: 26px;
+            box-shadow: 0 6px 20px rgba(74,144,217,0.4), 0 2px 6px rgba(74,144,217,0.2);
         }
-        
         .btn-play:hover { transform: scale(1.06); }
         .btn-play:active { transform: scale(0.94); }
-        
+
         .btn-sm {
-            background: #FFF;
-            color: var(--deep-orange);
-            border: 2px solid #FFE4D6;
-            font-size: 16px;
+            background: var(--white); color: var(--blue);
+            border: 2px solid var(--blue-soft); font-size: 16px;
         }
-        
-        .btn-sm:hover { 
-            background: linear-gradient(135deg, #FFB067, #F0884A);
-            color: white;
-            border-color: transparent;
-            transform: translateY(-2px);
+        .btn-sm:hover {
+            background: linear-gradient(135deg, var(--blue), var(--blue-deep));
+            color: white; border-color: transparent;
+            transform: translateY(-2px); box-shadow: 0 4px 12px var(--shadow-blue);
         }
-        
         .btn-sm:active { transform: scale(0.92); }
-        
+
         .speed-btn {
-            background: linear-gradient(135deg, #FFE8D6, #FFD6BA);
-            color: var(--deep-orange);
-            border: none;
-            border-radius: 18px;
-            padding: 7px 18px;
-            font-size: 13px;
-            font-weight: 600;
-            cursor: pointer;
+            background: linear-gradient(135deg, var(--blue-light), var(--blue-soft));
+            color: var(--blue-deep); border: none;
+            border-radius: 18px; padding: 7px 18px;
+            font-size: 13px; font-weight: 600; cursor: pointer;
             transition: all 0.2s;
-            box-shadow: 0 2px 8px rgba(240, 136, 74, 0.12);
+            box-shadow: 0 2px 8px var(--shadow-blue);
         }
-        
-        .speed-btn:hover { 
-            background: linear-gradient(135deg, #FFB067, #F0884A);
-            color: white;
-            transform: translateY(-1px);
-            box-shadow: 0 4px 12px rgba(240, 136, 74, 0.25);
+        .speed-btn:hover {
+            background: linear-gradient(135deg, var(--blue), var(--blue-deep));
+            color: white; transform: translateY(-1px);
         }
-        
-        .tags {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 6px;
-            justify-content: center;
-            margin-top: 16px;
-            padding-top: 14px;
-            border-top: 1px dashed #FFE4D6;
+
+        /* 可爱标签区域 */
+        .tags-area {
+            margin-top: 16px; padding-top: 14px;
+            border-top: 1.5px dashed rgba(74,144,217,0.15);
         }
-        
+        .tags-title {
+            font-size: 11px; color: var(--text-soft); margin-bottom: 10px;
+            letter-spacing: 1px; opacity: 0.7;
+        }
+        .tags-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 8px;
+        }
         .tag {
-            background: linear-gradient(135deg, #FFF3E0, #FFE8D6);
-            color: var(--deep-orange);
-            padding: 4px 12px;
-            border-radius: 14px;
-            font-size: 12px;
-            font-weight: 500;
-            border: 1px solid rgba(255, 176, 103, 0.2);
-            transition: all 0.2s;
+            display: flex; align-items: center; justify-content: center; gap: 4px;
+            padding: 10px 6px; border-radius: 16px;
+            font-size: 12px; font-weight: 600; cursor: pointer;
+            border: none; outline: none;
+            transition: all 0.25s cubic-bezier(0.4,0,0.2,1);
+            -webkit-tap-highlight-color: transparent;
+            position: relative; overflow: hidden;
+            user-select: none;
+            font-family: inherit;
         }
-        
+
+        /* 交替黄蓝配色 */
+        .tag-yellow {
+            background: linear-gradient(135deg, #FFFBEA, #FFF5C2);
+            color: #B8860B;
+            border: 1.5px solid rgba(255, 217, 61, 0.3);
+            box-shadow: 0 2px 6px var(--shadow-yellow);
+        }
+        .tag-blue {
+            background: linear-gradient(135deg, #F0F7FF, #D0E4FF);
+            color: #2E6CB5;
+            border: 1.5px solid rgba(74, 144, 217, 0.2);
+            box-shadow: 0 2px 6px var(--shadow-blue);
+        }
+
         .tag:hover {
-            transform: translateY(-1px);
-            box-shadow: 0 2px 6px rgba(240, 136, 74, 0.15);
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.1);
         }
-        
+        .tag:active {
+            transform: scale(0.93);
+        }
+
+        .tag-yellow:hover { background: linear-gradient(135deg, var(--yellow), var(--yellow-light)); }
+        .tag-blue:hover { background: linear-gradient(135deg, var(--blue), var(--blue-light)); color: white; }
+
+        .tag .tag-emoji { font-size: 16px; }
+        .tag .tag-text { font-size: 12px; }
+
+        /* 标签上的可爱小装饰 */
+        .tag::before {
+            content: '';
+            position: absolute; top: -8px; right: -8px;
+            width: 14px; height: 14px; background: var(--yellow);
+            border-radius: 50%; opacity: 0;
+            transition: opacity 0.2s;
+        }
+        .tag.active-tag::before { opacity: 1; }
+
+        .tag.active-tag {
+            transform: translateY(-3px) scale(1.03);
+        }
+        .tag-yellow.active-tag {
+            background: linear-gradient(135deg, #FFD93D, #FFC107);
+            box-shadow: 0 6px 20px var(--shadow-yellow);
+        }
+        .tag-blue.active-tag {
+            background: linear-gradient(135deg, var(--blue), var(--blue-deep));
+            color: white;
+            box-shadow: 0 6px 20px var(--shadow-blue);
+        }
+
+        .current-section {
+            font-size: 13px; font-weight: 600;
+            color: var(--blue-deep);
+            margin-top: 10px;
+            padding: 6px 0;
+            min-height: 24px;
+            transition: all 0.3s;
+        }
+
         .footer {
-            margin-top: 14px;
-            font-size: 11px;
-            color: #BCAAA4;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 4px;
+            margin-top: 12px; font-size: 11px; color: #A0B5CC;
+            display: flex; align-items: center; justify-content: center; gap: 4px;
         }
-        
         .footer .heart {
-            color: #FF6B6B;
-            animation: heartbeat 1.5s ease-in-out infinite;
+            color: #FF6B8A; animation: heartbeat 1.5s ease-in-out infinite;
         }
-        
+
         @keyframes heartbeat {
-            0%, 100% { transform: scale(1); }
-            14% { transform: scale(1.15); }
-            28% { transform: scale(1); }
-            42% { transform: scale(1.15); }
+            0%,100%{transform:scale(1)} 14%{transform:scale(1.15)} 28%{transform:scale(1)} 42%{transform:scale(1.15)}
         }
-        
-        /* 播放时的动画 */
+
+        /* 播放中动画 */
         .playing .pet-hero img {
             animation: gentle-bounce 2s ease-in-out infinite;
         }
-        
         @keyframes gentle-bounce {
-            0%, 100% { transform: translateY(0) scale(1); }
-            50% { transform: translateY(-6px) scale(1.02); }
+            0%,100%{transform:translateY(0) scale(1)}
+            50%{transform:translateY(-6px) scale(1.03)}
         }
-        
-        .wave-anim {
-            display: none;
-            position: absolute;
-            bottom: -8px;
-            left: 50%;
-            transform: translateX(-50%);
-            gap: 3px;
+
+        .deco {
+            position: absolute; pointer-events: none; opacity: 0.12;
         }
-        
-        .playing .wave-anim {
-            display: flex;
-        }
-        
-        .wave-bar {
-            width: 4px;
-            height: 8px;
-            background: linear-gradient(180deg, #FFB067, #F0884A);
-            border-radius: 2px;
-            animation: wave 1.2s ease-in-out infinite;
-        }
-        
-        .wave-bar:nth-child(1) { animation-delay: 0s; height: 6px; }
-        .wave-bar:nth-child(2) { animation-delay: 0.15s; height: 10px; }
-        .wave-bar:nth-child(3) { animation-delay: 0.3s; height: 14px; }
-        .wave-bar:nth-child(4) { animation-delay: 0.45s; height: 10px; }
-        .wave-bar:nth-child(5) { animation-delay: 0.6s; height: 6px; }
-        
-        @keyframes wave {
-            0%, 100% { transform: scaleY(1); }
-            50% { transform: scaleY(1.6); }
-        }
-        
-        /* 装饰小元素 */
-        .deco-bone {
-            position: absolute;
-            font-size: 18px;
-            opacity: 0.15;
-            pointer-events: none;
-        }
-        
-        .deco-bone.top-left { top: 12px; left: 16px; transform: rotate(-20deg); }
-        .deco-bone.top-right { top: 16px; right: 14px; transform: rotate(25deg); }
-        .deco-bone.bottom-left { bottom: 50px; left: 12px; transform: rotate(15deg); }
-        .deco-bone.bottom-right { bottom: 55px; right: 10px; transform: rotate(-30deg); }
-        
+        .deco.top-left { top: 10px; left: 14px; font-size: 18px; }
+        .deco.top-right { top: 12px; right: 12px; font-size: 16px; }
+        .deco.bottom-left { bottom: 14px; left: 12px; font-size: 14px; }
+        .deco.bottom-right { bottom: 18px; right: 14px; font-size: 16px; }
+
         @media (max-width: 400px) {
-            .player-card { padding: 20px 16px 16px; }
-            .pet-hero { width: 140px; height: 140px; }
-            .pet-hero img { width: 140px; height: 140px; }
-            .title { font-size: 20px; }
+            .player-card { padding: 22px 16px 16px; border-radius: 26px; }
+            .pet-hero { width: 130px; height: 130px; }
+            .pet-hero img { width: 130px; height: 130px; }
+            .title { font-size: 19px; }
+            .tags-grid { grid-template-columns: repeat(3, 1fr); gap: 6px; }
+            .tag { padding: 8px 4px; border-radius: 14px; }
         }
     </style>
 </head>
 <body>
-    <div class="paw-bg"></div>
-    
+    <div class="bg-paws"></div>
+
     <div class="player-card" id="playerCard">
-        <div class="deco-bone top-left">🦴</div>
-        <div class="deco-bone top-right">🦴</div>
-        <div class="deco-bone bottom-left">🦴</div>
-        <div class="deco-bone bottom-right">🦴</div>
-        
+        <!-- 装饰 -->
+        <div class="deco top-left">🦴</div>
+        <div class="deco top-right">🎾</div>
+
         <div class="date-badge">📅 2026年7月7日 · 星期二</div>
+
         <h1 class="title">
-            <span>🐶</span>
-            <span>宝宝雷の新闻电台</span>
-            <span>🎙️</span>
+            <span>🐶</span>宝宝雷の新闻电台<span>🎙️</span>
         </h1>
-        <p class="subtitle">财经 · 国际政治 · AI · 民生 · 科技 · 能源 · 军事 · 健康 · 灾害</p>
-        
+        <p class="subtitle">戳标签直达你关心的板块👇</p>
+
         <div class="pet-hero">
             <img src="baobaolei.jpg" alt="宝宝雷" id="petImage">
-            <div class="wave-anim">
-                <div class="wave-bar"></div>
-                <div class="wave-bar"></div>
-                <div class="wave-bar"></div>
-                <div class="wave-bar"></div>
-                <div class="wave-bar"></div>
-            </div>
         </div>
-        
         <div class="pet-name">
-            <span class="bone">🦴</span>
-            <span>今天由宝宝雷为你播报</span>
-            <span class="bone">🦴</span>
+            <span>🦴 今天宝宝雷为你播报 🦴</span>
         </div>
-        
+
         <div class="progress-bar" id="progressBar">
             <div class="progress-fill" id="progressFill"></div>
         </div>
-        
+
         <div class="time-info">
             <span id="currentTime">00:00</span>
             <span id="duration">07:15</span>
         </div>
-        
+
+        <div class="current-section" id="currentSection">🎧 准备收听...</div>
+
         <div class="controls">
             <button class="btn btn-sm" id="btnRewind" title="后退15秒">⏪</button>
             <button class="btn btn-play" id="btnPlay">▶️</button>
             <button class="btn btn-sm" id="btnForward" title="前进15秒">⏩</button>
         </div>
-        
+
         <div>
             <button class="speed-btn" id="btnSpeed">1.0x</button>
         </div>
-        
-        <div class="tags">
-            <span class="tag">📊 财经</span>
-            <span class="tag">🌍 国际</span>
-            <span class="tag">🤖 AI</span>
-            <span class="tag">🏠 民生</span>
-            <span class="tag">🔬 科技</span>
-            <span class="tag">⛽ 能源</span>
-            <span class="tag">🎖️ 军事</span>
-            <span class="tag">🏥 健康</span>
-            <span class="tag">🚨 灾害</span>
+
+        <!-- 可爱的分类标签 -->
+        <div class="tags-area">
+            <div class="tags-title">✦ 点一下直达你想听的内容 ✦</div>
+            <div class="tags-grid" id="tagsGrid">
+                <button class="tag tag-yellow" data-section="finance">
+                    <span class="tag-emoji">💰</span><span class="tag-text">财经</span>
+                </button>
+                <button class="tag tag-blue" data-section="politics">
+                    <span class="tag-emoji">🌍</span><span class="tag-text">国际政治</span>
+                </button>
+                <button class="tag tag-yellow" data-section="ai">
+                    <span class="tag-emoji">🤖</span><span class="tag-text">AI</span>
+                </button>
+                <button class="tag tag-blue" data-section="livelihood">
+                    <span class="tag-emoji">🏠</span><span class="tag-text">国内民生</span>
+                </button>
+                <button class="tag tag-yellow" data-section="tech">
+                    <span class="tag-emoji">🔬</span><span class="tag-text">硬科技</span>
+                </button>
+                <button class="tag tag-blue" data-section="energy">
+                    <span class="tag-emoji">⛽</span><span class="tag-text">能源大宗</span>
+                </button>
+                <button class="tag tag-yellow" data-section="military">
+                    <span class="tag-emoji">🎖️</span><span class="tag-text">军事安全</span>
+                </button>
+                <button class="tag tag-blue" data-section="health">
+                    <span class="tag-emoji">🏥</span><span class="tag-text">健康医疗</span>
+                </button>
+                <button class="tag tag-yellow" data-section="disaster">
+                    <span class="tag-emoji">🚨</span><span class="tag-text">灾害安全</span>
+                </button>
+            </div>
         </div>
-        
+
         <div class="footer">
-            <span>Made with</span>
-            <span class="heart">❤️</span>
-            <span>by WorkBuddy AI · 每日更新</span>
+            <span>Made with</span><span class="heart">❤️</span><span>by WorkBuddy AI · 每日更新</span>
         </div>
     </div>
-    
+
     <audio id="audio" preload="auto">
         <source src="news_2026-07-07.mp3" type="audio/mpeg">
     </audio>
-    
+
     <script>
+        // ========== 分类时间戳映射 ==========
+        // 基于音频实际结构估算（总长约7分15秒=435秒）
+        const SECTION_MAP = {
+            finance:    { name: '📈 财经',        emoji: '💰', start: 8,    end: 128 },
+            politics:   { name: '🌍 国际政治',     emoji: '🌍', start: 128,  end: 225 },
+            ai:         { name: '🤖 人工智能',     emoji: '🤖', start: 225,  end: 298 },
+            livelihood: { name: '🏠 国内民生',     emoji: '🏠', start: 298,  end: 356 },
+            tech:       { name: '🔬 硬科技产业',   emoji: '🔬', start: 356,  end: 400 },
+            energy:     { name: '⛽ 能源大宗',     emoji: '⛽', start: 400,  end: 432 },
+            military:   { name: '🎖️ 军事安全',     emoji: '🎖️', start: 432,  end: 465 },
+            health:     { name: '🏥 健康医疗',     emoji: '🏥', start: 465,  end: 495 },
+            disaster:   { name: '🚨 灾害安全',     emoji: '🚨', start: 495,  end: 555 },
+        };
+
         const audio = document.getElementById('audio');
         const btnPlay = document.getElementById('btnPlay');
         const btnRewind = document.getElementById('btnRewind');
@@ -455,36 +419,75 @@
         const durationEl = document.getElementById('duration');
         const playerCard = document.getElementById('playerCard');
         const petImage = document.getElementById('petImage');
-        
+        const currentSectionEl = document.getElementById('currentSection');
+
         let isPlaying = false;
-        let speeds = [0.75, 1.0, 1.25, 1.5, 1.75, 2.0];
+        const speeds = [0.75, 1.0, 1.25, 1.5, 1.75, 2.0];
         let speedIdx = 1;
-        
+
         function formatTime(seconds) {
             const m = Math.floor(seconds / 60);
             const s = Math.floor(seconds % 60);
-            return String(m).padStart(2, '0') + ':' + String(s).padStart(2, '0');
+            return String(m).padStart(2,'0') + ':' + String(s).padStart(2,'0');
         }
-        
+
+        // 根据当前时间判断在哪个板块
+        function getCurrentSection(time) {
+            for (const [key, sec] of Object.entries(SECTION_MAP)) {
+                if (time >= sec.start && time < sec.end) return key;
+            }
+            if (time >= 555) return 'ending';
+            return 'intro';
+        }
+
+        function updateSectionDisplay(time) {
+            const key = getCurrentSection(time);
+            if (key === 'intro') {
+                currentSectionEl.textContent = '🎧 今日新闻资讯播报';
+            } else if (key === 'ending') {
+                currentSectionEl.textContent = '📌 今日播报结束，感谢收听~';
+            } else {
+                const sec = SECTION_MAP[key];
+                currentSectionEl.textContent = sec.emoji + ' 正在收听：' + sec.name;
+            }
+
+            // 更新标签高亮
+            document.querySelectorAll('.tag').forEach(tag => {
+                tag.classList.toggle('active-tag', tag.dataset.section === key);
+            });
+        }
+
         audio.addEventListener('loadedmetadata', () => {
             durationEl.textContent = formatTime(audio.duration);
+            // 用实际时长修正时间戳
+            if (audio.duration && audio.duration > 0) {
+                const ratio = audio.duration / 580; // 基准约580秒
+                for (const key of Object.keys(SECTION_MAP)) {
+                    SECTION_MAP[key].start = Math.round(SECTION_MAP[key].start * ratio);
+                    SECTION_MAP[key].end = Math.round(SECTION_MAP[key].end * ratio);
+                }
+                durationEl.textContent = formatTime(audio.duration);
+            }
         });
-        
+
         audio.addEventListener('timeupdate', () => {
             if (audio.duration) {
                 const pct = (audio.currentTime / audio.duration) * 100;
                 progressFill.style.width = pct + '%';
                 currentTimeEl.textContent = formatTime(audio.currentTime);
+                updateSectionDisplay(audio.currentTime);
             }
         });
-        
+
+        // 点击进度条
         progressBar.addEventListener('click', (e) => {
             if (!audio.duration) return;
             const rect = progressBar.getBoundingClientRect();
             const pct = (e.clientX - rect.left) / rect.width;
             audio.currentTime = pct * audio.duration;
         });
-        
+
+        // 播放/暂停
         btnPlay.addEventListener('click', () => {
             if (isPlaying) {
                 audio.pause();
@@ -497,33 +500,57 @@
             }
             isPlaying = !isPlaying;
         });
-        
+
         audio.addEventListener('ended', () => {
             btnPlay.textContent = '▶️';
             playerCard.classList.remove('playing');
             isPlaying = false;
+            currentSectionEl.textContent = '✅ 播报完毕，宝宝雷下班啦~';
         });
-        
+
         btnRewind.addEventListener('click', () => {
             audio.currentTime = Math.max(0, audio.currentTime - 15);
         });
-        
+
         btnForward.addEventListener('click', () => {
             audio.currentTime = Math.min(audio.duration || 0, audio.currentTime + 15);
         });
-        
+
         btnSpeed.addEventListener('click', () => {
             speedIdx = (speedIdx + 1) % speeds.length;
             audio.playbackRate = speeds[speedIdx];
             btnSpeed.textContent = speeds[speedIdx] + 'x';
         });
-        
-        // 点击宝宝雷照片也能播放/暂停
-        petImage.addEventListener('click', () => {
-            btnPlay.click();
+
+        // 点击宝宝雷照片播放/暂停
+        petImage.addEventListener('click', () => btnPlay.click());
+
+        // ========== 标签点击跳转 ==========
+        const tagsGrid = document.getElementById('tagsGrid');
+        tagsGrid.addEventListener('click', (e) => {
+            const tag = e.target.closest('.tag');
+            if (!tag) return;
+            const sectionKey = tag.dataset.section;
+            const sec = SECTION_MAP[sectionKey];
+            if (!sec || !audio.duration) return;
+
+            audio.currentTime = sec.start;
+            updateSectionDisplay(sec.start);
+
+            // 如果没在播放，自动播放
+            if (!isPlaying) {
+                audio.play();
+                btnPlay.textContent = '⏸️';
+                playerCard.classList.add('playing');
+                isPlaying = true;
+            }
+
+            // 点击动画
+            tag.style.transform = 'scale(0.88)';
+            setTimeout(() => {
+                tag.style.transform = '';
+            }, 150);
         });
-        
-        petImage.style.cursor = 'pointer';
     </script>
 </body>
 </html>
